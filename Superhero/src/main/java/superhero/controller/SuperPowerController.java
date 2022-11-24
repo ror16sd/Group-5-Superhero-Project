@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/api/super-powers")
-public class SuperPowersController {
+public class SuperPowerController {
     
     @GetMapping
     public String getSuperPowers() {
