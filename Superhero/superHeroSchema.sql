@@ -31,7 +31,7 @@ Create Table super(
 superId int not null primary key auto_increment,
 superName varchar(20)not null,
 powerId int,
-heroDescription varchar(50) not null,
+superDescription varchar(50) not null,
 isSuper boolean not null,
 Constraint foreign key (powerId) references power(powerId));
 
