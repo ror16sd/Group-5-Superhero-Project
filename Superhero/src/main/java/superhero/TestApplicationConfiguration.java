@@ -12,4 +12,9 @@ import org.springframework.context.annotation.FilterType;
 @EnableAutoConfiguration
 public class TestApplicationConfiguration {
 
+        //We don't need anything more than this since it only exists to start up our tests 
+        //without running the main program
+    
+        //GIVE TESTS THIS ANNOTATION: @SpringBootTest(classes = TestApplicationConfiguration.class)
+
 }
