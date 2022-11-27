@@ -18,6 +18,7 @@ locationLong decimal(12,8));
 Create Table superOrganization(
 organizationId int not null primary key auto_increment,
 organizationName varchar(30) not null,
+organizationDescription varchar(50) not null,
 locationId int,
 Constraint foreign key (locationId) references location(locationId)
 );
