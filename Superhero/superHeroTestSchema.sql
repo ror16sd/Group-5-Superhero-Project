@@ -17,6 +17,8 @@ locationLong double);
 
 Create Table superOrganization(
 organizationId int not null primary key auto_increment,
+organizationName varchar(30) not null,
+organizationDescription varchar(50) not null,
 locationId int,
 Constraint foreign key (locationId) references location(locationId)
 );
@@ -30,7 +32,7 @@ Create Table super(
 superId int not null primary key auto_increment,
 superName varchar(20) not null,
 powerId int not null,
-heroDescription varchar(50) not null,
+superDescription varchar(50) not null,
 isSuper boolean not null,
 Constraint foreign key (powerId) references power(powerId));
 

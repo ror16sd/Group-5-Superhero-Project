@@ -16,8 +16,8 @@ Insert into super Values(superId, superName, powerId, superDescription, isSuper)
 (8,'Superman', 2, 'Americas Hero', 1), 
 (9, 'The Joker', 5, 'Pure psychopath', 0);
 
-Insert into superOrganization Values(organizationId, organizationName, locationId),
-(7, 'Hydra', 3 ), (8, 'Justice League', 4);
+Insert into superOrganization Values(organizationId, organizationName, organizationDescription, locationId),
+(7, 'Hydra', 'where the bad guys hang out', 3 ), (8, 'Justice League', 'where the good guys hang out', 4);
 
 Insert into super_Organization Values (superId, organizationId),
 (8, 8), (9, 7);
