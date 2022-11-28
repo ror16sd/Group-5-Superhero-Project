@@ -12,30 +12,69 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+@Repository
 public class LocationDaoDb implements LocationDao {
+
+    @Autowired
+    JdbcTemplate jdbc;
+
     @Override
     public Location getLocationById(int locationId) {
-        return null;
+        try{
+            final String SELECT_LOCATION_BY_ID = "SELECT * FROM location WHERE locationId = ?";
+            return jdbc.queryForObject(SELECT_LOCATION_BY_ID, new LocationMapper(), locationId);
+        } catch (DataAccessException e){
+            return null;
+        }
     }
 
     @Override
     public List<Location> getAllLocations() {
-        return null;
+        final String SELECT_ALL_LOCATIONS = "SELECT * FROM location";
+        return jdbc.query(SELECT_ALL_LOCATIONS, new LocationMapper());
     }
 
     @Override
+    @Transactional
     public Location addLocation(Location location) {
-        return null;
+        final String INSERT_LOCATION = "INSERT INTO location(locationName, locationDescription, locationAddress, locationState, locationCity, locationZip, locationLatLat, locationLong) "
+                + "VAlUES(?,?,?,?,?,?,?,?)";
+        jdbc.update(INSERT_LOCATION,
+                location.getLocationName(),
+                location.getLocationDescription(),
+                location.getLocationAddress(),
+                location.getLocationState(),
+                location.getLocationCity(),
+                location.getLocationZip(),
+                location.getLocationLat(),
+                location.getLocationLong());
+        int newId = jdbc.queryForObject("SELECT LAST_INSERT_ID()", Integer.class);
+        location.setLocationId(newId);
+        return location;
     }
 
     @Override
     public void updateLocation(Location location) {
-
+        final String UPDATE_LOCATION = "UPDATE location SET locationName = ?, locationDescription = ?, locationAddress = ?, locationState = ?, locationCity = ?, locationZip = ?, locationLatLat = ?, locationLong = ? "
+                + "WHERE id = ?";
+        jdbc.update(UPDATE_LOCATION,
+                location.getLocationName(),
+                location.getLocationDescription(),
+                location.getLocationAddress(),
+                location.getLocationState(),
+                location.getLocationCity(),
+                location.getLocationZip(),
+                location.getLocationLat(),
+                location.getLocationLong(),
+                location.getLocationId());
     }
 
     @Override
+    @Transactional
     public void deleteLocationById(int locationId) {
-
+        //quick delete written for testing, if issue with location deleting too much information START HERE***
+        final String DELETE_LOCATION = "DELETE FROM location WHERE locationId = ?";
+        jdbc.update(DELETE_LOCATION, locationId);
     }
 
     public static final class LocationMapper implements RowMapper<Location>{
