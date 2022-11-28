@@ -19,6 +19,10 @@ public class SuperOrganization {
     @Size(max = 20, message = "Name must be fewer than 20 characters")
     private String organizationName;
 
+    @NotBlank(message = "Description must not be blank")
+    @Size(max = 255, message = "Description must be fewer than 255 characters")
+    private String organizationDescription;
+
     private Location location;
 
     public int getOrganizationId() {
@@ -44,6 +48,10 @@ public class SuperOrganization {
     public void setLocation(Location location) {
         this.location = location;
     }
+
+    public String getOrganizationDescription(){return organizationDescription;}
+
+    public void setOrganizationDescription(String description){this.organizationDescription = description;}
 
     public int hashCode() {
         int hash = 3;
