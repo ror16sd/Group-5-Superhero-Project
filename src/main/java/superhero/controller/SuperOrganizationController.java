@@ -4,6 +4,7 @@
  */
 package superhero.controller;
 
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,13 +17,13 @@ import org.springframework.web.bind.annotation.RestController;
  *
  * @author ciruf
  */
-@RestController
-@RequestMapping("/api/super-organizations")
+@Controller
+@RequestMapping("/super-organizations")
 public class SuperOrganizationController {
     
     @GetMapping
     public String getSuperOrganizations() {
-        return "NOT IMPLEMENTED: View super organizations";
+        return "Organization";
     }
     
     @PostMapping

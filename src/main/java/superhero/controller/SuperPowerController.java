@@ -4,6 +4,7 @@
  */
 package superhero.controller;
 
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,8 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
  *
  * @author ciruf
  */
-@RestController
-@RequestMapping("/api/super-powers")
+@Controller
+@RequestMapping("/super-powers")
 public class SuperPowerController {
     
     @GetMapping
