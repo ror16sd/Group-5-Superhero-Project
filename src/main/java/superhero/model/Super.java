@@ -54,11 +54,11 @@ public class Super {
         this.superDescription = superDescription;
     }
 
-    public boolean isSuper() {
+    public boolean getIsSuper() {
         return isSuper;
     }
 
-    public void isSuper(boolean hero) {
+    public void setIsSuper(boolean hero) {
         isSuper = hero;
     }
 
