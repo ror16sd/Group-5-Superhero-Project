@@ -4,14 +4,16 @@
  */
 package superhero.controller;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jdk.jfr.Frequency;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+import superhero.dao.PowerDao;
+import superhero.model.Power;
+
+import java.util.List;
 
 /**
  *
@@ -20,15 +22,26 @@ import org.springframework.web.bind.annotation.RestController;
 @Controller
 @RequestMapping("/super-powers")
 public class SuperPowerController {
+
+    @Autowired
+    PowerDao powerDao;
     
     @GetMapping
-    public String getSuperPowers() {
-        return "NOT IMPLEMENTED: View super powers";
+    public String getSuperPowers(Model model) {
+
+        List<Power> powers = powerDao.getAllPowers();
+        model.addAttribute("powers", powers);
+        return "SuperPower";
     }
     
     @PostMapping
-    public String createSuperPower() {
-        return "NOT IMPLEMENTED: Create super powers";
+    public String createSuperPower(int powerId, String powerDescription) {
+        Power power = new Power();
+        power.setPowerId(powerId);
+        power.setPowerDescription(powerDescription);
+        powerDao.addPower(power);
+        return "redirect:/SuperPower";
+
     }
     
     @GetMapping("/{id}")

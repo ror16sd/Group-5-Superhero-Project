@@ -15,16 +15,19 @@ public class IndexController {
 
     @GetMapping
     public String getHomePage() {
+
         return "SuperHeroHome";
     }
     
     @GetMapping("gallery")
     public String getGalleryPage() {
+
         return "Gallery";
     }
     
     @PostMapping("gallery")
     public String addGalleryPhoto() {
+
         return "NOT IMPLEMENTED: add gallery photo";
     }
 }
