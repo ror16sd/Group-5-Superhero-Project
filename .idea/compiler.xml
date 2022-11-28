@@ -8,11 +8,13 @@
         <outputRelativeToContentRoot value="true" />
         <module name="SuperHeroProject" />
         <module name="Superhero" />
+        <module name="Group-5-Superhero-Project" />
       </profile>
     </annotationProcessing>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="Group-5-Superhero-Project" options="-parameters" />
       <module name="SuperHeroProject" options="-parameters" />
       <module name="Superhero" options="-parameters" />
     </option>
