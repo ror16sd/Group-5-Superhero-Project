@@ -35,13 +35,13 @@ public class PowerDaoDb implements PowerDao {
 
     @Override
     public List<Power> getAllPowers() {
-        final String SELECT_ALL_POWERS = "Select * from powers";
+        final String SELECT_ALL_POWERS = "SELECT * FROM power";
         return jdbc.query(SELECT_ALL_POWERS, new PowerMapper());
     }
 
     @Override
     public Power addPower(Power power) {
-        final String INSERT_POWER = "INSERT INTO Power(Name,Description) "
+        final String INSERT_POWER = "INSERT INTO power(Name,Description) "
                 + "VALUES(?,?)";
         jdbc.update(INSERT_POWER, power.getPowerDescription());
         int newId = jdbc.queryForObject("SELECT LAST_INSERT_ID()", Integer.class);
