@@ -15,12 +15,12 @@ xmlns="http://www.w3.org/1999/xhtml">
     <link rel="stylesheet" href="styles.css">
 </head>
 
-<body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-secondary">
+<body id="supPower">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-secondary">
         <a class="navbar-brand" href="">SuperSightings</a>
         <ul class="navbar-nav ms-auto">
             <li class="nav-item">
-                <a href="SuperHeroHome.html" id="navbar__logo">Home</a>
+                <a href="SuperHeroHome.html" class="navbar__links">Home</a>
             </li> &nbsp; &nbsp;
             <li class="nav-item">
                 <a href="Who.html" class="navbar__links">Who</a>
@@ -42,21 +42,63 @@ xmlns="http://www.w3.org/1999/xhtml">
             </li>  &nbsp; &nbsp;
         </ul>
     </nav>
-
-    <h1> What is Their Super Power? </h1>
-
-    <div class="form">
-        <form action="testForm" method="POST">
-            Add Their SuperPower: <input type="text" name="formPower"/><br>
-            <br>
-            <button type="submit">Submit</button>
-        </form>
-   
-    <br>
-
-    <p>Witnessed Superhero/Supervillain Powers: <span th:text="${Power}"></span></p>
-   
-</div>
+    <div class="container">
+        <div class="row m-4">
+            <div class="col text-center border border-dark">
+                <h1>What is Their SuperPower?</h1>
+            </div>
+        </div>
+    <div class="row m-4 border border-dark">
+        <div class="col-3 text-center m-3">
+            <span class="h3">Add SuperPower</span>
+        </div>
+        <div class="col-7 text-center m-3">
+            <form action="addPower" method="POST">
+                <div class="form-group row">
+                    <label for="superPower" class="col-3 col-form-label">
+                        Power</label>
+                    <div class="col-9">
+                        <input type="text" name="superPower" 
+                               id="superPower" class="form-control"/>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="lastName" class="col-3 col-form-label">
+                         Name</label>
+                    <div class="col-9">
+                        <input type="text" name="lastName" 
+                               id="lastName" class="form-control"/>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Add Power</button>
+            </form>
+        </div>
+    </div>
+    <div class="row m-4 border border-dark">
+        <div class="col text-center m-3">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>SuperPower</th>
+                        <th>Hero/Villain Name</th>
+                        <th>Edit</th>
+                        <th>Delete</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="Power : ${Powers}">
+                        <td th:text="${power.id}">Power ID</td>
+                        <td th:text="${power.Name}">SuperPower</td>
+                        <td th:text="${hero.Name}">Hero/Villain Name</td>
+                        <td><a href="#" th:href="@{/editPower(id=${power.id})}">Edit</a></td>
+                        <td><a href="#" th:href="@{/deletePower(id=${power.id})}">Delete</a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div> 
 
 
 
