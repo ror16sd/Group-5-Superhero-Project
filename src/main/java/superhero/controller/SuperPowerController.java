@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import superhero.dao.PowerDao;
+import superhero.dao.SuperDao;
 import superhero.model.Power;
 
 import java.util.List;
@@ -24,9 +25,12 @@ import java.util.List;
 public class SuperPowerController {
 
     @Autowired
-    PowerDao powerDao;
+    public PowerDao powerDao;
+
+//    @Autowired
+//    SuperDao superDao;
     
-    @GetMapping
+    @GetMapping("/powers")
     public String getSuperPowers(Model model) {
 
         List<Power> powers = powerDao.getAllPowers();
@@ -44,11 +48,11 @@ public class SuperPowerController {
 
     }
     
-//    @GetMapping("/{id}")
-//    public String getSuperPower(@PathVariable int id) {
-//
-//        return "NOT IMPLEMENTED: Get specific super power";
-//    }
+    @GetMapping("/{id}")
+    public String getSuperPower(@PathVariable int id) {
+
+        return "NOT IMPLEMENTED: Get specific super power";
+    }
     
     @PutMapping("/{id}")
     public String updateSuperPower(@PathVariable int id, @RequestBody Power power) {
