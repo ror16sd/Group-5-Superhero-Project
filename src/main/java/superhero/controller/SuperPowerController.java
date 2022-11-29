@@ -44,19 +44,27 @@ public class SuperPowerController {
 
     }
     
-    @GetMapping("/{id}")
-    public String getSuperPower(@PathVariable int id) {
-        return "NOT IMPLEMENTED: Get specific super power";
-    }
+//    @GetMapping("/{id}")
+//    public String getSuperPower(@PathVariable int id) {
+//
+//        return "NOT IMPLEMENTED: Get specific super power";
+//    }
     
     @PutMapping("/{id}")
-    public String updateSuperPower(@PathVariable int id) {
-        return "NOT IMPLEMENTED: Update specific super power";
+    public String updateSuperPower(@PathVariable int id, @RequestBody Power power) {
+        Power updatePower = powerDao.getPowerById(id);
+        updatePower.setPowerId(power.getPowerId());
+        updatePower.setPowerDescription(power.getPowerDescription());
+        powerDao.updatePower(power);
+        return "editPower";
     }
     
     @DeleteMapping("/{id}")
     public String deleteSuperPower(@PathVariable int id) {
-        return "NOT IMPLEMENTED: Delete specific super power";
+        Power deletePower = powerDao.getPowerById(id);
+        powerDao.deletePowerById(id);
+        return "redirect:/SuperPower";
+
     }
     
 }
