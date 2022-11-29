@@ -9,16 +9,19 @@ import jdk.jfr.Frequency;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import superhero.dao.PowerDao;
 import superhero.dao.SuperDao;
 import superhero.model.Power;
 
+import javax.validation.Valid;
+import java.net.BindException;
 import java.util.List;
 
 /**
  *
- * @author ciruf
+// * @author ciruf
  */
 @Controller
 @RequestMapping("/super-powers")
@@ -29,46 +32,67 @@ public class SuperPowerController {
 
 //    @Autowired
 //    SuperDao superDao;
-    
-    @GetMapping("/powers")
+
+    @GetMapping("powers")
     public String getSuperPowers(Model model) {
 
         List<Power> powers = powerDao.getAllPowers();
         model.addAttribute("powers", powers);
         return "SuperPower";
     }
-    
+
     @PostMapping
-    public String createSuperPower(int powerId, String powerDescription) {
-        Power power = new Power();
-        power.setPowerId(powerId);
-        power.setPowerDescription(powerDescription);
-        powerDao.addPower(power);
+    public String createSuperPower(Power power, HttpServletRequest request) {
+//        powerDao.addPower(power);
         return "redirect:/SuperPower";
 
     }
-    
+
     @GetMapping("/{id}")
     public String getSuperPower(@PathVariable int id) {
-
-        return "NOT IMPLEMENTED: Get specific super power";
+//        Power power = powerDao.getPowerById(id);
+        return "SuperPower";
     }
-    
-    @PutMapping("/{id}")
-    public String updateSuperPower(@PathVariable int id, @RequestBody Power power) {
-        Power updatePower = powerDao.getPowerById(id);
-        updatePower.setPowerId(power.getPowerId());
-        updatePower.setPowerDescription(power.getPowerDescription());
-        powerDao.updatePower(power);
+
+
+    @GetMapping("edit")
+    public String editPower(Integer id, Model model) {
+//        Power power = powerDao.getPowerById(id);
+//        model.addAttribute("power", power);
         return "editPower";
     }
-    
-    @DeleteMapping("/{id}")
-    public String deleteSuperPower(@PathVariable int id) {
-        Power deletePower = powerDao.getPowerById(id);
-        powerDao.deletePowerById(id);
+
+
+
+//    @PutMapping("/{id}")
+//    public String updateSuperPower(@PathVariable int id, @RequestBody Power power) {
+//        Power updatePower = powerDao.getPowerById(id);
+//        updatePower.setPowerId(power.getPowerId());
+//        updatePower.setPowerDescription(power.getPowerDescription());
+//        powerDao.updatePower(power);
+//        return "editPower";
+//    }
+//
+    @PostMapping("edit")
+    public String performEditPower(@Valid Power power, BindingResult result){
+        if(result.hasErrors()) {
+            return "editPower";
+        }
+//        powerDao.updatePower(power);
         return "redirect:/SuperPower";
 
     }
-    
+
+
+    @GetMapping("deletePower")
+    public String deleteSuperPower(@PathVariable int powerId) {
+//        powerDao.deletePowerById(powerId);
+        return "redirect:/SuperPower";
+
+    }
+
 }
+
+
+
+

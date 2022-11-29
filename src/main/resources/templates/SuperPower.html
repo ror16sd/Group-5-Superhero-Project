@@ -88,8 +88,8 @@ xmlns="http://www.w3.org/1999/xhtml">
                 </thead>
                 <tbody>
                     <tr th:each="Power : ${Powers}">
-                        <td th:text="${power.id}">Power ID</td>
-                        <td th:text="${power.Name}">SuperPower</td>
+                        <td th:text="${power.powerId}">Power ID</td>
+                        <td th:text="${power.powerDescription}">SuperPower</td>
                         <td th:text="${hero.Name}">Hero/Villain Name</td>
                         <td><a href="#" th:href="@{/editPower(id=${power.id})}">Edit</a></td>
                         <td><a href="#" th:href="@{/deletePower(id=${power.id})}">Delete</a></td>
