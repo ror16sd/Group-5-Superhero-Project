@@ -26,8 +26,9 @@ public class PowerDaoDb implements PowerDao {
 
     @Override
     public List<Power> getAllPowers() {
-
-        return null;
+        final String SELECT_ALL_POWERS = "SELECT * FROM power";
+        List<Power> powers = jdbc.query(SELECT_ALL_POWERS, new PowerMapper());
+        return powers;
     }
 
     @Override
@@ -45,11 +46,16 @@ public class PowerDaoDb implements PowerDao {
 
     @Override
     public void updatePower(Power power) {
-
+        final String UPDATE_POWER = "UPDATE power SET powerDescription = ?";
+        jdbc.update(UPDATE_POWER,
+                power.getPowerDescription(),
+                power.getPowerId());
     }
 
     @Override
     public void deletePowerById(int powerId) {
+        final String DELETE_POWER = "DELETE POWER from power WHERE powerId = ?";
+        jdbc.update(DELETE_POWER, powerId);
 
     }
 
