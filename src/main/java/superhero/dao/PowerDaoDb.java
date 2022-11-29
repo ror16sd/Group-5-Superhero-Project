@@ -1,7 +1,6 @@
 package superhero.dao;
 
 //<<<<<<< Updated upstream
-import org.springframework.context.annotation.Bean;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 import superhero.model.Location;
@@ -14,7 +13,6 @@ import org.springframework.jdbc.core.RowMapper;
 import superhero.model.Power;
 import superhero.model.Super;
 
-import javax.sql.DataSource;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
@@ -24,16 +22,6 @@ public class PowerDaoDb implements PowerDao {
 
     @Autowired
     private JdbcTemplate jdbc;
-
-//    @Bean("jdbc")
-//    public JdbcTemplate jdbcTemplate(DataSource dataSource) {
-//        return new JdbcTemplate(dataSource);
-//    }
-//
-//    @Autowired
-//    public PowerDaoDb(JdbcTemplate jdbc) {
-//        this.jdbc = jdbc;
-//    }
 
     @Override
     public Power getPowerById(int powerId) {
