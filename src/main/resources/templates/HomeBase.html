@@ -17,12 +17,12 @@ xmlns="http://www.w3.org/1999/xhtml">
 <link rel="stylesheet" href="style.css" type="text/css"/>
 </head>
 
-<body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-secondary">
+<body id="orgLocation">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-secondary">
         <a class="navbar-brand" href="">SuperSightings</a>
         <ul class="navbar-nav ms-auto">
             <li class="nav-item">
-                <a href="SuperHeroHome.html" id="navbar__logo">Home</a>
+                <a href="SuperHeroHome.html" class="navbar__links">Home</a>
             </li> &nbsp; &nbsp;
             <li class="nav-item">
                 <a href="Who.html" class="navbar__links">Who</a>
@@ -34,7 +34,7 @@ xmlns="http://www.w3.org/1999/xhtml">
                 <a href="Organization.html" class="navbar__links">Organization</a>
             </li>  &nbsp; &nbsp;
             <li class="nav-item">
-                <a href="HomeBase.html" class="">HomeBase</a>
+                <a href="HomeBase.html" class="navbar__links">HomeBase</a>
             </li>  &nbsp; &nbsp;
             <li class="nav-item">
                 <a href="Sighting.html" class="navbar__links">Sighting</a>
@@ -44,18 +44,115 @@ xmlns="http://www.w3.org/1999/xhtml">
             </li>  &nbsp; &nbsp;
         </ul>
     </nav>
-
-    <h1> Where is Their Home Base? </h1>
-
-    <div class="form">
-        <form action="testForm" method="POST">
-            Add the Location of Organization: <input type="text" name="formLocation"/><br>
-            <br>
-            <button type="submit">Submit</button>
-        </form>
-       <br>
-    <p>Location of Superhero/Supervillain: <span th:text="${Location}"></span></p>
-   </div>
+    <div class="container">
+        <div class="row m-4">
+            <div class="col text-center border border-dark">
+                <h1>Where is Their Home Base?</h1>
+            </div>
+        </div>
+    <div class="row m-4 border border-dark">
+        <div class="col-3 text-center m-3">
+            <span class="h3">Add Organization Location</span>
+        </div>
+        <div class="col-7 text-center m-3">
+            <form action="addLocation" method="POST">
+                <div class="form-group row">
+                    <label for="locationName" class="col-3 col-form-label">
+                        Location Name</label>
+                    <div class="col-9">
+                        <input type="text" name="locationName" 
+                               id="locationName" class="form-control"/>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="description" class="col-3 col-form-label">
+                        Description</label>
+                    <div class="col-9">
+                        <input type="text" name="description" 
+                               id="description" class="form-control"/>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="streetAdd" class="col-3 col-form-label">
+                        Street Address</label>
+                    <div class="col-9">
+                        <input type="text" name="streetAdd" 
+                               id="streetAdd" class="form-control"/>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="state" class="col-3 col-form-label">
+                        State</label>
+                    <div class="col-9">
+                        <input type="text" name="state" 
+                        id="state" class="form-control"/>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="city" class="col-3 col-form-label">
+                        City</label>
+                    <div class="col-9">
+                        <input type="text" name="city" 
+                               id="city" class="form-control"/>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="zipCode" class="col-3 col-form-label">
+                        Zip Code</label>
+                    <div class="col-9">
+                        <input type="text" name="zipCode" 
+                        id="zipCode" class="form-control"/>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="latitude" class="col-3 col-form-label">
+                        Latitude</label>
+                    <div class="col-9">
+                        <input type="text" name="latitude" 
+                               id="latitude" class="form-control"/>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="longitude" class="col-3 col-form-label">
+                        Longitude</label>
+                    <div class="col-9">
+                        <input type="text" name="longitude" 
+                               id="longitude" class="form-control"/>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Add Organization Location</button>
+            </form>
+        </div>
+    </div>
+    
+    <div class="row m-4 border border-dark">
+        <div class="col text-center m-3">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Teacher</th>
+                        <th>Details</th>
+                        <th>Edit</th>
+                        <th>Delete</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="course : ${courses}">
+                        <td th:text="${location.id}">Location ID</td>
+                        <td th:text='${location.name}'>Location Name</td>
+                        <td th:text="${location.description.description + ' ' 
+                            + course.teacher.lastName}">Location Description</td>
+                        <td><a href="#" th:href="@{/courseDetail(id=${course.id})}">Details</a></td>
+                        <td><a href="#" th:href="@{/editCourse(id=${course.id})}">Edit</a></td>
+                        <td><a href="#" th:href="@{/deleteCourse(id=${course.id})}">Delete</a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>   
 
 
 
