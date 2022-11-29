@@ -41,8 +41,8 @@ public class PowerDaoDb implements PowerDao {
 
     @Override
     public Power addPower(Power power) {
-        final String INSERT_POWER = "INSERT INTO power(Name,Description) "
-                + "VALUES(?,?)";
+        final String INSERT_POWER = "INSERT INTO power(powerDescription) "
+                + "VALUES(?)";
         jdbc.update(INSERT_POWER, power.getPowerDescription());
         int newId = jdbc.queryForObject("SELECT LAST_INSERT_ID()", Integer.class);
         power.setPowerId(newId);
@@ -58,10 +58,10 @@ public class PowerDaoDb implements PowerDao {
 
     @Override
     public void deletePowerById(int powerId) {
-        final String DELETE_HERO_POWER = "DELETE FROM HeroSuperpower WHERE SuperpowerId = ?";
+        final String DELETE_HERO_POWER = "DELETE FROM superPerson WHERE powerId = ?";
         jdbc.update(DELETE_HERO_POWER, powerId);
 
-        final String DELETE_SUPERPOWER = "DELETE FROM Superpower WHERE SuperpowerId = ?";
+        final String DELETE_SUPERPOWER = "DELETE FROM power WHERE powerId = ?";
         jdbc.update(DELETE_SUPERPOWER, powerId);
     }
 
