@@ -56,37 +56,44 @@ xmlns="http://www.w3.org/1999/xhtml">
                 <span class="h3">Add Superhero or Supervillain</span>
             </div>
             <div class="col-7 text-center m-3">
-                <form action="addName" method="POST">
+                <form action="/super-people" method="POST">
                     <div class="form-group row">
                         <label for="superName" class="col-3 col-form-label">
                             Name</label>
                         <div class="col-9">
-                            <input type="text" name="name" 
-                                   id="name" class="form-control"/>
+                            <input type="text" name="superName" 
+                                   id="superName" class="form-control"/>
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="hero" class="col-3 col-form-label">
+                        <label for="isHero" class="col-3 col-form-label">
                             Hero(yes/no)</label>
                         <div class="col-9">
-                            <input type="text" name="hero" 
-                                   id="hero" class="form-control"/>
+                            <select id="isHero" name="isHero" class="form-control" >
+                                <option value="true">Yes</option>
+                                <option value="false">No</option>
+                            </select>
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="superPower" class="col-3 col-form-label">
-                            SuperPower</label>
-                        <div class="col-9">
-                            <input type="text" name="superPower" 
-                               id="superPower" class="form-control"/>
-                        </div>
+                            <label for="power" class="col-3 col-form-label">
+                                Super Power</label>
+                            <div class="col-9">
+                                
+                                <select id="power" name="powerId" class="form-control" >
+                                    <option th:each="power : ${powers}" 
+                                            th:value="${power.powerId}" 
+                                            th:text="${power.powerDescription}">
+                                        Power Description</option>
+                                </select>
+                            </div>
                     </div>
                     <div class="form-group row">
-                        <label for="description" class="col-3 col-form-label">
+                        <label for="superDescription" class="col-3 col-form-label">
                             Description</label>
                         <div class="col-9">
-                            <input type="text" name="description" 
-                               id="description" class="form-control"/>
+                            <input type="text" name="superDescription" 
+                               id="superDescription" class="form-control"/>
                         </div>
                     </div>
                     <button type="submit" class="btn btn-primary">Add Hero/Villain</button>
