@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import superhero.dao.PowerDao;
+import superhero.dao.SuperDao;
 import superhero.model.Power;
 import superhero.model.Super;
 
@@ -28,17 +29,18 @@ import superhero.model.Super;
 @Controller
 @RequestMapping("/super-people")
 public class SuperPersonController {
-    
-    
+   @Autowired
+   SuperDao superDao;
+   
    @Autowired
    PowerDao powerDao;
    
    @GetMapping
     public String getSuperPeople(Model model) {
-//        In the future
-//        List<Power> powers = powerDao.getAllPowers();
-        List<Power> powers = testPowerList();
+        List<Super> supers = superDao.getAllSupers();
+        List<Power> powers = powerDao.getAllPowers();
         model.addAttribute("powers", powers);
+        model.addAttribute("superPeople", supers);
         return "Who";
     }
     

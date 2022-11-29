@@ -108,21 +108,23 @@ xmlns="http://www.w3.org/1999/xhtml">
                         <tr>
                             <th>ID</th>
                             <th>Name</th>
-                            <th>Hero</th>
+                            <th>Power</th>
+                            <th>Hero Status</th>
                             <th>Details</th>
                             <th>Edit</th>
                             <th>Delete</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr th:each="course : ${courses}">
-                            <td th:text="${course.id}">Super ID</td>
-                            <td th:text='${course.name}'>Hero/Villain Name</td>
-                            <td th:text="${course.teacher.firstName + ' ' 
-                                + course.teacher.lastName}">Yes or No</td>
-                            <td><a href="#" th:href="@{/courseDetail(id=${course.id})}">Details</a></td>
-                            <td><a href="#" th:href="@{/editCourse(id=${course.id})}">Edit</a></td>
-                            <td><a href="#" th:href="@{/deleteCourse(id=${course.id})}">Delete</a></td>
+                        <tr th:each="super : ${superPeople}">
+                            <td th:text="${super.superId}">Super ID</td>
+                            <td th:text="${super.superName}">Hero/Villain Name</td>
+                            <td th:text="${super.power.powerDescription}">Power</td>
+                            <td th:if="${super.isSuper == true}" th:text="Hero">Hero</td>
+                            <td th:if="${super.isSuper == false}" th:text="Villain">Villain</td>
+                            <td th:text="${super.superDescription}">Description</td>
+                            <td><a href="#" th:href="@{/edit(id=${super.superId})}">Edit</a></td>
+                            <td><a href="#" th:href="@{/delete(id=${super.superId})}">Delete</a></td>
                         </tr>
                     </tbody>
                 </table>
