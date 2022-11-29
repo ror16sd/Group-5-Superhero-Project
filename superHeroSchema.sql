@@ -28,25 +28,27 @@ powerId int not null primary key auto_increment,
 powerDescription varchar(30) not null
 );
 
-Create Table super(
+Create Table superPerson(
 superId int not null primary key auto_increment,
 superName varchar(20)not null,
 powerId int,
 superDescription varchar(50) not null,
 isSuper boolean not null,
-Constraint foreign key (powerId) references power(powerId));
+ foreign key (powerId) references power(powerId));
 
 Create Table super_Organization(
 superId int not null,
 organizationId int not null,
-primary key (superId, organizationId));
--- constraint foreign key (superId) references super(superId),
--- constraint foreign key (organizationId) references superOrganization (organizationId));
+primary key (superId, organizationId),
+ foreign key (superId) 
+	references superPerson(superId),
+ foreign key (organizationId) 
+	references superOrganization(organizationId));
 
 Create Table sightingLocation(
 sightingId int not null primary key auto_increment,
 sightingDate timestamp not null default current_timestamp,
 locationId int,
 superId int,
-Constraint foreign key (superId) references super(superId),
+Constraint foreign key (superId) references superPerson(superId),
 Constraint foreign key (locationId) references location(locationId));
