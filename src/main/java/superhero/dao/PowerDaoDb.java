@@ -20,13 +20,8 @@ import java.util.List;
 @Repository
 public class PowerDaoDb implements PowerDao {
 
-
-    JdbcTemplate jdbc;
-
     @Autowired
-    public PowerDaoDb(JdbcTemplate jdbc) {
-        this.jdbc = jdbc;
-    }
+    private JdbcTemplate jdbc;
 
     @Override
     public Power getPowerById(int powerId) {
