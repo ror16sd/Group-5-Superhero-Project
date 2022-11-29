@@ -42,7 +42,7 @@ public class SuperOrganizationDaoDb implements SuperOrganizationDao {
     private void associateOrganizationAndSuper(List<SuperOrganization> organization) {
         for (SuperOrganization superOrganization : organization){
             //TODO: implement below, why not working??
-            superOrganization.setSupers(getSuperForSuperOrganization(superOrganization.getOrganizationId()));
+//            superOrganization.setSupers(getSuperForSuperOrganization(superOrganization.getOrganizationId()));
         }
     }
 
