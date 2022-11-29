@@ -9,6 +9,7 @@ package superhero.model;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.util.List;
 import java.util.Objects;
 
 public class SuperOrganization {
@@ -24,6 +25,20 @@ public class SuperOrganization {
     private String organizationDescription;
 
     private Location location;
+
+    //private Super superPerson;
+
+    private List<Super> superMembers;
+
+
+
+    public List<Super> getSupers() {
+        return superMembers;
+    }
+
+    public void setSupers(List<Super> superMembers) {
+        this.superMembers = superMembers;
+    }
 
     public int getOrganizationId() {
         return organizationId;
