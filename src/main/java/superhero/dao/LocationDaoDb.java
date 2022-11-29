@@ -56,7 +56,7 @@ public class LocationDaoDb implements LocationDao {
     @Override
     public void updateLocation(Location location) {
         final String UPDATE_LOCATION = "UPDATE location SET locationName = ?, locationDescription = ?, locationAddress = ?, locationState = ?, locationCity = ?, locationZip = ?, locationLatLat = ?, locationLong = ? "
-                + "WHERE id = ?";
+                + "WHERE locationId = ?";
         jdbc.update(UPDATE_LOCATION,
                 location.getLocationName(),
                 location.getLocationDescription(),
