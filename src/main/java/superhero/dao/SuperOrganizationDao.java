@@ -17,7 +17,4 @@ public interface SuperOrganizationDao {
 
     void deleteSuperOrganizationById(int superOrganizationId);
 
-    List<Super> getSuperOrganizationForSuper(Super superHero);
-
-
 }
