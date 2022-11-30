@@ -1,7 +1,8 @@
 package superhero.model;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
+
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import java.util.Objects;
 
 public class Super {
@@ -18,8 +19,6 @@ public class Super {
     @Size(max = 30, message = "Description must be fewer than 30 characters")
     String superDescription;
 
-    @NotBlank(message = "Is a hero must not be blank")
-    @Size( message = "Is a hero must be True(1) or False(0).")
     boolean isSuper;
 
     public int getSuperId() {

@@ -54,6 +54,18 @@
 package superhero.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.Valid;
+import jakarta.validation.Validation;
+import jakarta.validation.Validator;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -78,11 +90,13 @@ import superhero.model.Super;
 @Controller
 @RequestMapping("/super-people")
 public class SuperPersonController {
-    @Autowired
-    SuperDao superDao;
 
-    @Autowired
-    PowerDao powerDao;
+   Set<ConstraintViolation<Super>> violations = new HashSet<>();
+   @Autowired
+   SuperDao superDao;
+   
+   @Autowired
+   PowerDao powerDao;
 
     @GetMapping
     public String getSuperPeople(Model model) {
@@ -90,47 +104,58 @@ public class SuperPersonController {
         List<Power> powers = powerDao.getAllPowers();
         model.addAttribute("powers", powers);
         model.addAttribute("superPeople", supers);
+        model.addAttribute("errors", violations);
         return "Who";
     }
 
     @PostMapping
-    public String createSuperPerson(Super superPerson, HttpServletRequest request, Model model) {
+    public String createSuperPerson(Super superPerson, HttpServletRequest request) {
         final boolean isHero = Boolean.parseBoolean(request.getParameter("isHero"));
         final Power power = powerDao.getPowerById(Integer.parseInt(request.getParameter("powerId")));
-        return "redirect:/Who";
+        superPerson.setIsSuper(isHero);
+        superPerson.setPower(power);
+        Validator validate = Validation.buildDefaultValidatorFactory().getValidator();
+        violations = validate.validate(superPerson);
+       
+       if (violations.isEmpty()) {
+           superDao.addSuper(superPerson);
+       }
+        
+       return "redirect:/super-people";
+    }
+    
+    @PostMapping("edit")
+    public String editSuperPerson(Super superPerson, HttpServletRequest request, Model model) {
+
+        final boolean isHero = Boolean.parseBoolean(request.getParameter("isHero"));
+        final Power power = powerDao.getPowerById(Integer.parseInt(request.getParameter("powerId")));
+        superPerson.setIsSuper(isHero);
+        superPerson.setPower(power);
+        Validator validate = Validation.buildDefaultValidatorFactory().getValidator();
+        violations = validate.validate(superPerson);
+       
+       if (!violations.isEmpty()) {
+           return "redirect:/super-people/edit?id=" + superPerson.getSuperId();
+       }
+        superDao.updateSuper(superPerson);
+        return "redirect:/super-people";
+    }
+    
+    @GetMapping("edit")
+    public String updateSuperPerson(Integer id, Model model) {
+        Super superPerson = superDao.getSuperById(id);
+        final List<Power> powers = powerDao.getAllPowers();
+        model.addAttribute("superPerson", superPerson);
+        model.addAttribute("powers", powers);
+        model.addAttribute("errors", violations);
+        return "EditSuperPerson";
+    }
+    
+    @GetMapping("delete")
+    public String deleteSuperPerson(Integer id) {
+        superDao.deleteSuperById(id);
+        return "redirect:/super-people";
     }
 
-    @GetMapping("/{id}")
-    public String getSuperPerson(@PathVariable int id) {
-        return "NOT IMPLEMENTED: Get specific super person";
-    }
-
-    @PutMapping("/{id}")
-    public String updateSuperPerson(@PathVariable int id) {
-        return "NOT IMPLEMENTED: Update specific super person";
-    }
-
-    @DeleteMapping("/{id}")
-    public String deleteSuperPerson(@PathVariable int id) {
-        return "NOT IMPLEMENTED: Delete specific super person";
-    }
-
-    //TEST METHODS
-    private List<Power> testPowerList() {
-        List<Power> powers = new ArrayList<>();
-        Power testPow1 = new Power();
-        testPow1.setPowerId(1);
-        testPow1.setPowerDescription("Super Strength");
-        Power testPow2 = new Power();
-        testPow2.setPowerId(2);
-        testPow2.setPowerDescription("Invisibility");
-        Power testPow3 = new Power();
-        testPow3.setPowerId(3);
-        testPow3.setPowerDescription("Omniscence");
-        powers.add(testPow1);
-        powers.add(testPow2);
-        powers.add(testPow3);
-        return powers;
-    }
 }
 
