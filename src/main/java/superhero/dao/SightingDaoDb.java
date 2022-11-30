@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import superhero.model.Location;
 import superhero.model.Sighting;
+import superhero.model.Super;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -28,6 +29,12 @@ public class SightingDaoDb implements SightingDao {
         } catch (DataAccessException ex) {
             return null;
         }
+    }
+
+    private Super getSuperForSighting(Sighting sighting) {
+        final String SELECT_SUPER_FOR_SIGHTING = "SELECT s. * FROM superperson s "
+                + "JOIN sightinglocation si ON s.id = si.superId WHERE si.id = ?";
+        return jdbcTemplate.queryForObject(SELECT_SUPER_FOR_SIGHTING, new SuperDaoDb.SuperMapper(), sighting.getSightingId());
     }
 
     private Location getLocationForSighting(int locationId){

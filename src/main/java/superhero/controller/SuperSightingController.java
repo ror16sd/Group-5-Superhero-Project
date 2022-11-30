@@ -62,13 +62,13 @@ public class SuperSightingController {
     
     @PostMapping("addSighting")
     public String createSuperSighting( HttpServletRequest request) {
-//        String sightingLocation = request.getParameter("locationId");
-//        String sightingSuper = request.getParameter("superId");
-//        Timestamp sightingDate = request.getParameter(sightingDate);
-//
-//        Sighting sighting = new Sighting();
-//        sighting.setSightingId(sighting.getSightingId());
-//        sighting.setSightingDate(sightingDate);
+        String sightingSuper = request.getParameter("superId");
+        String locationId = request.getParameter("locationId");
+        String date = request.getParameter("date");
+
+
+        sighting.setSightingId(sighting.getSightingId());
+        sighting.setSightingDate(sightingDate);
 
 
 
