@@ -25,6 +25,7 @@ import superhero.model.Super;
 
 import java.sql.Time;
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -61,18 +62,15 @@ public class SuperSightingController {
     }
     
     @PostMapping("addSighting")
-    public String createSuperSighting( HttpServletRequest request) {
-        String sightingSuper = request.getParameter("superId");
+    public String createSuperSighting(Sighting sighting, HttpServletRequest request) {
+        String sightingSuperId = request.getParameter("superId");
         String locationId = request.getParameter("locationId");
         String date = request.getParameter("date");
 
+        sighting.setSightingSuper(superDao.getSuperById(Integer.parseInt(sightingSuperId)));
+        sighting.setSightingLocation(locationDao.getLocationById(Integer.parseInt(locationId)));
 
-        sighting.setSightingId(sighting.getSightingId());
-        sighting.setSightingDate(sightingDate);
-
-
-
-        return "NOT IMPLEMENTED: Create super sighting";
+        return "redirect:/Sighting";
     }
     
     @GetMapping("/{id}")

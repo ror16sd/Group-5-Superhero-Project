@@ -3,6 +3,7 @@ package superhero.dao;
 import superhero.model.Location;
 import superhero.model.Sighting;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 public interface SightingDao {
@@ -15,4 +16,5 @@ public interface SightingDao {
     void deleteSightingById(int sightingId);
 
     List<Sighting> getSightingsForLocation(Location location);
+
 }
