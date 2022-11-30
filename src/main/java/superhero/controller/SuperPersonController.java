@@ -6,6 +6,7 @@ package superhero.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.ConstraintViolation;
+import jakarta.validation.Valid;
 import jakarta.validation.Validation;
 import jakarta.validation.Validator;
 import java.util.ArrayList;
@@ -70,10 +71,17 @@ public class SuperPersonController {
     
     @PostMapping("edit")
     public String editSuperPerson(Super superPerson, HttpServletRequest request, Model model) {
+
         final boolean isHero = Boolean.parseBoolean(request.getParameter("isHero"));
         final Power power = powerDao.getPowerById(Integer.parseInt(request.getParameter("powerId")));
         superPerson.setIsSuper(isHero);
         superPerson.setPower(power);
+        Validator validate = Validation.buildDefaultValidatorFactory().getValidator();
+        violations = validate.validate(superPerson);
+       
+       if (!violations.isEmpty()) {
+           return "redirect:/super-people/edit?id=" + superPerson.getSuperId();
+       }
         superDao.updateSuper(superPerson);
         return "redirect:/super-people";
     }
@@ -89,6 +97,7 @@ public class SuperPersonController {
         final List<Power> powers = powerDao.getAllPowers();
         model.addAttribute("superPerson", superPerson);
         model.addAttribute("powers", powers);
+        model.addAttribute("errors", violations);
         return "EditSuperPerson";
     }
     
