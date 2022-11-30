@@ -25,9 +25,9 @@ VALUES
 ('Justice League', 'where the good guys hang out', 4);
 
 
-Insert into sightingLocation(sightingDate, locationId, superId)
+Insert into sightingLocation(date, locationId, superId)
 VALUES
-('2022-11-11 13:23:44', 1, 1);
+('2022-11-11', 1, 1);
 
 Insert into super_Organization(superId, organizationId)
 VALUES
