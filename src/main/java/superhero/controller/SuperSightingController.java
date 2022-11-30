@@ -4,6 +4,7 @@
  */
 package superhero.controller;
 
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,9 +18,13 @@ import org.springframework.web.bind.annotation.RestController;
 import superhero.dao.LocationDao;
 import superhero.dao.SightingDao;
 import superhero.dao.SuperDao;
+import superhero.model.Location;
 import superhero.model.Power;
 import superhero.model.Sighting;
+import superhero.model.Super;
 
+import java.sql.Time;
+import java.sql.Timestamp;
 import java.util.List;
 
 /**
@@ -42,14 +47,31 @@ public class SuperSightingController {
     @GetMapping
     public String getSuperSightings(Model model) {
 
+//        List<Sighting> sightings = sightingDao.getAllSightings();
+//        model.addAttribute("sightings", sightings);
+
         List<Sighting> sightings = sightingDao.getAllSightings();
+        List<Super> superheroes = superDao.getAllSupers();
+        List<Location> locations = locationDao.getAllLocations();
         model.addAttribute("sightings", sightings);
+        model.addAttribute("superheroes", superheroes);
+        model.addAttribute("locations", locations);
 
         return "Sighting";
     }
     
-    @PostMapping
-    public String createSuperSighting() {
+    @PostMapping("addSighting")
+    public String createSuperSighting( HttpServletRequest request) {
+//        String sightingLocation = request.getParameter("locationId");
+//        String sightingSuper = request.getParameter("superId");
+//        Timestamp sightingDate = request.getParameter(sightingDate);
+//
+//        Sighting sighting = new Sighting();
+//        sighting.setSightingId(sighting.getSightingId());
+//        sighting.setSightingDate(sightingDate);
+
+
+
         return "NOT IMPLEMENTED: Create super sighting";
     }
     
