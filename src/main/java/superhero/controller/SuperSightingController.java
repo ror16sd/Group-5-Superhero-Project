@@ -4,7 +4,9 @@
  */
 package superhero.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,6 +14,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import superhero.dao.LocationDao;
+import superhero.dao.SightingDao;
+import superhero.dao.SuperDao;
+import superhero.model.Power;
+import superhero.model.Sighting;
+
+import java.util.List;
 
 /**
  *
@@ -20,9 +29,22 @@ import org.springframework.web.bind.annotation.RestController;
 @Controller
 @RequestMapping("/super-sightings")
 public class SuperSightingController {
+
+    @Autowired
+    SightingDao sightingDao;
+
+    @Autowired
+    SuperDao superDao;
+
+    @Autowired
+    LocationDao locationDao;
     
     @GetMapping
-    public String getSuperSightings() {
+    public String getSuperSightings(Model model) {
+
+        List<Sighting> sightings = sightingDao.getAllSightings();
+        model.addAttribute("sightings", sightings);
+
         return "Sighting";
     }
     
