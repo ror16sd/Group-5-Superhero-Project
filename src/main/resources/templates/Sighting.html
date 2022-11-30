@@ -152,8 +152,8 @@ xmlns="http://www.w3.org/1999/xhtml">
                         <td th:text="${sighting.sightingLocation.locationId}">Location ID</td>
                         <td th:text="${sighting.sightingSuper.superId}">Super ID</td>
 
-                        <td><a href="#" th:href="@{/editSighting(id=${sighting.sightingId})}">Edit</a></td>
-                        <td><a href="#" th:href="@{/deleteSighting(id=${sighting.sightingId})}">Delete</a></td>
+                        <td><a href="#" th:href="@{super-sightings/editSighting(sightingId=${sighting.sightingId})}">Edit</a></td>
+                        <td><a href="#" th:href="@{super-sightings/deleteSighting(sightingId=${sighting.sightingId})}">Delete</a></td>
                     </tr>
                 </tbody>
             </table>

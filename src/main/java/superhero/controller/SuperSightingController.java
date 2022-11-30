@@ -94,7 +94,7 @@ public class SuperSightingController {
         List<Super> superheroes = superDao.getAllSupers();
         List<Location> locations = locationDao.getAllLocations();
         model.addAttribute("sighting", sighting);
-        model.addAttribute("superheros", superheroes);
+        model.addAttribute("superheroes", superheroes);
         model.addAttribute("locations", locations);
 
         return "editSighting";
@@ -136,8 +136,8 @@ public class SuperSightingController {
     }
     
     @GetMapping("deleteSighting")
-    public String deleteSuperSighting(@PathVariable int sightingId) {
+    public String deleteSuperSighting(Integer sightingId) {
         sightingDao.deleteSightingById(sightingId);
-        return "redirect:/Sighting";
+        return "redirect:/super-sightings";
     }
 }

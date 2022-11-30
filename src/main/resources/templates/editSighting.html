@@ -53,18 +53,18 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
         <span class="h3">Add Sighting</span>
     </div>
     <div class="col-7 text-center m-3">
-        <form action="addSighting" method="POST">
+        <form action="/super-sightings/editSighting" method="POST">
             <div class="form-group row">
                 <label for="superheroes" class="col-3 col-form-label">
                     Superhero Name</label>
                 <div class="col-9">
-                    <select multiple id="superheroes" name="superheroId"
+                    <select id="superheroes" name="superId"
                             class="form-control" >
                         <option th:each="super : ${superheroes}"
-                                th:text="${super.superId}"
-                                th:text="${super.superName}"
-                                th:selected="${sighting.super}"
-                                >
+                                th:value="${super.superId}"
+                                th:text="${super.superName}">
+<!--                                th:selected="${sighting.sightingSuper.superId == super.superId}"-->
+
 
                             Superhero Name</option>
                     </select>
@@ -74,13 +74,13 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                 <label for="location" class="col-3 col-form-label">
                     Location ID</label>
                 <div class="col-9">
-                    <select multiple id="location" name="locationId"
+                    <select id="location" name="locationId"
                             class="form-control" >
                         <option th:each="location : ${locations}"
-                                th:text="${location.locationId}"
-                                th:text="${location.locationName}"
-                                th:selected="${sighting.location}"
-                        >
+                                th:value="${location.locationId}"
+                                th:text="${location.locationName}">
+<!--                                th:selected="${sighting.sightingLocation.locationId == location.locationId}"-->
+
                             Location ID</option>
                     </select>
                 </div>
@@ -90,7 +90,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                     Date</label>
                 <div class="col-9">
                     <input type="date" name="date" id="date" class="form-control"
-                           th:value="${sighting.date}" />
+                    />
                     <!--                        <div th:if="${#fields.hasErrors('location.date')}">-->
                     <!--                            <p th:each="error : ${#fields.errors('location.date')}" class="alert alert-danger"-->
                     <!--                               th:text="${error}"> Bad date</p>-->
