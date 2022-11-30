@@ -5,6 +5,7 @@
 package superhero.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
 import jdk.jfr.Frequency;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,7 +16,6 @@ import superhero.dao.PowerDao;
 import superhero.dao.SuperDao;
 import superhero.model.Power;
 
-import javax.validation.Valid;
 import java.net.BindException;
 import java.util.List;
 

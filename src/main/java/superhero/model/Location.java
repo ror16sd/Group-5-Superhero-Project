@@ -1,7 +1,7 @@
 package superhero.model;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import java.util.Objects;
 
 public class Location {

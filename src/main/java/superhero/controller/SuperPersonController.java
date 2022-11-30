@@ -5,11 +5,17 @@
 package superhero.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.Validation;
+import jakarta.validation.Validator;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,6 +35,7 @@ import superhero.model.Super;
 @Controller
 @RequestMapping("/super-people")
 public class SuperPersonController {
+   Set<ConstraintViolation<Super>> violations = new HashSet<>();
    @Autowired
    SuperDao superDao;
    
@@ -41,17 +48,24 @@ public class SuperPersonController {
         List<Power> powers = powerDao.getAllPowers();
         model.addAttribute("powers", powers);
         model.addAttribute("superPeople", supers);
+        model.addAttribute("errors", violations);
         return "Who";
     }
     
     @PostMapping
-    public String createSuperPerson(Super superPerson, HttpServletRequest request, Model model) {
+    public String createSuperPerson(Super superPerson, HttpServletRequest request) {
         final boolean isHero = Boolean.parseBoolean(request.getParameter("isHero"));
         final Power power = powerDao.getPowerById(Integer.parseInt(request.getParameter("powerId")));
         superPerson.setIsSuper(isHero);
         superPerson.setPower(power);
-        superDao.addSuper(superPerson);
-        return "redirect:/super-people";
+        Validator validate = Validation.buildDefaultValidatorFactory().getValidator();
+        violations = validate.validate(superPerson);
+       
+       if (violations.isEmpty()) {
+           superDao.addSuper(superPerson);
+       }
+        
+       return "redirect:/super-people";
     }
     
     @PostMapping("edit")
