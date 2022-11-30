@@ -11,6 +11,7 @@ import superhero.model.Sighting;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.List;
 
 @Repository
@@ -20,7 +21,7 @@ public class SightingDaoDb implements SightingDao {
     JdbcTemplate jdbcTemplate;
 
     @Override
-    public Sighting setSightingById(int sightingId) {
+    public Sighting getSightingById(int sightingId) {
         try {
             final String SELECT_SIGHTING_BY_ID = "SELECT * FROM sightingLocation WHERE id = ?";
             Sighting sighting = jdbcTemplate.queryForObject(SELECT_SIGHTING_BY_ID, new SightingMapper(), sightingId);
@@ -30,9 +31,11 @@ public class SightingDaoDb implements SightingDao {
         }
     }
 
-    private Location getLocationForSighting(int locationId){
-        //TODO need to do join query
-       return null;
+    private Location getLocationForSighting(int locationId) {
+        final String SELECT_LOCATION_FOR_SIGHTING_BY_ID = "SELECT l * FROM location l " +
+                "JOIN sightingLocation s ON s.locationId = l.locationId WHERE s.sightingId = ?";
+        return jdbcTemplate.queryForObject(SELECT_LOCATION_FOR_SIGHTING_BY_ID, new LocationDaoDb.LocationMapper(), locationId);
+
     }
 
     @Override
@@ -52,20 +55,21 @@ public class SightingDaoDb implements SightingDao {
                 sighting.getSightingLocation(),
                 sighting.getSightingSuper());
 
-        int newSightingId = jdbcTemplate.queryForObject("SELECT LAST_INSERT_ID", Integer.class);
+        int newSightingId = jdbcTemplate.queryForObject("SELECT LAST_INSERT_ID()", Integer.class);
         sighting.setSightingId(newSightingId);
         return sighting;
     }
 
     @Override
+    @Transactional
     public void updateSighting(Sighting sighting) {
-    final String UPDATE_SIGHTING = "UPDATE sightinglocation SET sightingDate = ?, locationId = ?, superId = ?)"
-            + "WHERE sightingId = ?";
-    jdbcTemplate.update(UPDATE_SIGHTING,
-            sighting.getSightingDate(),
-            sighting.getSightingLocation().getLocationId(),
-            sighting.getSightingSuper().getSuperId(),
-            sighting.getSightingId());
+        final String UPDATE_SIGHTING = "UPDATE sightinglocation SET sightingDate = ?, locationId = ?, superId = ?)"
+                + "WHERE sightingId = ?";
+        jdbcTemplate.update(UPDATE_SIGHTING,
+                sighting.getSightingDate(),
+                sighting.getSightingLocation().getLocationId(),
+                sighting.getSightingSuper().getSuperId(),
+                sighting.getSightingId());
     }
 
     @Override
@@ -84,8 +88,8 @@ public class SightingDaoDb implements SightingDao {
         return sighting;
     }
 
-    void associateLocationsForSighting(List<Sighting> sightings){
-        for (Sighting sighting : sightings){
+    void associateLocationsForSighting(List<Sighting> sightings) {
+        for (Sighting sighting : sightings) {
             sighting.setSightingLocation(getLocationForSighting(sighting.getSightingId()));
         }
     }
@@ -100,3 +104,4 @@ public class SightingDaoDb implements SightingDao {
         }
     }
 }
+

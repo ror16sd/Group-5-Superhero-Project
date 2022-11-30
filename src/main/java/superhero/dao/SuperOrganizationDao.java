@@ -1,5 +1,6 @@
 package superhero.dao;
 
+import superhero.model.Location;
 import superhero.model.Super;
 import superhero.model.SuperOrganization;
 
@@ -16,5 +17,9 @@ public interface SuperOrganizationDao {
     void updateSuperOrganization(SuperOrganization superOrganization);
 
     void deleteSuperOrganizationById(int superOrganizationId);
+
+    List<SuperOrganization> getOrganizationsForSuper(Super superPerson);
+
+    List<SuperOrganization> getOrganizationsForLocation(Location location);
 
 }
