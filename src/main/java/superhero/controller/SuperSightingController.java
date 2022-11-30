@@ -69,7 +69,9 @@ public class SuperSightingController {
 
         sighting.setSightingSuper(superDao.getSuperById(Integer.parseInt(sightingSuperId)));
         sighting.setSightingLocation(locationDao.getLocationById(Integer.parseInt(locationId)));
+        sighting.setDate(LocalDate.parse(date));
 
+        sightingDao.addSighting(sighting);
         return "redirect:/Sighting";
     }
     
