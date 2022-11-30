@@ -63,11 +63,37 @@ xmlns="http://www.w3.org/1999/xhtml">
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label for="description" class="col-3 col-form-label">
+                    <label for="organizationDescription" class="col-3 col-form-label">
                         Description</label>
                     <div class="col-9">
-                        <input type="text" name="description" 
-                               id="description" class="form-control"/>
+                        <input type="text" name="organizationDescription" 
+                               id="organizationDescription" class="form-control"/>
+                    </div>
+                </div>
+                <div class="form-group row">
+                        <label for="location" class="col-3 col-form-label">
+                            Location</label>
+                        <div class="col-9">
+
+                            <select id="location" name="locationId" class="form-control" >
+                                <option th:each="location : ${locations}" 
+                                        th:value="${location.locationId}" 
+                                        th:text="${location.locationName}">
+                                    Location Name</option>
+                            </select>
+                        </div>
+                </div>
+                <div class="form-group row">
+                    <label for="superPeople" class="col-3 col-form-label">
+                        Super Members</label>
+                    <div class="col-9">
+                        <select multiple id="superPeople" name="superId" 
+                                class="form-control" >
+                            <option th:each="super : ${superPeople}" 
+                                    th:value="${super.superId}" 
+                                    th:text="${super.superName}">
+                                Names of Supers</option>
+                        </select>
                     </div>
                 </div>
                 <button type="submit" class="btn btn-primary">Add Organization</button>
@@ -81,18 +107,24 @@ xmlns="http://www.w3.org/1999/xhtml">
                     <tr>
                         <th>ID</th>
                         <th>Organization</th>
+<!--                        <th>Location</th>-->
                         <th>Description</th>
+<!--                        <th>Total Members</th>-->
+                        <th>Details</th>
                         <th>Edit</th>
                         <th>Delete</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr th:each="student : ${students}">
-                        <td th:text="${student.id}">Organization ID</td>
-                        <td th:text="${student.firstName}">Organization Name</td>
-                        <td th:text="${student.lastName}">Organization Description</td>
-                        <td><a href="#" th:href="@{/editStudent(id=${student.id})}">Edit</a></td>
-                        <td><a href="#" th:href="@{/deleteStudent(id=${student.id})}">Delete</a></td>
+                    <tr th:each="organization : ${organizations}">
+                        <td th:text="${organization.organizationId}">Organization ID</td>
+                        <td th:text="${organization.organizationName}">Organization Name</td>
+<!--                        <td th:text="${organization.location.locationName}">Location Name</td>-->
+                        <td th:text="${organization.organizationDescription}">Organization Description</td>
+<!--                        <td th:text="${#lists.size(organization.superMembers)}">Total Members</td>-->
+                        <td><a href="#" th:href="@{/super-organizations/details(id=${organization.organizationId})}">Details</a></td>
+                        <td><a href="#" th:href="@{/super-organizations/edit(id=${organization.organizationId})}">Edit</a></td>
+                        <td><a href="#" th:href="@{/super-organizations/delete(id=${organization.organizationId})}">Delete</a></td>
                     </tr>
                 </tbody>
             </table>

@@ -5,6 +5,7 @@
 package superhero.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
 import jdk.jfr.Frequency;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,13 +16,12 @@ import superhero.dao.PowerDao;
 import superhero.dao.SuperDao;
 import superhero.model.Power;
 
-import javax.validation.Valid;
 import java.net.BindException;
 import java.util.List;
 
 /**
  *
- // * @author ciruf
+// * @author ciruf
  */
 @Controller
 @RequestMapping("/super-powers")
@@ -40,49 +40,31 @@ public class SuperPowerController {
         model.addAttribute("powers", powers);
         return "SuperPower";
     }
-//
-//    @PostMapping
-//    public String createSuperPower(Power power, HttpServletRequest request) {
-//        powerDao.addPower(power);
-//        return "redirect:/SuperPower";
-//
-//    }
-
 
     @PostMapping
-    public String createSuperPower(HttpServletRequest request) {
-        String powerDescription;
-        Power power = new Power();
-
-        powerDescription = request.getParameter("name");
-
-        powerDao.addPower(power);
+    public String createSuperPower(Power power, HttpServletRequest request) {
+//        powerDao.addPower(power);
         return "redirect:/SuperPower";
+
     }
-
-
-
-
-
-
 
     @GetMapping("/{id}")
     public String getSuperPower(@PathVariable int id) {
-        Power power = powerDao.getPowerById(id);
+//        Power power = powerDao.getPowerById(id);
         return "SuperPower";
     }
 
 
     @GetMapping("edit")
     public String editPower(Integer id, Model model) {
-        Power power = powerDao.getPowerById(id);
-        model.addAttribute("power", power);
+//        Power power = powerDao.getPowerById(id);
+//        model.addAttribute("power", power);
         return "editPower";
     }
 
 
 
-    //    @PutMapping("/{id}")
+//    @PutMapping("/{id}")
 //    public String updateSuperPower(@PathVariable int id, @RequestBody Power power) {
 //        Power updatePower = powerDao.getPowerById(id);
 //        updatePower.setPowerId(power.getPowerId());
