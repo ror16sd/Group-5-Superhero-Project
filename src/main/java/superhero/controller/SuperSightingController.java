@@ -62,11 +62,12 @@ public class SuperSightingController {
     }
     
     @PostMapping("addSighting")
-    public String createSuperSighting(Sighting sighting, HttpServletRequest request) {
+    public String createSuperSighting(HttpServletRequest request) {
         String sightingSuperId = request.getParameter("superId");
         String locationId = request.getParameter("locationId");
         String date = request.getParameter("date");
 
+        Sighting sighting = new Sighting();
         sighting.setSightingSuper(superDao.getSuperById(Integer.parseInt(sightingSuperId)));
         sighting.setSightingLocation(locationDao.getLocationById(Integer.parseInt(locationId)));
         sighting.setDate(LocalDate.parse(date));

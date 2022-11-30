@@ -47,8 +47,8 @@ primary key (superId, organizationId),
 
 Create Table sightingLocation(
 sightingId int not null primary key auto_increment,
-sightingDate timestamp not null default current_timestamp,
+date date not null,
 locationId int,
 superId int,
-Constraint foreign key (superId) references superPerson(superId),
-Constraint foreign key (locationId) references location(locationId));
+foreign key (superId) references superPerson(superId),
+foreign key (locationId) references location(locationId));

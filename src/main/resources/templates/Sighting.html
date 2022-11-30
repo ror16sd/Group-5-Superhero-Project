@@ -146,9 +146,9 @@ xmlns="http://www.w3.org/1999/xhtml">
                 <tbody>
                     <tr th:each="sighting : ${sightings}">
                         <td th:text="${sighting.sightingId}">Sighting ID</td>
-                        <td th:text="${sighting.sightingDate}">Sighting Date</td>
-                        <td th:text="${sighting.sightingLocation}">Location ID</td>
-                        <td th:text="${sighting.sightingSuper}">Super ID</td>
+                        <td th:text="${sighting.date}">Sighting Date</td>
+<!--                        <td th:text="${sighting.sightingLocation.locationId}">Location ID</td>-->
+<!--                        <td th:text="${sighting.sightingSuper.superId}">Super ID</td>-->
 
                         <td><a href="#" th:href="@{/editSighting(id=${sighting.sightingId})}">Edit</a></td>
                         <td><a href="#" th:href="@{/deleteSighting(id=${sighting.sightingId})}">Delete</a></td>
