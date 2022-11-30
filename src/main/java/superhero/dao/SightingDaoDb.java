@@ -48,7 +48,7 @@ public class SightingDaoDb implements SightingDao {
     @Transactional
     public Sighting addSighting(Sighting sighting) {
         //TODO: should the model be changed?
-        final String INSERT_SIGHTING = "INSERT INTO sightinglocation (sightingDate, locationId, superId) "
+        final String INSERT_SIGHTING = "INSERT INTO sightinglocation (date , locationId, superId) "
                 + "VALUES(?,?,?)";
         jdbcTemplate.update(INSERT_SIGHTING,
                 sighting.getSightingDate(),
@@ -63,7 +63,7 @@ public class SightingDaoDb implements SightingDao {
     @Override
     @Transactional
     public void updateSighting(Sighting sighting) {
-        final String UPDATE_SIGHTING = "UPDATE sightinglocation SET sightingDate = ?, locationId = ?, superId = ?)"
+        final String UPDATE_SIGHTING = "UPDATE sightinglocation SET date = ?, locationId = ?, superId = ?)"
                 + "WHERE sightingId = ?";
         jdbcTemplate.update(UPDATE_SIGHTING,
                 sighting.getSightingDate(),
@@ -99,7 +99,7 @@ public class SightingDaoDb implements SightingDao {
         public Sighting mapRow(ResultSet rs, int index) throws SQLException {
             Sighting sighting = new Sighting();
             sighting.setSightingId(rs.getInt("sightingId"));
-            sighting.setSightingDate(rs.getTimestamp("sightingDate"));
+            sighting.setSightingDate(rs.getDate("date").toLocalDate());
             return sighting;
         }
     }

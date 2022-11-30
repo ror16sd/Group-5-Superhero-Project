@@ -7,6 +7,8 @@ import superhero.dao.*;
 import superhero.model.*;
 
 import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 class SightingDaoDbTest {
-
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     @Autowired
     LocationDao locationDao;
     @Autowired
@@ -72,7 +74,7 @@ class SightingDaoDbTest {
 
         Sighting sighting = new Sighting();
         sighting.setSightingLocations(locations);
-        sighting.setSightingDate(Timestamp.valueOf("2022-11-11 03:25:45"));
+        sighting.setSightingDate(LocalDate.parse("2022-11-11",formatter));
         sighting.setSupers(supers);
         sighting = sightingDao.addSighting(sighting);
 
@@ -85,13 +87,13 @@ class SightingDaoDbTest {
 
         Sighting sighting1 = new Sighting();
         sighting1.setSightingLocations(locations);
-        sighting1.setSightingDate(Timestamp.valueOf("2022-11-29 12:45:55"));
+        sighting1.setSightingDate(LocalDate.parse("2022-11-29 12:45:55",formatter));
         sighting1.setSupers(supers);
         sighting1 = sightingDao.addSighting(sighting1);
 
         Sighting sighting2 = new Sighting();
         sighting2.setSightingLocations(locations);
-        sighting2.setSightingDate(Timestamp.valueOf("2022-11-28 10:30:45"));
+        sighting2.setSightingDate(LocalDate.parse("2022-11-28 10:30:45",formatter));
         sighting2.setSupers(supers);
         sighting2 = sightingDao.addSighting(sighting2);
 
@@ -108,7 +110,7 @@ class SightingDaoDbTest {
 //
 //        Sighting sighting1 = new Sighting();
 //        sighting1.setSightingLocations(locations);
-//        sighting1.setSightingDate(Timestamp.valueOf("2022-11-29 12:45:55"));
+//        sighting1.setSightingDate(LocalDate.parse2022-11-29 12:45:55",formatter));
 //        sighting1.setSupers(supers);
 //        sighting1 = sightingDao.addSighting(sighting1);
 //
@@ -117,7 +119,7 @@ class SightingDaoDbTest {
 //
 //        Sighting sighting2 = new Sighting();
 //        sighting2.setSightingLocations(locations);
-//        sighting2.setSightingDate(Timestamp.valueOf("2022-11-28 10:30:45"));
+//        sighting2.setSightingDate(LocalDate.parse"2022-11-28 10:30:45",formatter));
 //        sighting2.setSupers(supers);
 //        sighting2 = sightingDao.addSighting(sighting2);
 //
@@ -155,7 +157,7 @@ class SightingDaoDbTest {
 //        location = locationDao.addLocation(location);
 //
 //        Sighting sighting = new Sighting();
-//        sighting.setSightingDate(Timestamp.valueOf("2022-11-15 04:30:55"));
+//        sighting.setSightingDate(LocalDate.parse"2022-11-15 04:30:55",formatter));
 //        sighting.setSightingLocation(location);
 //        sighting.setSightingSuper(superPerson);
 //        sighting = sightingDao.addSighting(sighting);
@@ -209,13 +211,13 @@ class SightingDaoDbTest {
         supers.add(superPerson);
 
         Sighting sighting = new Sighting();
-        sighting.setSightingDate(Timestamp.valueOf("2022-11-15 04:30:55"));
+        sighting.setSightingDate(LocalDate.parse("2022-11-15",formatter));
         sighting.setSightingLocation(location);
         sighting.setSupers(supers);
         sighting = sightingDao.addSighting(sighting);
 
         Sighting sighting2 = new Sighting();
-        sighting2.setSightingDate(Timestamp.valueOf("2022-11-15 04:30:55"));
+        sighting2.setSightingDate(LocalDate.parse("2022-11-15",formatter));
         sighting2.setSightingLocation(location2);
         sighting2.setSupers(supers);
         sighting2 = sightingDao.addSighting(sighting2);
