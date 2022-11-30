@@ -46,22 +46,23 @@ xmlns="http://www.w3.org/1999/xhtml">
     <div class="container">
         <div class="row m-4">
             <div class="col text-center border border-dark">
-                <h1>Who was Sighted?</h1>
+                <h1>Ooooh THAT'S who you saw!</h1>
             </div>
         </div>
       
         
         <div class="row m-4 border border-dark">
             <div class="col-3 text-center m-3">
-                <span class="h3">Add Superhero or Supervillain</span>
+                <span class="h3">Edit Superhero or Supervillain</span>
             </div>
             <div class="col-7 text-center m-3">
-                <form action="/super-people" method="POST">
+                <form action="/super-people/edit" method="POST">
                     <div class="form-group row">
+                        <input hidden type="text" name="superId" th:value="${superPerson.superId}">
                         <label for="superName" class="col-3 col-form-label">
                             Name</label>
                         <div class="col-9">
-                            <input type="text" name="superName" 
+                            <input type="text" name="superName" th:value="${superPerson.superName}"
                                    id="superName" class="form-control"/>
                         </div>
                     </div>
@@ -70,8 +71,8 @@ xmlns="http://www.w3.org/1999/xhtml">
                             Hero(yes/no)</label>
                         <div class="col-9">
                             <select id="isHero" name="isHero" class="form-control" >
-                                <option value="true">Yes</option>
-                                <option value="false">No</option>
+                                <option value="true" th:selected="${superPerson.isSuper == true}">Yes</option>
+                                <option value="false" th:selected="${superPerson.isSuper == false}">No</option>
                             </select>
                         </div>
                     </div>
@@ -83,7 +84,8 @@ xmlns="http://www.w3.org/1999/xhtml">
                                 <select id="power" name="powerId" class="form-control" >
                                     <option th:each="power : ${powers}" 
                                             th:value="${power.powerId}" 
-                                            th:text="${power.powerDescription}">
+                                            th:text="${power.powerDescription}"
+                                            th:selected="${power.powerId == superPerson.power.powerId}">
                                         Power Description</option>
                                 </select>
                             </div>
@@ -92,45 +94,16 @@ xmlns="http://www.w3.org/1999/xhtml">
                         <label for="superDescription" class="col-3 col-form-label">
                             Description</label>
                         <div class="col-9">
-                            <input type="text" name="superDescription" 
+                            <input type="text" name="superDescription" th:value="${superPerson.superDescription}"
                                id="superDescription" class="form-control"/>
                         </div>
                     </div>
-                    <button type="submit" class="btn btn-primary">Add Hero/Villain</button>
+                    <button type="submit" class="btn btn-primary">Update Hero/Villain</button>
                 </form>
             </div>
         </div>
         
-        <div class="row m-4 border border-dark">
-            <div class="col text-center m-3">
-                <table class="table table-striped">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Name</th>
-                            <th>Power</th>
-                            <th>Hero Status</th>
-                            <th>Details</th>
-                            <th>Edit</th>
-                            <th>Delete</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr th:each="super : ${superPeople}">
-                            <td th:text="${super.superId}">Super ID</td>
-                            <td th:text="${super.superName}">Hero/Villain Name</td>
-                            <td th:text="${super.power.powerDescription}">Power</td>
-                            <td th:if="${super.isSuper == true}" th:text="Hero">Hero</td>
-                            <td th:if="${super.isSuper == false}" th:text="Villain">Villain</td>
-                            <td th:text="${super.superDescription}">Description</td>
-                            <td><a href="#" th:href="@{/super-people/edit(id=${super.superId})}">Edit</a></td>
-                            <td><a href="#" th:href="@{/super-people/delete(id=${super.superId})}">Delete</a></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>   
+        
    
 
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>

@@ -48,7 +48,20 @@ public class SuperPersonController {
     public String createSuperPerson(Super superPerson, HttpServletRequest request, Model model) {
         final boolean isHero = Boolean.parseBoolean(request.getParameter("isHero"));
         final Power power = powerDao.getPowerById(Integer.parseInt(request.getParameter("powerId")));
-        return "redirect:/Who";
+        superPerson.setIsSuper(isHero);
+        superPerson.setPower(power);
+        superDao.addSuper(superPerson);
+        return "redirect:/super-people";
+    }
+    
+    @PostMapping("edit")
+    public String editSuperPerson(Super superPerson, HttpServletRequest request, Model model) {
+        final boolean isHero = Boolean.parseBoolean(request.getParameter("isHero"));
+        final Power power = powerDao.getPowerById(Integer.parseInt(request.getParameter("powerId")));
+        superPerson.setIsSuper(isHero);
+        superPerson.setPower(power);
+        superDao.updateSuper(superPerson);
+        return "redirect:/super-people";
     }
     
     @GetMapping("/{id}")
@@ -56,14 +69,19 @@ public class SuperPersonController {
         return "NOT IMPLEMENTED: Get specific super person";
     }
     
-    @PutMapping("/{id}")
-    public String updateSuperPerson(@PathVariable int id) {
-        return "NOT IMPLEMENTED: Update specific super person";
+    @GetMapping("edit")
+    public String updateSuperPerson(Integer id, Model model) {
+        Super superPerson = superDao.getSuperById(id);
+        final List<Power> powers = powerDao.getAllPowers();
+        model.addAttribute("superPerson", superPerson);
+        model.addAttribute("powers", powers);
+        return "EditSuperPerson";
     }
     
-    @DeleteMapping("/{id}")
-    public String deleteSuperPerson(@PathVariable int id) {
-        return "NOT IMPLEMENTED: Delete specific super person";
+    @GetMapping("delete")
+    public String deleteSuperPerson(Integer id) {
+        superDao.deleteSuperById(id);
+        return "redirect:/super-people";
     }
     
     //TEST METHODS
