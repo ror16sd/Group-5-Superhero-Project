@@ -86,11 +86,6 @@ public class SuperPersonController {
         return "redirect:/super-people";
     }
     
-    @GetMapping("/{id}")
-    public String getSuperPerson(@PathVariable int id) {
-        return "NOT IMPLEMENTED: Get specific super person";
-    }
-    
     @GetMapping("edit")
     public String updateSuperPerson(Integer id, Model model) {
         Super superPerson = superDao.getSuperById(id);
@@ -106,22 +101,5 @@ public class SuperPersonController {
         superDao.deleteSuperById(id);
         return "redirect:/super-people";
     }
-    
-    //TEST METHODS
-    private List<Power> testPowerList() {
-        List<Power> powers = new ArrayList<>();
-        Power testPow1 = new Power();
-        testPow1.setPowerId(1);
-        testPow1.setPowerDescription("Super Strength");
-        Power testPow2 = new Power();
-        testPow2.setPowerId(2);
-        testPow2.setPowerDescription("Invisibility");
-        Power testPow3 = new Power();
-        testPow3.setPowerId(3);
-        testPow3.setPowerDescription("Omniscence");
-        powers.add(testPow1);
-        powers.add(testPow2);
-        powers.add(testPow3);
-        return powers;
-    }
+
 }
