@@ -85,45 +85,46 @@ xmlns="http://www.w3.org/1999/xhtml">
             <span class="h3">Add Sighting</span>
         </div>
         <div class="col-7 text-center m-3">
-            <form action="addSighting" method="POST">
+            <form action="/super-sightings" method="POST">
                 <div class="form-group row">
-                    <label for="superheroes" class="col-3 col-form-label">
-                        Superhero ID</label>
+                    <label for="superheroe" class="col-3 col-form-label">
+                        Superhero Name</label>
                     <div class="col-9">
-                        <select multiple id="superheroes" name="superheroId"
+                        <select id="superheroe" name="superId"
                                 class="form-control" >
                             <option th:each="super : ${superheroes}"
-                                    th:text="${super.superId}">
+                                    th:value="${super.superId}"
+                                    th:text="${super.superName}">
 
 
-                                Superhero ID</option>
+                                Superhero Name</option>
                         </select>
                     </div>
                 </div>
                 <div class="form-group row">
                     <label for="location" class="col-3 col-form-label">
-                        Location ID</label>
+                        Location Name</label>
                     <div class="col-9">
                         <select multiple id="location" name="locationId"
                                 class="form-control" >
                             <option th:each="location : ${locations}"
-                                    th:text="${location.locationId}"
+                                    th:value="${location.locationId}"
+                                    th:text="${location.locationName}"
                                     >
-                                Location ID</option>
+                                Location Name</option>
                         </select>
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label for="date" class="col-3 col-form-label">
-                        Date</label>
+<!--                    <label for = "sightingDate">Date of Sighting</label>-->
+<!--                    <input type="date" id="sightingDate" name="sightingDate">-->
+
+                    <label for="sight_date" class="col-3 col-form-label">Date</label>
                     <div class="col-9">
-                        <input type="date" name="date" id="date" class="form-control"
-                               th:value="${'location.date'}" />
-<!--                        <div th:if="${#fields.hasErrors('location.date')}">-->
-<!--                            <p th:each="error : ${#fields.errors('location.date')}" class="alert alert-danger"-->
-<!--                               th:text="${error}"> Bad date</p>-->
-<!--                        </div>-->
+                        <input type="date" id="sight_date" name="sight_date" class="form-control"
+                               >
                     </div>
+
                 </div>
                 <button type="submit" class="btn btn-primary">Add Sighting</button>
             </form>

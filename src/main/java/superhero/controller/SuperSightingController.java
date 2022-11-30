@@ -29,6 +29,7 @@ import javax.validation.Valid;
 import java.sql.Time;
 import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 /**
@@ -68,15 +69,18 @@ public class SuperSightingController {
     public String createSuperSighting(HttpServletRequest request) {
         String sightingSuperId = request.getParameter("superId");
         String locationId = request.getParameter("locationId");
-        String date = request.getParameter("date");
+        String date = request.getParameter("sight_date");
 
         Sighting sighting = new Sighting();
         sighting.setSightingSuper(superDao.getSuperById(Integer.parseInt(sightingSuperId)));
         sighting.setSightingLocation(locationDao.getLocationById(Integer.parseInt(locationId)));
-        sighting.setDate(LocalDate.parse(date));
 
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate ld = LocalDate.parse(date, formatter);
+        sighting.setDate(ld);
         sightingDao.addSighting(sighting);
-        return "redirect:/Sighting";
+        return "redirect:/super-sightings";
     }
     
 //    @GetMapping("/{id}")

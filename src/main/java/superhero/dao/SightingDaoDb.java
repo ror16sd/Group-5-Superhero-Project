@@ -10,6 +10,7 @@ import superhero.model.Location;
 import superhero.model.Sighting;
 import superhero.model.Super;
 
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
@@ -74,14 +75,14 @@ public class SightingDaoDb implements SightingDao {
     @Transactional
     public Sighting addSighting(Sighting sighting) {
         //TODO: should the model be changed?
-        final String INSERT_SIGHTING = "INSERT INTO sightinglocation (sightingDate, locationId, superId) "
+        final String INSERT_SIGHTING = "INSERT INTO sightinglocation (date, locationId, superId) "
                 + "VALUES(?,?,?)";
         jdbcTemplate.update(INSERT_SIGHTING,
-                sighting.getDate(),
-                sighting.getSightingLocation(),
-                sighting.getSightingSuper());
+                Date.valueOf(sighting.getDate()),
+                sighting.getSightingLocation().getLocationId(),
+                sighting.getSightingSuper().getSuperId());
 
-        int newSightingId = jdbcTemplate.queryForObject("SELECT LAST_INSERT_ID", Integer.class);
+        int newSightingId = jdbcTemplate.queryForObject("SELECT LAST_INSERT_ID()", Integer.class);
         sighting.setSightingId(newSightingId);
         return sighting;
     }
