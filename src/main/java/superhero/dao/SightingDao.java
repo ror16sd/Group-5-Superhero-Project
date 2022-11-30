@@ -8,6 +8,7 @@ import java.util.List;
 
 public interface SightingDao {
     Sighting setSightingById(int sightingId);
+    Sighting getSightingById(int sightingId);
     List<Sighting> getAllSightings();
     Sighting addSighting(Sighting sighting);
 
@@ -15,6 +16,6 @@ public interface SightingDao {
 
     void deleteSightingById(int sightingId);
 
-    List<Sighting> getSightingsForLocation(Location location);
+//    List<Sighting> getSightingsForLocation(Location location);
 
 }

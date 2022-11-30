@@ -95,6 +95,7 @@ xmlns="http://www.w3.org/1999/xhtml">
                             <option th:each="super : ${superheroes}"
                                     th:text="${super.superId}">
 
+
                                 Superhero ID</option>
                         </select>
                     </div>
@@ -135,8 +136,8 @@ xmlns="http://www.w3.org/1999/xhtml">
             <table class="table table-striped">
                 <thead>
                     <tr>
-                        <th>ID</th>
-                        <th>Date</th>
+                        <th>Sighting ID</th>
+                        <th>Sighting Date</th>
                         <th>Location</th>
                         <th>Super</th>
                         <th>Edit</th>
@@ -146,9 +147,9 @@ xmlns="http://www.w3.org/1999/xhtml">
                 <tbody>
                     <tr th:each="sighting : ${sightings}">
                         <td th:text="${sighting.sightingId}">Sighting ID</td>
-                        <td th:text="${sighting.date}">Sighting Date</td>
-<!--                        <td th:text="${sighting.sightingLocation.locationId}">Location ID</td>-->
-<!--                        <td th:text="${sighting.sightingSuper.superId}">Super ID</td>-->
+                        <td th:date="${sighting.date}">Sighting Date</td>
+                        <td th:text="${sighting.sightingLocation.locationId}">Location ID</td>
+                        <td th:text="${sighting.sightingSuper.superId}">Super ID</td>
 
                         <td><a href="#" th:href="@{/editSighting(id=${sighting.sightingId})}">Edit</a></td>
                         <td><a href="#" th:href="@{/deleteSighting(id=${sighting.sightingId})}">Delete</a></td>

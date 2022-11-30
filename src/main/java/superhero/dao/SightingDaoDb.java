@@ -31,21 +31,43 @@ public class SightingDaoDb implements SightingDao {
         }
     }
 
+    @Override
+    public Sighting getSightingById(int sightingId) {
+        return null;
+    }
+
     private Super getSuperForSighting(Sighting sighting) {
         final String SELECT_SUPER_FOR_SIGHTING = "SELECT s. * FROM superperson s "
-                + "JOIN sightinglocation si ON s.id = si.superId WHERE si.id = ?";
+                + "JOIN sightinglocation si ON s.superId = si.superId WHERE si.sightingId = ?";
         return jdbcTemplate.queryForObject(SELECT_SUPER_FOR_SIGHTING, new SuperDaoDb.SuperMapper(), sighting.getSightingId());
     }
 
-    private Location getLocationForSighting(int locationId){
+    private Location getLocationForSighting(Sighting sighting){
         //TODO need to do join query
-       return null;
+
+        final String SELECT_LOCATION_FOR_SIGHTING = "SELECT l. * FROM location l "
+                + "JOIN sightinglocation si ON l.locationId = si.locationId WHERE si.sightingId = ?";
+        return jdbcTemplate.queryForObject(SELECT_LOCATION_FOR_SIGHTING, new LocationDaoDb.LocationMapper(), sighting.getSightingId());
+
+    }
+
+    private void addSuperAndLocationToSightings(List<Sighting> sightings) {
+        for (Sighting sighting :sightings) {
+            sighting.setSightingSuper(getSuperForSighting(sighting));
+            sighting.setSightingLocation(getLocationForSighting(sighting));
+        }
     }
 
     @Override
     public List<Sighting> getAllSightings() {
-        final String GET_ALL_SIGHTINGS = "SELECT * FROM sightinglocation";
-        return jdbcTemplate.query(GET_ALL_SIGHTINGS, new SightingMapper());
+//        final String GET_ALL_SIGHTINGS = "SELECT * FROM sightinglocation";
+//        return jdbcTemplate.query(GET_ALL_SIGHTINGS, new SightingMapper());
+        final String SELECT_ALL_SIGHTINGS = "SELECT * FROM sightinglocation";
+        List<Sighting> sightings = jdbcTemplate.query(SELECT_ALL_SIGHTINGS, new SightingMapper());
+
+        addSuperAndLocationToSightings(sightings);
+
+        return sightings;
     }
 
     @Override
@@ -83,19 +105,26 @@ public class SightingDaoDb implements SightingDao {
 
     }
 
-    @Override
-    public List<Sighting> getSightingsForLocation(Location location) {
-        final String SELECT_SIGHTINGS_FOR_LOCATION = "SELECT * FROM sightinglocation WHERE locationId = ?";
-        List<Sighting> sighting = jdbcTemplate.query(SELECT_SIGHTINGS_FOR_LOCATION, new SightingMapper(), location.getLocationId());
-        associateLocationsForSighting(sighting);
-        return sighting;
-    }
+//    @Override
+//    public List<Sighting> getSightingsForLocation(Location location) {
+//        final String SELECT_SIGHTINGS_FOR_LOCATION = "SELECT * FROM sightinglocation WHERE locationId = ?";
+//        List<Sighting> sighting = jdbcTemplate.query(SELECT_SIGHTINGS_FOR_LOCATION, new SightingMapper(), location.getLocationId());
+//        associateLocationsForSighting(sighting);
+//        return sighting;
+//    }
+//
+//    void associateLocationsForSighting(List<Sighting> sightings){
+//        for (Sighting sighting : sightings){
+//            sighting.setSightingLocation(getLocationForSighting(sighting.getSightingId()));
+//        }
+//    }
 
-    void associateLocationsForSighting(List<Sighting> sightings){
-        for (Sighting sighting : sightings){
-            sighting.setSightingLocation(getLocationForSighting(sighting.getSightingId()));
-        }
-    }
+
+//    void associateSuperForSighting(List<Sighting> sightings) {
+//        for (Sighting sighting : sightings) {
+//            sighting.setSightingLocation(getSuperForSighting(sighting.getSightingId()));
+//        }
+//    }
 
     public static final class SightingMapper implements RowMapper<Sighting> {
         @Override

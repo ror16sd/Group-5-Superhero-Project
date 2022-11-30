@@ -8,6 +8,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,6 +25,7 @@ import superhero.model.Power;
 import superhero.model.Sighting;
 import superhero.model.Super;
 
+import javax.validation.Valid;
 import java.sql.Time;
 import java.sql.Timestamp;
 import java.time.LocalDate;
@@ -61,7 +64,7 @@ public class SuperSightingController {
         return "Sighting";
     }
     
-    @PostMapping("addSighting")
+    @PostMapping
     public String createSuperSighting(HttpServletRequest request) {
         String sightingSuperId = request.getParameter("superId");
         String locationId = request.getParameter("locationId");
@@ -76,18 +79,61 @@ public class SuperSightingController {
         return "redirect:/Sighting";
     }
     
-    @GetMapping("/{id}")
-    public String getSuperSighting(@PathVariable int id) {
-        return "NOT IMPLEMENTED: Get specific super sighting";
+//    @GetMapping("/{id}")
+//    public String getSuperSighting(@PathVariable int id) {
+//        return "NOT IMPLEMENTED: Get specific super sighting";
+//    }
+//
+    @GetMapping("editSighting")
+    public String updateSuperSighting(Integer sightingId, Model model) {
+        Sighting sighting = sightingDao.getSightingById(sightingId);
+        List<Super> superheroes = superDao.getAllSupers();
+        List<Location> locations = locationDao.getAllLocations();
+        model.addAttribute("sighting", sighting);
+        model.addAttribute("superheros", superheroes);
+        model.addAttribute("locations", locations);
+
+        return "editSighting";
+    }
+
+    @PostMapping("editSighting")
+    public String performEditSighting(@Valid Sighting sighting, BindingResult result,
+                                      HttpServletRequest request, Model model) {
+        String superId = request.getParameter("superId");
+        String locationId = request.getParameter("locationId");
+        String date = request.getParameter("date");
+
+        if (superId == null) {
+            FieldError error = new FieldError("sighting", "super", "Must include a super");
+            result.addError(error);
+        }
+
+        if (locationId == null) {
+            FieldError error = new FieldError("sighting", "location","Must include a location");
+            result.addError(error);
+        }
+
+        if (date == null) {
+            FieldError error = new FieldError("sighting", "date", "Must include a date");
+            result.addError(error);
+        }
+
+        sighting.setSightingSuper(superDao.getSuperById(Integer.parseInt(superId)));
+        sighting.setSightingLocation(locationDao.getLocationById(Integer.parseInt(locationId)));
+        sighting.setDate(LocalDate.parse(date));
+
+        if (result.hasErrors()) {
+            model.addAttribute("sighting", sighting);
+            return "editSighting";
+        }
+
+        return "redirect:/Sighting";
+
     }
     
-    @PutMapping("/{id}")
-    public String updateSuperSighting(@PathVariable int id) {
-        return "NOT IMPLEMENTED: Update specific super sighting";
-    }
-    
-    @DeleteMapping("/{id}")
-    public String deleteSuperSighting(@PathVariable int id) {
-        return "NOT IMPLEMENTED: Delete specific super sighting";
+    @GetMapping("deleteSighting")
+    public String deleteSuperSighting(@PathVariable int sightingId) {
+        sightingDao.deleteSightingById(sightingId);
+        return "redirect:/Sighting";
     }
 }
