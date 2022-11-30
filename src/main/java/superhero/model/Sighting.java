@@ -1,6 +1,7 @@
 package superhero.model;
 
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 
@@ -15,7 +16,7 @@ public class Sighting {
 
     private int sightingId;
 
-    private Timestamp sightingDate;
+    private LocalDate date;
 
     private Location sightingLocation;
 
@@ -49,12 +50,12 @@ public class Sighting {
         this.sightingId = sightingId;
     }
 
-    public Timestamp getSightingDate() {
-        return sightingDate;
+    public LocalDate getSightingDate() {
+        return date;
     }
 
-    public void setSightingDate(Timestamp sightingDate) {
-        this.sightingDate = sightingDate;
+    public void setSightingDate(LocalDate sightingDate) {
+        this.date = sightingDate;
     }
 
     public Location getSightingLocation() {
@@ -77,7 +78,7 @@ public class Sighting {
     public int hashCode() {
         int hash = 3;
         hash = 61 * hash + this.sightingId;
-        hash = 61 * hash + Objects.hashCode(this.sightingDate);
+        hash = 61 * hash + Objects.hashCode(this.date);
         hash = 61 * hash + Objects.hashCode(this.sightingLocation);
         hash = 61 * hash + Objects.hashCode(this.sightingSuper);
         return hash;
@@ -98,7 +99,7 @@ public class Sighting {
         if (this.sightingId != other.sightingId) {
             return false;
         }
-        if (!Objects.equals(this.sightingDate, other.sightingDate)) {
+        if (!Objects.equals(this.date, other.date)) {
             return false;
         }
         if (!Objects.equals(this.sightingLocation, other.sightingLocation)) {
