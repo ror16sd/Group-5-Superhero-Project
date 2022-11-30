@@ -41,14 +41,14 @@ superId int not null,
 organizationId int not null,
 primary key (superId, organizationId),
  foreign key (superId) 
-	references superPerson(superId),
+   references superPerson(superId),
  foreign key (organizationId) 
-	references superOrganization(organizationId));
+   references superOrganization(organizationId));
 
 Create Table sightingLocation(
 sightingId int not null primary key auto_increment,
-sightingDate timestamp not null default current_timestamp,
+date date not null,
 locationId int,
 superId int,
-Constraint foreign key (superId) references superPerson(superId),
-Constraint foreign key (locationId) references location(locationId));
+foreign key (superId) references superPerson(superId),
+foreign key (locationId) references location(locationId));
