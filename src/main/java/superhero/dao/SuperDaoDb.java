@@ -56,17 +56,17 @@ public class SuperDaoDb implements SuperDao
     @Override
     @Transactional
     public Super addSuper(Super superHero) {
-        final String INSERT_SUPER = "INSERT INTO superPerson(superName, powerId, superDescription, isSuper) "
-                + "VALUES(?,?,?,?)";
-        jdbc.update(INSERT_SUPER,
-                superHero.getSuperName(),
-                superHero.getPower().getPowerId(),
-                superHero.getSuperDescription(),
-                superHero.getIsSuper());
-        int newId = jdbc.queryForObject("SELECT LAST_INSERT_ID()", Integer.class);
-        superHero.setSuperId(newId);
-//        insertSuper(superHero);
-        return superHero;
+//        final String INSERT_SUPER = "INSERT INTO superPerson(superName, powerId, superDescription, isSuper) "
+//                + "VALUES(?,?,?,?)";
+//        jdbc.update(INSERT_SUPER,
+//                superHero.getSuperName(),
+//                superHero.getPower().getPowerId(),
+//                superHero.getSuperDescription(),
+//                superHero.getIsSuper());
+//        int newId = jdbc.queryForObject("SELECT LAST_INSERT_ID()", Integer.class);
+//        superHero.setSuperId(newId);
+////        insertSuper(superHero);
+       return superHero;
     }
 
 /*

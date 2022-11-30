@@ -6,7 +6,7 @@ import superhero.model.Sighting;
 import java.util.List;
 
 public interface SightingDao {
-    Sighting setSightingById(int sightingId);
+    Sighting getSightingById(int sightingId);
     List<Sighting> getAllSightings();
     Sighting addSighting(Sighting sighting);
 

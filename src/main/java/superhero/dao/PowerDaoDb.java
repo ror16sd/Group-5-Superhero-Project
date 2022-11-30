@@ -21,7 +21,8 @@ import java.util.List;
 public class PowerDaoDb implements PowerDao {
 
     @Autowired
-    private JdbcTemplate jdbc;
+    JdbcTemplate jdbc;
+
 
     @Override
     public Power getPowerById(int powerId) {
@@ -58,11 +59,11 @@ public class PowerDaoDb implements PowerDao {
 
     @Override
     public void deletePowerById(int powerId) {
-        final String DELETE_HERO_POWER = "DELETE FROM superPerson WHERE powerId = ?";
-        jdbc.update(DELETE_HERO_POWER, powerId);
+//        final String DELETE_HERO_POWER = "DELETE FROM superPerson WHERE powerId = ?";
+//        jdbc.update(DELETE_HERO_POWER, powerId);
 
-        final String DELETE_SUPERPOWER = "DELETE FROM power WHERE powerId = ?";
-        jdbc.update(DELETE_SUPERPOWER, powerId);
+//        final String DELETE_SUPERPOWER = "DELETE FROM power WHERE powerId = ?";
+//        jdbc.update(DELETE_SUPERPOWER, powerId);
     }
 
     @Override
