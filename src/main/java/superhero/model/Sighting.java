@@ -1,6 +1,7 @@
 package superhero.model;
 
 import java.sql.Timestamp;
+import java.util.List;
 import java.util.Objects;
 
 public class Sighting {
@@ -17,6 +18,26 @@ public class Sighting {
     private Timestamp sightingDate;
 
     private Location sightingLocation;
+
+    List<Location> sightingLocations;
+
+    List<Super> supers;
+
+    public List<Super> getSupers() {
+        return supers;
+    }
+
+    public void setSupers(List<Super> supers) {
+        this.supers = supers;
+    }
+
+    public List<Location> getSightingLocations() {
+        return sightingLocations;
+    }
+
+    public void setSightingLocations(List<Location> sightingLocations) {
+        this.sightingLocations = sightingLocations;
+    }
 
     private Super sightingSuper;
 
