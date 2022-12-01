@@ -5,6 +5,7 @@
 package superhero.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,7 +26,6 @@ import superhero.model.Power;
 import superhero.model.Sighting;
 import superhero.model.Super;
 
-import javax.validation.Valid;
 import java.sql.Time;
 import java.sql.Timestamp;
 import java.time.LocalDate;
@@ -78,7 +78,7 @@ public class SuperSightingController {
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         LocalDate ld = LocalDate.parse(date, formatter);
-        sighting.setDate(ld);
+        sighting.setSightingDate(ld);
         sightingDao.addSighting(sighting);
         return "redirect:/super-sightings";
     }
@@ -124,7 +124,7 @@ public class SuperSightingController {
 
         sighting.setSightingSuper(superDao.getSuperById(Integer.parseInt(superId)));
         sighting.setSightingLocation(locationDao.getLocationById(Integer.parseInt(locationId)));
-        sighting.setDate(LocalDate.parse(date));
+        sighting.setSightingDate(LocalDate.parse(date));
 
         if (result.hasErrors()) {
             model.addAttribute("sighting", sighting);
