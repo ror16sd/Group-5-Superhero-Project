@@ -154,11 +154,14 @@ public class PowerDaoDb implements PowerDao {
 
     @Override
     public void deletePowerById(int powerId) {
-//        final String DELETE_HERO_POWER = "DELETE FROM superPerson WHERE powerId = ?";
-//        jdbc.update(DELETE_HERO_POWER, powerId);
+        final String DELETE_SUPERPOWER = "DELETE FROM power WHERE powerId = ?";
+        jdbc.update(DELETE_SUPERPOWER, powerId);
 
-//        final String DELETE_SUPERPOWER = "DELETE FROM power WHERE powerId = ?";
-//        jdbc.update(DELETE_SUPERPOWER, powerId);
+        final String DELETE_HERO_FROM_POWER = "DELETE su. * FROM superPerson su "
+            + "JOIN power p ON su.powerId = p.powerId WHERE p.powerId = ?";
+        jdbc.update(DELETE_HERO_FROM_POWER, powerId);
+
+
     }
 
     @Override

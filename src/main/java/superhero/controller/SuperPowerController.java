@@ -65,9 +65,6 @@ public class SuperPowerController {
     }
 
 
-
-
-
     @GetMapping("edit")
     public String editPower(Integer id, Model model) {
         Power power = powerDao.getPowerById(id);
@@ -76,16 +73,6 @@ public class SuperPowerController {
     }
 
 
-
-    //    @PutMapping("/{id}")
-//    public String updateSuperPower(@PathVariable int id, @RequestBody Power power) {
-//        Power updatePower = powerDao.getPowerById(id);
-//        updatePower.setPowerId(power.getPowerId());
-//        updatePower.setPowerDescription(power.getPowerDescription());
-//        powerDao.updatePower(power);
-//        return "editPower";
-//    }
-//
     @PostMapping("edit")
     public String performEditPower(@Valid Power power, BindingResult result){
         if(result.hasErrors()) {
@@ -98,9 +85,12 @@ public class SuperPowerController {
 
 
     @GetMapping("deletePower")
-    public String deleteSuperPower(@PathVariable int powerId) {
-//        powerDao.deletePowerById(powerId);
-        return "redirect:/SuperPower";
+    public String deleteSuperPower(HttpServletRequest request) {
+        int powerId = Integer.parseInt(request.getParameter("powerId"));
+        powerDao.deletePowerById(powerId);
+        return "redirect:/super-powers";
+
+
 
     }
 
