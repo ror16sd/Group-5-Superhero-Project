@@ -8,6 +8,7 @@ package superhero.model;
 //        );
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 import java.util.List;
 import java.util.Objects;
@@ -27,12 +28,12 @@ public class SuperOrganization {
     private Location location;
 
     //private Super superPerson;
-
+    @NotEmpty(message= "Must select at least one super member")
     private List<Super> superMembers;
 
 
 
-    public List<Super> getSupers() {
+    public List<Super> getSuperMembers() {
         return superMembers;
     }
 

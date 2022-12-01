@@ -97,7 +97,7 @@ public class SuperOrganizationDaoDb implements SuperOrganizationDao {
     }    private void insertOrganizationSuper(SuperOrganization superOrganization) {
         final String INSERT_ORGANIZATION_SUPERPERSON =
                 "INSERT INTO super_organization (superId, organizationId) VALUES(?,?)";
-        for (Super superPerson : superOrganization.getSupers()) {
+        for (Super superPerson : superOrganization.getSuperMembers()) {
             jdbcTemplate.update(INSERT_ORGANIZATION_SUPERPERSON,
                     superPerson.getSuperId(),
                     superOrganization.getOrganizationId());

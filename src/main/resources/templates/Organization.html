@@ -21,25 +21,25 @@ xmlns="http://www.w3.org/1999/xhtml">
         <ul class="navbar-nav ms-auto">
             <li class="nav-item">
                 <a href="SuperHeroHome.html" class="navbar__links">Home</a>
-            </li> &nbsp; &nbsp;
+            </li>
             <li class="nav-item">
                 <a href="Who.html" class="navbar__links">Who</a>
-            </li>  &nbsp; &nbsp;
+            </li>
             <li class="nav-item">
                 <a href="SuperPower.html" class="navbar__links">SuperPower</a>
-            </li>  &nbsp; &nbsp;
+            </li>
             <li class="nav-item">
                 <a href="Organization.html" class="navbar__links">Organization</a>
-            </li>  &nbsp; &nbsp;
+            </li>
             <li class="nav-item">
                 <a href="HomeBase.html" class="navbar__links">HomeBase</a>
-            </li>  &nbsp; &nbsp;
+            </li>
             <li class="nav-item">
                 <a href="Sighting.html" class="navbar__links">Sighting</a>
-            </li>  &nbsp; &nbsp;
+            </li>
             <li class="nav-item">
                 <a href="Gallery.html" class="navbar__links">Gallery</a>
-            </li>  &nbsp; &nbsp;
+            </li>
         </ul>
     </nav>
     <div class="container">
@@ -53,7 +53,12 @@ xmlns="http://www.w3.org/1999/xhtml">
             <span class="h3">Add Organization</span>
         </div>
         <div class="col-7 text-center m-3">
-            <form action="addOrganization" method="POST">
+            <form action="/super-organizations" method="POST">
+                <div class="col-12 m-1 text-center" 
+                    th:if="${!errors.isEmpty()}">
+                        <p class="alert alert-danger" th:each="error : ${errors}" 
+                      th:text="${error.message}">Error message</p>
+                </div>
                 <div class="form-group row">
                     <label for="organizationName" class="col-3 col-form-label">
                         Organization</label>
@@ -84,10 +89,10 @@ xmlns="http://www.w3.org/1999/xhtml">
                         </div>
                 </div>
                 <div class="form-group row">
-                    <label for="superPeople" class="col-3 col-form-label">
+                    <label for="superMemberIds" class="col-3 col-form-label">
                         Super Members</label>
                     <div class="col-9">
-                        <select multiple id="superPeople" name="superId" 
+                        <select multiple id="superMemberIds" name="superMemberIds" 
                                 class="form-control" >
                             <option th:each="super : ${superPeople}" 
                                     th:value="${super.superId}" 
@@ -107,7 +112,7 @@ xmlns="http://www.w3.org/1999/xhtml">
                     <tr>
                         <th>ID</th>
                         <th>Organization</th>
-<!--                        <th>Location</th>-->
+                        <th>Location</th>
                         <th>Description</th>
 <!--                        <th>Total Members</th>-->
                         <th>Details</th>
@@ -119,7 +124,7 @@ xmlns="http://www.w3.org/1999/xhtml">
                     <tr th:each="organization : ${organizations}">
                         <td th:text="${organization.organizationId}">Organization ID</td>
                         <td th:text="${organization.organizationName}">Organization Name</td>
-<!--                        <td th:text="${organization.location.locationName}">Location Name</td>-->
+                        <td th:text="${organization.location.locationName}">Location Name</td>
                         <td th:text="${organization.organizationDescription}">Organization Description</td>
 <!--                        <td th:text="${#lists.size(organization.superMembers)}">Total Members</td>-->
                         <td><a href="#" th:href="@{/super-organizations/details(id=${organization.organizationId})}">Details</a></td>
