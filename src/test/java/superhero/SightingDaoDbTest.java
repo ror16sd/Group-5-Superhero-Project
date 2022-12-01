@@ -219,7 +219,9 @@ class SightingDaoDbTest {
 
         Sighting retreievedSighting = sightingDao.getSightingById(sighting.getSightingId());
         assertEquals(sighting,retreievedSighting);
-        sighting.setSightingDate(LocalDate.parse("2043-04-01",formatter));
+        //After the fixes to the updateSuperSighting method the 2043 years was 
+        //being truncated in MySQL because it 
+        sighting.setSightingDate(LocalDate.parse("2023-04-01",formatter));
         sightingDao.updateSighting(sighting);
 
         assertNotEquals(sighting,retreievedSighting);
@@ -304,7 +306,10 @@ class SightingDaoDbTest {
 
         List<Super> supers = new ArrayList<>();
         supers.add(superPerson);
-
+        //UPDATED SO SUPER PERSON CAN EXIST
+        //Before this superId of superPerson would be 0
+        //This fixed this test
+        superPerson = superDao.addSuper(superPerson);
         Sighting sighting = new Sighting();
         sighting.setSightingDate(LocalDate.parse("2022-11-15",formatter));
         sighting.setSightingLocation(location);
