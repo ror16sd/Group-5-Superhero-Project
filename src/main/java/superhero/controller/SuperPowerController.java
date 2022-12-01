@@ -51,6 +51,7 @@ public class SuperPowerController {
 
         List<Power> powers = powerDao.getAllPowers();
         model.addAttribute("powers", powers);
+        model.addAttribute("errors", violations);
         return "SuperPower";
     }
 
