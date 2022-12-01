@@ -38,6 +38,17 @@ public class SightingDaoDb implements SightingDao {
             return null;
         }
     }
+    
+    public List<Sighting> getTop10Sightings() {
+        try {
+            final String SELECT_TOP_10_SIGHTINGS = "SELECT * FROM sightinglocation ORDER BY DATE DESC LIMIT 10;";
+            List<Sighting> sightings = jdbcTemplate.query(SELECT_TOP_10_SIGHTINGS, new SightingMapper());
+            associateLocationsForSighting(sightings);
+            return sightings;
+        } catch(DataAccessException error) {
+            return null;
+        }
+    }
 
     private Super getSuperForSighting(int sightId) {
         //WHERE s.sightingId needed to be changed to WHERE m.sightingId since
@@ -88,6 +99,7 @@ public class SightingDaoDb implements SightingDao {
     @Transactional
     public Sighting addSighting(Sighting sighting) {
         //TODO: should the model be changed?
+        //date needed to be date since this is how it appears in the 
         //date needed to be sightingDate since this is how it appears in the
         //database
         final String INSERT_SIGHTING = "INSERT INTO sightinglocation (date , locationId, superId) "
@@ -106,7 +118,7 @@ public class SightingDaoDb implements SightingDao {
     @Transactional
     public void updateSighting(Sighting sighting) {
         //Used to be superId = ?) causing the error in SQL syntax
-        //Also, date needed to be locationDate
+        //locationId needed to be sightingId
         //Lastly, the date needed to be parsed to a MySQL Date
         final String UPDATE_SIGHTING = "UPDATE sightinglocation SET date = ?, locationId = ?, superId = ? "
                 + "WHERE sightingId = ?";
@@ -145,7 +157,7 @@ public class SightingDaoDb implements SightingDao {
         public Sighting mapRow(ResultSet rs, int index) throws SQLException {
             Sighting sighting = new Sighting();
             sighting.setSightingId(rs.getInt("sightingId"));
-            //changed date to sightingDate since this is how date column
+            //changed date to date since this is how date column
             //appears in the database
             sighting.setSightingDate(rs.getDate("date").toLocalDate());
             return sighting;

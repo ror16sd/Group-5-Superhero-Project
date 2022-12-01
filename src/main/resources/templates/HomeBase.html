@@ -132,21 +132,30 @@ xmlns="http://www.w3.org/1999/xhtml">
                     <tr>
                         <th>ID</th>
                         <th>Name</th>
-                        <th>Teacher</th>
-                        <th>Details</th>
+                        <th>Description</th>
+                        <th>Address</th>
+                        <th>State</th>
+                        <th>City</th>
+                        <th>Zip</th>
+                        <th>Latitude</th>
+                        <th>Longitude</th>
                         <th>Edit</th>
                         <th>Delete</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr th:each="course : ${courses}">
-                        <td th:text="${location.id}">Location ID</td>
-                        <td th:text='${location.name}'>Location Name</td>
-                        <td th:text="${location.description.description + ' ' 
-                            + course.teacher.lastName}">Location Description</td>
-                        <td><a href="#" th:href="@{/courseDetail(id=${course.id})}">Details</a></td>
-                        <td><a href="#" th:href="@{/editCourse(id=${course.id})}">Edit</a></td>
-                        <td><a href="#" th:href="@{/deleteCourse(id=${course.id})}">Delete</a></td>
+                    <tr th:each="location : ${locations}">
+                        <td th:text='${location.locationId}'>Location Id</td>
+                        <td th:text="${location.locationName}">Location Name</td>
+                        <td th:text="${location.locationDescription}">Location Description</td>
+                        <td th:text="${location.locationAddress}">Location Address</td>
+                        <td th:text="${location.locationState}">Location State</td>
+                        <td th:text="${location.locationCity}">Location City</td>
+                        <td th:text="${location.locationZip}">Location Zip</td>
+                        <td th:text="${location.locationLong}">Location Long</td>
+                        <td th:text="${location.locationLat}">Location Lat</td>
+                        <td><a href="#" th:href="@{/locations/edit(id=${location.locationId})}">Edit</a></td>
+                        <td><a href="#" th:href="@{/locations/delete(id=${location.locationId})}">Delete</a></td>
                     </tr>
                 </tbody>
             </table>
