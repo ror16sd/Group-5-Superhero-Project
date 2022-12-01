@@ -62,10 +62,10 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                    th:value="${power.powerId}"
                    th:text="${power.powerDescription}"/>
 
-            <div th:if="${#fields.hasErrors('power.powerDescription')}">
-              <p th:each="error : ${#fields.errors('power.powerDescription')}" class="alert alert-danger"
-                 th:text="${error}"> Name errors</p>
-            </div>
+<!--            <div th:if="${#fields.hasErrors('power.powerDescription')}">-->
+<!--              <p th:each="error : ${#fields.errors('power.powerDescription')}" class="alert alert-danger"-->
+<!--                 th:text="${error}"> Name errors</p>-->
+<!--            </div>-->
           </div>
 
 
@@ -78,21 +78,21 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
 <!--              Superpower Name</option>-->
 <!--          </select>-->
       </div>
-      <div class="form-group row">
-        <label for="superId" class="col-3 col-form-label">
-          Superhero Name</label>
-        <div class="col-9">
-          <select id="superId" name="superName"
-                  class="form-control" >
-            <option th:each="super : ${superheroes}"
-                    th:text="${super.superName}">
+<!--      <div class="form-group row">-->
+<!--        <label for="superId" class="col-3 col-form-label">-->
+<!--          Superhero Name</label>-->
+<!--        <div class="col-9">-->
+<!--          <select id="superId" name="superName"-->
+<!--                  class="form-control" >-->
+<!--            <option th:each="super : ${superheroes}"-->
+<!--                    th:text="${super.superName}">-->
 
-              Superhero Name</option>
-          </select>
-        </div>
-      </div>
+<!--              Superhero Name</option>-->
+<!--          </select>-->
+<!--        </div>-->
+<!--      </div>-->
 
-      <button type="submit" class="btn btn-primary">Update Sighting</button>
+      <button type="submit" class="btn btn-primary">Update Power</button>
     </form>
   </div>
 </div>

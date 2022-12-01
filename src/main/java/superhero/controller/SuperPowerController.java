@@ -70,27 +70,43 @@ public class SuperPowerController {
 
     @GetMapping("editPower")
     public String editPower(Integer powerId, Model model) {
-
         Power power = powerDao.getPowerById(powerId);
-        List<Super> superheroes = superDao.getAllSupers();
-        model.addAttribute("superheroes", superheroes);
         model.addAttribute("power", power);
-
-
-        return "editSighting";
-
+        return "EditPower";
     }
 
     @PostMapping("editPower")
-    public String performEditPower(@Valid Power power, BindingResult result){
+    public String performEditPower(@Valid Power power, BindingResult result, Model model) {
         if(result.hasErrors()) {
-            return "editPower";
+            return "EditPower";
         }
+
         powerDao.updatePower(power);
-        return "redirect:/SuperPower";
+        return "redirect:/super-powers" + power.getPowerId();
 
     }
 
+//    public String editPower(Integer powerId, Model model) {
+//
+//        Power power = powerDao.getPowerById(powerId);
+//        List<Super> superheroes = superDao.getAllSupers();
+//        model.addAttribute("superheroes", superheroes);
+//        model.addAttribute("power", power);
+//
+//
+//        return "EditPower";
+//
+//    }
+//
+//    @PostMapping("editPower")
+//    public String performEditPower(@Valid Power power, BindingResult result){
+//        if(result.hasErrors()) {
+//            return "EditPower";
+//        }
+//        powerDao.updatePower(power);
+//        return "redirect:/super-powers";
+//
+//    }
 
     @GetMapping("deletePower")
     public String deleteSuperPower(Integer powerId) {

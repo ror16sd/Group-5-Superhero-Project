@@ -147,7 +147,7 @@ public class PowerDaoDb implements PowerDao {
 
     @Override
     public void updatePower(Power power) {
-        final String UPDATE_POWER = "UPDATE Power set name = ?"
+        final String UPDATE_POWER = "UPDATE Power set powerDescription = ?"
                 + "WHERE powerId = ?";
         jdbc.update(UPDATE_POWER, power.getPowerDescription(), power.getPowerId());
     }
