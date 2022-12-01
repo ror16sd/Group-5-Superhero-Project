@@ -106,7 +106,7 @@ public class SightingDaoDb implements SightingDao {
     @Transactional
     public void updateSighting(Sighting sighting) {
         //Used to be superId = ?) causing the error in SQL syntax
-        //Also, date needed to be locationDate
+        //locationId needed to be sightingId
         //Lastly, the date needed to be parsed to a MySQL Date
         final String UPDATE_SIGHTING = "UPDATE sightinglocation SET date = ?, locationId = ?, superId = ? "
                 + "WHERE sightingId = ?";
