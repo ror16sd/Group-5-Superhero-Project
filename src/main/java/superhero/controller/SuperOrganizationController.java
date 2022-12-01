@@ -4,7 +4,17 @@
  */
 package superhero.controller;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.Validation;
+import jakarta.validation.Validator;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,41 +39,164 @@ import superhero.model.SuperOrganization;
 @Controller
 @RequestMapping("/super-organizations")
 public class SuperOrganizationController {
+    Set<ConstraintViolation<SuperOrganization>> violations = new HashSet<>();
+    
     @Autowired
     LocationDao locationDao;
+    
     @Autowired
     SuperDao superDao;
+    
     @Autowired
     SuperOrganizationDao organizationDao;
+    
+    Map<Integer, SuperOrganization> organizations = new HashMap<>();
+    
     @GetMapping
     public String getSuperOrganizations(Model model) {
+        if (organizations.size() < 1) {
+            loadTestOrganizationList();
+        }
         List<Location> locations = locationDao.getAllLocations();
         List<Super> superPeople = superDao.getAllSupers();
-        List<SuperOrganization> organizations =  organizationDao.getAllSuperOrganizations();
+//        TO BE IMPLEMENTED AFTER ORG DAO IS IMPLEMENTED
+//        List<SuperOrganization> organizations =  organizationDao.getAllSuperOrganizations();
         model.addAttribute("locations", locations);
         model.addAttribute("superPeople", superPeople);
-        model.addAttribute("organizations", organizations);
+        model.addAttribute("organizations", organizations.values());
+        model.addAttribute("errors", violations);
         return "Organization";
     }
     
     @PostMapping
-    public String createSuperOrganization() {
-        return "NOT IMPLEMENTED: Create super organization";
+    public String createSuperOrganization(SuperOrganization organization, HttpServletRequest request) {
+        final Location location = locationDao.getLocationById(Integer.parseInt(request.getParameter("locationId")));
+        final String[] SuperMemberIds = request.getParameterValues("superMemberIds");
+        final List<Super> superMembers = new ArrayList<>();
+        
+        if (SuperMemberIds != null) {
+            for (String memberId: SuperMemberIds) {
+                final Super currentMember = superDao.getSuperById(Integer.parseInt(memberId));
+                superMembers.add(currentMember);
+         }
+        }
+        
+        organization.setLocation(location);
+        organization.setSupers(superMembers);
+        Validator validate = Validation.buildDefaultValidatorFactory().getValidator();
+        violations = validate.validate(organization);
+       
+       if (violations.isEmpty()) {
+//        TO BE IMPLEMENTED AFTER ORG DAO IS IMPLEMENTED
+//           organizationDao.addSuperOrganization(organization);
+          final int testOrgId = organizations.size() + 1;
+          organization.setOrganizationId(testOrgId);
+          organizations.put(testOrgId, organization);
+       }
+        return "redirect:/super-organizations";
     }
     
-    @GetMapping("/{id}")
-    public String getSuperOrganization(@PathVariable int id) {
-        return "NOT IMPLEMENTED: Get specific super organization";
+    @GetMapping("/details")
+    public String getSuperOrganization(Integer id, Model model) {
+        if (organizations.size() < 1) {
+            loadTestOrganizationList();
+        }
+//        TO BE IMPLEMENTED AFTER ORG DAO IS IMPLEMENTED
+//        final SuperOrganization organization = organizationDao.getSuperOrganizationById(1);
+        final SuperOrganization organization = getTestOrganization(id);
+        model.addAttribute("organization", organization);
+        return "OrganizationDetails";
     }
     
-    @PutMapping("/{id}")
-    public String updateSuperOrganization(@PathVariable int id) {
-        return "NOT IMPLEMENTED: Update specific super organization";
+    @GetMapping("/edit")
+    public String updateSuperOrganization(Integer id, Model model) {
+        if (organizations.size() < 1) {
+            loadTestOrganizationList();
+        }
+        final SuperOrganization organization = getTestOrganization(id);
+        final List<Integer> superMemberIds = returnSuperMemberIdList(organization);
+        List<Location> locations = locationDao.getAllLocations();
+        List<Super> superPeople = superDao.getAllSupers();
+        model.addAttribute("locations", locations);
+        model.addAttribute("superPeople", superPeople);
+        model.addAttribute("errors", violations);
+        model.addAttribute("superMemberIds", superMemberIds);
+        model.addAttribute("organization", organization);
+        return "EditOrganization";
     }
     
-    @DeleteMapping("/{id}")
-    public String deleteSuperOrganization(@PathVariable int id) {
-        return "NOT IMPLEMENTED: Delete specific super organization";
+    @PostMapping("/edit")
+    public String updateSuperOrganization(SuperOrganization organization, HttpServletRequest request, Model model) {
+        List<Location> locations = locationDao.getAllLocations();
+        List<Super> superPeople = superDao.getAllSupers();
+        final Location location = locationDao.getLocationById(Integer.parseInt(request.getParameter("locationId")));
+        final String[] superMemberIds = request.getParameterValues("superMemberIds");
+        final List<Super> superMembers = new ArrayList<>();
+        
+        if (superMemberIds != null) {
+            for (String memberId: superMemberIds) {
+                final Super currentMember = superDao.getSuperById(Integer.parseInt(memberId));
+                superMembers.add(currentMember);
+         }
+        }
+        
+        organization.setLocation(location);
+        organization.setSupers(superMembers);
+        model.addAttribute("locations", locations);
+        model.addAttribute("superPeople", superPeople);
+        model.addAttribute("errors", violations);
+        model.addAttribute("superMemberIds", superMemberIds);
+        model.addAttribute("organization", organization);
+        Validator validate = Validation.buildDefaultValidatorFactory().getValidator();
+        violations = validate.validate(organization);
+       
+        if (!violations.isEmpty()) {
+ //        TO BE IMPLEMENTED AFTER ORG DAO IS IMPLEMENTED
+ //           organizationDao.updateSuperOrganization(organization);
+           return "redirect:/super-organizations/edit?id=" + organization.getOrganizationId();
+        }
+        organizations.put(organization.getOrganizationId(), organization);
+        return "redirect:/super-organizations";
+    }
+    
+    @GetMapping("/delete")
+    public String deleteSuperOrganization(int id) {
+        final SuperOrganization organization = getTestOrganization(id);
+        organizations.remove(id);
+//        TO BE IMPLEMENTED AFTER ORG DAO IS IMPLEMENTED
+//        organizationDao.deleteSuperOrganizationById(id);
+        return "redirect:/super-organizations";
+    }
+    
+    private List<Integer> returnSuperMemberIdList(SuperOrganization organizationWithMembers) {
+        List<Integer> memberIdList = organizationWithMembers.getSuperMembers().stream().
+                        map(member -> member.getSuperId())
+                .collect(Collectors.toList());
+        return memberIdList;
+    }
+    
+    private void loadTestOrganizationList() {
+        SuperOrganization testOrg1 = new SuperOrganization();
+        SuperOrganization testOrg2 = new SuperOrganization();
+        testOrg1.setOrganizationId(1);
+        testOrg2.setOrganizationId(2);
+        testOrg1.setOrganizationName("Test Org 1");
+        testOrg2.setOrganizationName("Test Org 2");
+        testOrg1.setOrganizationDescription("This is a org for testing");
+        testOrg2.setOrganizationDescription("This also a org for testing");
+        final Location testLocation = locationDao.getLocationById(1);
+        testOrg1.setLocation(testLocation);
+        testOrg2.setLocation(testLocation);
+        final List<Super> supers = superDao.getAllSupers();
+        testOrg1.setSupers(supers);
+        testOrg2.setSupers(supers);
+        organizations.put(1, testOrg1);
+        organizations.put(2, testOrg2);
+    }
+    
+    private SuperOrganization getTestOrganization(int id) {
+        final SuperOrganization organization = organizations.get(id);
+        return organization;
     }
     
 }
