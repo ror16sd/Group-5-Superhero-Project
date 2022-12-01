@@ -69,31 +69,109 @@ class SightingDaoDbTest {
 
     @Test
     void testAddAndGetSighting() {
-        List<Location> locations = new ArrayList<>();
-        List<Super> supers = new ArrayList<>();
+
+        Location location = new Location();
+        location.setLocationName("Disney World");
+        location.setLocationDescription("The Happiest Place on Earth");
+        location.setLocationAddress("1375 E Buena Vista Dr");
+        location.setLocationCity("Orlando");
+        location.setLocationState("Florida");
+        location.setLocationZip(32830);
+        location.setLocationLat(28.37779);
+        location.setLocationLong(-81.57065);
+        location = locationDao.addLocation(location);
+
+        Power power = new Power();
+        power.setPowerDescription("Test Power");
+        power = powerDao.addPower(power);
+
+        Super superPerson = new Super();
+        superPerson.setSuperName("Test Name");
+        superPerson.setSuperDescription("Test Description");
+        superPerson.setIsSuper(true);
+        superPerson.setPower(power);
+        superPerson = superDao.addSuper(superPerson);
+
+        List<Location> locations = locationDao.getAllLocations();
+        List<Super> supers = superDao.getAllSupers();
 
         Sighting sighting = new Sighting();
+        sighting.setSightingLocation(location);
         sighting.setSightingLocations(locations);
         sighting.setSightingDate(LocalDate.parse("2022-11-11",formatter));
+        sighting.setSightingSuper(superPerson);
         sighting.setSupers(supers);
         sighting = sightingDao.addSighting(sighting);
+
+        Sighting retrievedSighting = sightingDao.getSightingById(sighting.getSightingId());
+        assertEquals(retrievedSighting,sighting);
 
     }
 
     @Test
     void getAllSightings() {
-        List<Location> locations = new ArrayList<>();
-        List<Super> supers = new ArrayList<>();
+        Location location = new Location();
+        location.setLocationName("Disney World");
+        location.setLocationDescription("The Happiest Place on Earth");
+        location.setLocationAddress("1375 E Buena Vista Dr");
+        location.setLocationCity("Orlando");
+        location.setLocationState("Florida");
+        location.setLocationZip(32830);
+        location.setLocationLat(28.37779);
+        location.setLocationLong(-81.57065);
+
+        location = locationDao.addLocation(location);
+
+        Location location1 = new Location();
+        location1.setLocationName("Space Needle");
+        location1.setLocationDescription("Large observation tower");
+        location1.setLocationAddress("400 Broad St");
+        location1.setLocationCity("Seattle");
+        location1.setLocationState("Washington");
+        location1.setLocationZip(98109);
+        location1.setLocationLat(47.62062);
+        location1.setLocationLong(-122.34929);
+        location1 = locationDao.addLocation(location1);
+
+        List<Location> locations = locationDao.getAllLocations();
+
+        Power power = new Power();
+        power.setPowerDescription("Test Power");
+        power = powerDao.addPower(power);
+
+        Super superPerson = new Super();
+        superPerson.setSuperName("Test Name");
+        superPerson.setSuperDescription("Test Description");
+        superPerson.setIsSuper(true);
+        superPerson.setPower(power);
+        superPerson = superDao.addSuper(superPerson);
+
+        Power power1 = new Power();
+        power1.setPowerDescription("Test Power1");
+        power1 = powerDao.addPower(power1);
+
+        Super superPerson1 = new Super();
+        superPerson1.setSuperName("Test Name1");
+        superPerson1.setSuperDescription("Test Description1");
+        superPerson1.setIsSuper(true);
+        superPerson1.setPower(power1);
+        superPerson1 = superDao.addSuper(superPerson1);
+
+        List<Super> supers = superDao.getAllSupers();
 
         Sighting sighting1 = new Sighting();
+        sighting1.setSightingLocation(location);
         sighting1.setSightingLocations(locations);
-        sighting1.setSightingDate(LocalDate.parse("2022-11-29 12:45:55",formatter));
+        sighting1.setSightingDate(LocalDate.parse("2022-11-29",formatter));
+        sighting1.setSightingSuper(superPerson);
         sighting1.setSupers(supers);
         sighting1 = sightingDao.addSighting(sighting1);
 
         Sighting sighting2 = new Sighting();
+        sighting2.setSightingLocation(location1);
         sighting2.setSightingLocations(locations);
-        sighting2.setSightingDate(LocalDate.parse("2022-11-28 10:30:45",formatter));
+        sighting2.setSightingDate(LocalDate.parse("2022-11-28",formatter));
+        sighting2.setSightingSuper(superPerson1);
         sighting2.setSupers(supers);
         sighting2 = sightingDao.addSighting(sighting2);
 
@@ -103,76 +181,93 @@ class SightingDaoDbTest {
         assertTrue(sightings.contains(sighting2));
     }
 
-//    @Test
-//    void updateSighting() {
-//        List<Location> locations = new ArrayList<>();
-//        List<Super> supers = new ArrayList<>();
-//
-//        Sighting sighting1 = new Sighting();
-//        sighting1.setSightingLocations(locations);
-//        sighting1.setSightingDate(LocalDate.parse2022-11-29 12:45:55",formatter));
-//        sighting1.setSupers(supers);
-//        sighting1 = sightingDao.addSighting(sighting1);
-//
-//        Sighting fromDao = sightingDao.getSightingById(sighting1.getSightingId());
-//        assertEquals(sighting1, fromDao);
-//
-//        Sighting sighting2 = new Sighting();
-//        sighting2.setSightingLocations(locations);
-//        sighting2.setSightingDate(LocalDate.parse"2022-11-28 10:30:45",formatter));
-//        sighting2.setSupers(supers);
-//        sighting2 = sightingDao.addSighting(sighting2);
-//
-//        sightingDao.updateSighting(sighting2);
-//
-//        assertNotEquals(sighting2, fromDao);
-//
-//        fromDao = sightingDao.getSightingById(sighting2.getSightingId());
-//        assertEquals(sighting2, fromDao);
-//
-//    }
+    @Test
+    void updateSighting() {
 
-//    @Test
-//    void deleteSightingById() {
-//        Power power = new Power();
-//        power.setPowerDescription("Test Power");
-//        power = powerDao.addPower(power);
-//
-//        Super superPerson = new Super();
-//        superPerson.setSuperName("Superman");
-//        superPerson.setPower(power);
-//        superPerson.setSuperDescription("Man of Steel");
-//        superPerson.setIsSuper(true);
-//        superPerson = superDao.addSuper(superPerson);
-//
-//        Location location = new Location();
-//        location.setLocationName("The Mall");
-//        location.setLocationDescription("Test Location");
-//        location.setLocationAddress("Test Address");
-//        location.setLocationState("Test State");
-//        location.setLocationCity("Test City");
-//        location.setLocationZip(75234);
-//        location.setLocationLat(65.362);
-//        location.setLocationLong(56.362);
-//        location = locationDao.addLocation(location);
-//
-//        Sighting sighting = new Sighting();
-//        sighting.setSightingDate(LocalDate.parse"2022-11-15 04:30:55",formatter));
-//        sighting.setSightingLocation(location);
-//        sighting.setSightingSuper(superPerson);
-//        sighting = sightingDao.addSighting(sighting);
-//
-//        Sighting fromDao = sightingDao.getSightingById(sighting.getSightingId());
-//        assertEquals(sighting, fromDao);
-//
-//        sightingDao.deleteSightingById(sighting.getSightingId());
-//
-//        fromDao = sightingDao.getSightingById(sighting.getSightingId());
-//        assertNull(fromDao);
-//
-//
-//    }
-//
+        Location location = new Location();
+        location.setLocationName("Disney World");
+        location.setLocationDescription("The Happiest Place on Earth");
+        location.setLocationAddress("1375 E Buena Vista Dr");
+        location.setLocationCity("Orlando");
+        location.setLocationState("Florida");
+        location.setLocationZip(32830);
+        location.setLocationLat(28.37779);
+        location.setLocationLong(-81.57065);
+        location = locationDao.addLocation(location);
+
+        Power power = new Power();
+        power.setPowerDescription("Test Power");
+        power = powerDao.addPower(power);
+
+        Super superPerson = new Super();
+        superPerson.setSuperName("Test Name");
+        superPerson.setSuperDescription("Test Description");
+        superPerson.setIsSuper(true);
+        superPerson.setPower(power);
+        superPerson = superDao.addSuper(superPerson);
+
+        List<Location> locations = locationDao.getAllLocations();
+        List<Super> supers = superDao.getAllSupers();
+
+        Sighting sighting = new Sighting();
+        sighting.setSightingLocation(location);
+        sighting.setSightingLocations(locations);
+        sighting.setSightingDate(LocalDate.parse("2022-11-11",formatter));
+        sighting.setSightingSuper(superPerson);
+        sighting.setSupers(supers);
+        sighting = sightingDao.addSighting(sighting);
+
+        Sighting retreievedSighting = sightingDao.getSightingById(sighting.getSightingId());
+        assertEquals(sighting,retreievedSighting);
+        sighting.setSightingDate(LocalDate.parse("2043-04-01",formatter));
+        sightingDao.updateSighting(sighting);
+
+        assertNotEquals(sighting,retreievedSighting);
+        retreievedSighting = sightingDao.getSightingById(sighting.getSightingId());
+        assertEquals(sighting,retreievedSighting);
+    }
+
+    @Test
+    void deleteSightingById() {
+        Power power = new Power();
+        power.setPowerDescription("Test Power");
+        power = powerDao.addPower(power);
+
+        Super superPerson = new Super();
+        superPerson.setSuperName("Superman");
+        superPerson.setPower(power);
+        superPerson.setSuperDescription("Man of Steel");
+        superPerson.setIsSuper(true);
+        superPerson = superDao.addSuper(superPerson);
+
+        Location location = new Location();
+        location.setLocationName("The Mall");
+        location.setLocationDescription("Test Location");
+        location.setLocationAddress("Test Address");
+        location.setLocationState("Test State");
+        location.setLocationCity("Test City");
+        location.setLocationZip(75234);
+        location.setLocationLat(65.362);
+        location.setLocationLong(56.362);
+        location = locationDao.addLocation(location);
+
+        Sighting sighting = new Sighting();
+        sighting.setSightingDate(LocalDate.parse("2022-11-15",formatter));
+        sighting.setSightingLocation(location);
+        sighting.setSightingSuper(superPerson);
+        sighting = sightingDao.addSighting(sighting);
+
+        Sighting fromDao = sightingDao.getSightingById(sighting.getSightingId());
+        assertEquals(sighting, fromDao);
+
+        sightingDao.deleteSightingById(sighting.getSightingId());
+
+        fromDao = sightingDao.getSightingById(sighting.getSightingId());
+        assertNull(fromDao);
+
+
+    }
+
     @Test
     void getSightingsForLocation() {
         Location location = new Location();
@@ -213,12 +308,14 @@ class SightingDaoDbTest {
         Sighting sighting = new Sighting();
         sighting.setSightingDate(LocalDate.parse("2022-11-15",formatter));
         sighting.setSightingLocation(location);
+        sighting.setSightingSuper(superPerson);
         sighting.setSupers(supers);
         sighting = sightingDao.addSighting(sighting);
 
         Sighting sighting2 = new Sighting();
         sighting2.setSightingDate(LocalDate.parse("2022-11-15",formatter));
         sighting2.setSightingLocation(location2);
+        sighting2.setSightingSuper(superPerson);
         sighting2.setSupers(supers);
         sighting2 = sightingDao.addSighting(sighting2);
 

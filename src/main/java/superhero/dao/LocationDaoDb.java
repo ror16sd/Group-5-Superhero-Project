@@ -72,9 +72,11 @@ public class LocationDaoDb implements LocationDao {
     @Override
     @Transactional
     public void deleteLocationById(int locationId) {
-//        //quick delete written for testing, if issue with location deleting too much information START HERE***
-//        final String DELETE_LOCATION = "DELETE FROM location WHERE locationId = ?";
-//        jdbc.update(DELETE_LOCATION, locationId);
+        //quick delete written for testing, if issue with location deleting too much information START HERE***
+        final String DELETE_LOCATION = "DELETE FROM location WHERE locationId = ?";
+        final String DELETE_LOCATION_FROM_SIGHTING = "DELETE FROM sightingLocation WHERE locationId = ?";
+        jdbc.update(DELETE_LOCATION_FROM_SIGHTING, locationId);
+        jdbc.update(DELETE_LOCATION, locationId);
     }
 
     public static final class LocationMapper implements RowMapper<Location>{

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import superhero.model.Location;
 import superhero.model.Sighting;
+import superhero.model.Super;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -23,16 +24,24 @@ public class SightingDaoDb implements SightingDao {
     @Override
     public Sighting getSightingById(int sightingId) {
         try {
-            final String SELECT_SIGHTING_BY_ID = "SELECT * FROM sightingLocation WHERE id = ?";
+            final String SELECT_SIGHTING_BY_ID = "SELECT * FROM sightingLocation WHERE sightingId = ?";
             Sighting sighting = jdbcTemplate.queryForObject(SELECT_SIGHTING_BY_ID, new SightingMapper(), sightingId);
+            sighting.setSightingLocation(getLocationForSighting(sightingId));
+            sighting.setSightingSuper(getSuperForSighting(sightingId));
             return sighting;
         } catch (DataAccessException ex) {
             return null;
         }
     }
 
+    private Super getSuperForSighting(int sightId) {
+        final String SELECT_SUPER_FOR_SIGHTING_BY_ID = "SELECT s.* FROM superPerson s " +
+                "JOIN sightingLocation m ON m.superId = s.superId WHERE s.sightingId = ?";
+        return jdbcTemplate.queryForObject(SELECT_SUPER_FOR_SIGHTING_BY_ID, new SuperDaoDb.SuperMapper(), sightId);
+
+    }
     private Location getLocationForSighting(int locationId) {
-        final String SELECT_LOCATION_FOR_SIGHTING_BY_ID = "SELECT l * FROM location l " +
+        final String SELECT_LOCATION_FOR_SIGHTING_BY_ID = "SELECT l.* FROM location l " +
                 "JOIN sightingLocation s ON s.locationId = l.locationId WHERE s.sightingId = ?";
         return jdbcTemplate.queryForObject(SELECT_LOCATION_FOR_SIGHTING_BY_ID, new LocationDaoDb.LocationMapper(), locationId);
 
@@ -52,8 +61,8 @@ public class SightingDaoDb implements SightingDao {
                 + "VALUES(?,?,?)";
         jdbcTemplate.update(INSERT_SIGHTING,
                 sighting.getSightingDate(),
-                sighting.getSightingLocation(),
-                sighting.getSightingSuper());
+                sighting.getSightingLocation().getLocationId(),
+                sighting.getSightingSuper().getSuperId());
 
         int newSightingId = jdbcTemplate.queryForObject("SELECT LAST_INSERT_ID()", Integer.class);
         sighting.setSightingId(newSightingId);
@@ -91,6 +100,7 @@ public class SightingDaoDb implements SightingDao {
     void associateLocationsForSighting(List<Sighting> sightings) {
         for (Sighting sighting : sightings) {
             sighting.setSightingLocation(getLocationForSighting(sighting.getSightingId()));
+            sighting.setSightingSuper(getSuperForSighting(sighting.getSightingId()));
         }
     }
 
