@@ -105,7 +105,7 @@ xmlns="http://www.w3.org/1999/xhtml">
                     <label for="location" class="col-3 col-form-label">
                         Location Name</label>
                     <div class="col-9">
-                        <select multiple id="location" name="locationId"
+                        <select id="location" name="locationId"
                                 class="form-control" >
                             <option th:each="location : ${locations}"
                                     th:value="${location.locationId}"

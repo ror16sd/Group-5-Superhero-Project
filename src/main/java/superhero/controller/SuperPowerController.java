@@ -7,10 +7,12 @@ package superhero.controller;
 import jakarta.servlet.http.HttpServletRequest;
 import jdk.jfr.Frequency;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import superhero.dao.PowerDao;
 import superhero.dao.SuperDao;
 import superhero.model.Power;
@@ -33,44 +35,37 @@ public class SuperPowerController {
 //    @Autowired
 //    SuperDao superDao;
 
-    @GetMapping("powers")
+    @GetMapping
     public String getSuperPowers(Model model) {
 
         List<Power> powers = powerDao.getAllPowers();
         model.addAttribute("powers", powers);
         return "SuperPower";
     }
-//
-//    @PostMapping
-//    public String createSuperPower(Power power, HttpServletRequest request) {
-//        powerDao.addPower(power);
-//        return "redirect:/SuperPower";
-//
-//    }
+
+    // Get power by ID
+    // Need to check this again, null error, powerId return null value
+    @GetMapping("/{id}")
+    public String getSuperPower(Model model, Integer powerId) {
+        Power power = powerDao.getPowerById(powerId);
+
+        model.addAttribute("power", power);
+
+        return "redirect:/super-powers";
+    }
 
 
     @PostMapping
     public String createSuperPower(HttpServletRequest request) {
-        String powerDescription;
+        String powerDescription = request.getParameter("powerDescription");
         Power power = new Power();
-
-        powerDescription = request.getParameter("name");
-
+        power.setPowerDescription(powerDescription);
         powerDao.addPower(power);
-        return "redirect:/SuperPower";
+        return "redirect:/super-powers";
     }
 
 
 
-
-
-
-
-    @GetMapping("/{id}")
-    public String getSuperPower(@PathVariable int id) {
-        Power power = powerDao.getPowerById(id);
-        return "SuperPower";
-    }
 
 
     @GetMapping("edit")
