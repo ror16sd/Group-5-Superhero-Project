@@ -219,8 +219,8 @@ class SightingDaoDbTest {
 
         Sighting retreievedSighting = sightingDao.getSightingById(sighting.getSightingId());
         assertEquals(sighting,retreievedSighting);
-        //After the fixes to the updateSuperSighting method the 2043 years was 
-        //being truncated in MySQL because it 
+        //After the fixes to the updateSuperSighting method the 2043 years was
+        //being truncated in MySQL because it
         sighting.setSightingDate(LocalDate.parse("2023-04-01",formatter));
         sightingDao.updateSighting(sighting);
 
