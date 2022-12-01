@@ -83,8 +83,8 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                 <tr th:each="power : ${powers}">
                     <td th:text="${power.powerId}"></td>
                     <td th:text="${power.powerDescription}"></td>
-                                            <td><a href="#" th:href="@{super-powers/editPower(id=${power.powerId})}">Edit</a></td>
-                                            <td><a href="#" th:href="@{super-powers/deletePower(id=${power.powerId})}">Delete</a></td>
+                                            <td><a href="#" th:href="@{super-powers/editPower(powerId=${power.powerId})}">Edit</a></td>
+                                            <td><a href="#" th:href="@{super-powers/deletePower(powerId=${power.powerId})}">Delete</a></td>
                 </tr>
                 </tbody>
             </table>
