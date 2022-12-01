@@ -34,9 +34,15 @@ public class SuperDaoDb implements SuperDao
     }
 
     private Power getPowerForSuper(int superId) {
+
         final String SELECT_POWER_FOR_SUPER = "SELECT p.* FROM power p "
                 + "JOIN superPerson s ON s.powerId = p.powerId WHERE s.superId = ?";
-        return jdbc.queryForObject(SELECT_POWER_FOR_SUPER, new PowerMapper(), superId);
+        try{
+            return jdbc.queryForObject(SELECT_POWER_FOR_SUPER, new PowerMapper(), superId);
+
+        }catch (DataAccessException e) {
+            return null;
+        }
     }
 
     @Override

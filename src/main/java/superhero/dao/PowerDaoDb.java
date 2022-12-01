@@ -59,7 +59,7 @@ public class PowerDaoDb implements PowerDao {
 
     @Override
     public void deletePowerById(int powerId) {
-        final String DELETE_HERO_POWER = "DELETE FROM superPerson WHERE powerId = ?";
+        final String DELETE_HERO_POWER = "UPDATE superPerson SET powerId = null WHERE powerId = ?";
         jdbc.update(DELETE_HERO_POWER, powerId);
 
         final String DELETE_SUPERPOWER = "DELETE FROM power WHERE powerId = ?";

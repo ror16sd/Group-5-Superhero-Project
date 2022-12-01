@@ -55,18 +55,6 @@ public class SuperPowerController {
         return "SuperPower";
     }
 
-    // Get power by ID
-    // Need to check this again, null error, powerId return null value
-//    @GetMapping
-//    public String getSuperPower(Model model, Integer powerId) {
-//        Power power = powerDao.getPowerById(powerId);
-//
-//        model.addAttribute("power", power);
-//
-//        return "redirect:/super-powers";
-//    }
-
-
     @PostMapping
     public String createSuperPower(HttpServletRequest request) {
         String powerDescription = request.getParameter("powerDescription");
@@ -82,7 +70,6 @@ public class SuperPowerController {
 
         return "redirect:/super-powers";
     }
-
 
     @GetMapping("editPower")
     public String editPower(Integer powerId, Model model) {
@@ -108,5 +95,4 @@ public class SuperPowerController {
         return "redirect:/super-powers";
 
     }
-
 }
