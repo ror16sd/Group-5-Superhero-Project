@@ -5,7 +5,10 @@
 package superhero.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Valid;
+import jakarta.validation.Validation;
+import jakarta.validation.Validator;
 import jdk.jfr.Frequency;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -23,7 +26,9 @@ import superhero.model.Super;
 
 
 import java.net.BindException;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  *
@@ -32,6 +37,8 @@ import java.util.List;
 @Controller
 @RequestMapping("/super-powers")
 public class SuperPowerController {
+
+    Set<ConstraintViolation<Power>> violations = new HashSet<>();
 
     @Autowired
     public PowerDao powerDao;
@@ -49,7 +56,7 @@ public class SuperPowerController {
 
     // Get power by ID
     // Need to check this again, null error, powerId return null value
-//    @GetMapping("/{id}")
+//    @GetMapping
 //    public String getSuperPower(Model model, Integer powerId) {
 //        Power power = powerDao.getPowerById(powerId);
 //
@@ -64,7 +71,14 @@ public class SuperPowerController {
         String powerDescription = request.getParameter("powerDescription");
         Power power = new Power();
         power.setPowerDescription(powerDescription);
-        powerDao.addPower(power);
+
+        Validator validate = Validation.buildDefaultValidatorFactory().getValidator();
+        violations = validate.validate(power);
+
+        if (violations.isEmpty()) {
+            powerDao.addPower(power);
+        }
+
         return "redirect:/super-powers";
     }
 
@@ -86,28 +100,6 @@ public class SuperPowerController {
         return "redirect:/super-powers";
 
     }
-
-//    public String editPower(Integer powerId, Model model) {
-//
-//        Power power = powerDao.getPowerById(powerId);
-//        List<Super> superheroes = superDao.getAllSupers();
-//        model.addAttribute("superheroes", superheroes);
-//        model.addAttribute("power", power);
-//
-//
-//        return "EditPower";
-//
-//    }
-//
-//    @PostMapping("editPower")
-//    public String performEditPower(@Valid Power power, BindingResult result){
-//        if(result.hasErrors()) {
-//            return "EditPower";
-//        }
-//        powerDao.updatePower(power);
-//        return "redirect:/super-powers";
-//
-//    }
 
     @GetMapping("deletePower")
     public String deleteSuperPower(Integer powerId) {
