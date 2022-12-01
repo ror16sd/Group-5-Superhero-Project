@@ -15,4 +15,5 @@ public interface SightingDao {
     void deleteSightingById(int sightingId);
 
     List<Sighting> getSightingsForLocation(Location location);
+    List<Sighting> getTop10Sightings();
 }
