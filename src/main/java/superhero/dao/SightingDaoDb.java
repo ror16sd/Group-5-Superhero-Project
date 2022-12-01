@@ -88,7 +88,7 @@ public class SightingDaoDb implements SightingDao {
     @Transactional
     public Sighting addSighting(Sighting sighting) {
         //TODO: should the model be changed?
-        //date needed to be date since this is how it appears in the
+        //date needed to be sightingDate since this is how it appears in the
         //database
         final String INSERT_SIGHTING = "INSERT INTO sightinglocation (date , locationId, superId) "
                 + "VALUES(?,?,?)";
@@ -145,7 +145,7 @@ public class SightingDaoDb implements SightingDao {
         public Sighting mapRow(ResultSet rs, int index) throws SQLException {
             Sighting sighting = new Sighting();
             sighting.setSightingId(rs.getInt("sightingId"));
-            //changed date to date since this is how date column
+            //changed date to sightingDate since this is how date column
             //appears in the database
             sighting.setSightingDate(rs.getDate("date").toLocalDate());
             return sighting;
