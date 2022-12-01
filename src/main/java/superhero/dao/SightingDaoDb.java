@@ -38,6 +38,17 @@ public class SightingDaoDb implements SightingDao {
             return null;
         }
     }
+    
+    public List<Sighting> getTop10Sightings() {
+        try {
+            final String SELECT_TOP_10_SIGHTINGS = "SELECT * FROM sightinglocation ORDER BY DATE DESC LIMIT 10;";
+            List<Sighting> sightings = jdbcTemplate.query(SELECT_TOP_10_SIGHTINGS, new SightingMapper());
+            associateLocationsForSighting(sightings);
+            return sightings;
+        } catch(DataAccessException error) {
+            return null;
+        }
+    }
 
     private Super getSuperForSighting(int sightId) {
         //WHERE s.sightingId needed to be changed to WHERE m.sightingId since

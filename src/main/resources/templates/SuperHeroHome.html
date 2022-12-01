@@ -20,26 +20,23 @@ xmlns="http://www.w3.org/1999/xhtml">
     <nav class="navbar navbar-expand-lg navbar-dark bg-secondary">
         <a class="navbar-brand" href="">SuperSightings</a>
         <ul class="navbar-nav ms-auto">
-            <li class="nav-item">
+            <li class="nav-item px-2">
 <!--                <a href="SuperHeroHome.html" class="navbar__links">Home</a>-->
                 <a href="/" th:href="@{/}">Home</a>
-            </li> &nbsp; &nbsp;
-            <li class="nav-item">
+            </li>
+            <li class="nav-item px-2">
                 <a href="/super-people" class="navbar__links">Who</a>
-            </li>  &nbsp; &nbsp;
-            <li class="nav-item">
+            </li>
+            <li class="nav-item px-2">
                 <a href="/super-powers" class="navbar__links">SuperPower</a>
-            </li>  &nbsp; &nbsp;
-            <li class="nav-item">
+            </li>
+            <li class="nav-item px-2">
                 <a href="/super-organizations" class="navbar__links">Organization</a>
-            </li>  &nbsp; &nbsp;
-            <li class="nav-item">
-                <a href="HomeBase.html" class="navbar__links">HomeBase</a>
-            </li>  &nbsp; &nbsp;
-            <li class="nav-item">
+            </li>
+            <li class="nav-item px-2">
                 <a href="/super-sightings" class="navbar__links">Sighting</a>
-            </li>  &nbsp; &nbsp;
-            <li class="nav-item">
+            </li>
+            <li class="nav-item px-2">
                 <a href="/gallery" class="navbar__links">Gallery</a>
         </ul>
     </nav></div>
@@ -64,6 +61,32 @@ xmlns="http://www.w3.org/1999/xhtml">
             <div od="Top10">
                 <h3>Top 10 Sightings</h3>
             <p class="Top10"></p>
+            </div>
+            <div class="row m-4 border border-dark">
+                <div class="col text-center m-3">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Sighting Date</th>
+                                <th>Location</th>
+                                <th>Super seen</th>
+                                <th>Super Status</th>
+                                <th>Super Power</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="sighting : ${top10Sightings}">
+                                <td th:text="${sighting.sightingDate}">Sighting Date</td>
+                                <td th:text="${sighting.sightingLocation.locationName}">Location Name</td>
+                                <td th:text="${sighting.sightingSuper.superName}">Super Name</td>
+                                <td th:if="${sighting.sightingSuper.isSuper == true}" th:text="Hero">Super Status</td>
+                                <td th:if="${sighting.sightingSuper.isSuper == false}" th:text="False">Super Status</td>
+                                <td th:text="${sighting.sightingSuper.power.powerDescription}">Super Description</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
             </div>
             <br>
             <footer>
