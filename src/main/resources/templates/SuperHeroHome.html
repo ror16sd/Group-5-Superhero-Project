@@ -81,7 +81,7 @@ xmlns="http://www.w3.org/1999/xhtml">
                                 <td th:text="${sighting.sightingSuper.superName}">Super Name</td>
                                 <td th:if="${sighting.sightingSuper.isSuper == true}" th:text="Hero">Super Status</td>
                                 <td th:if="${sighting.sightingSuper.isSuper == false}" th:text="False">Super Status</td>
-                                <td th:text="${sighting.sightingSuper.power.powerDescription}">Super Description</td>
+                                <td th:text="${sighting.sightingSuper.power != null} ? ${sighting.sightingSuper.power.powerDescription} : 'Power Unknown'">Power Description</td>
                             </tr>
                         </tbody>
                     </table>

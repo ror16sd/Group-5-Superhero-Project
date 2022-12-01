@@ -120,7 +120,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                         <tr th:each="super : ${superPeople}">
                             <td th:text="${super.superId}">Super ID</td>
                             <td th:text="${super.superName}">Hero/Villain Name</td>
--->                            <td th:text="${super.power != null} ? ${super.power.powerDescription} : 'Power Unknown'">Power Unknown</td>
+-->                            <td th:text="${super.power != null} ? ${super.power.powerDescription} : 'Power Unknown'">Power Description</td>
                             <td th:if="${super.isSuper == true}" th:text="Hero">Hero</td>
                             <td th:if="${super.isSuper == false}" th:text="Villain">Villain</td>
                             <td th:text="${super.superDescription}">Description</td>
