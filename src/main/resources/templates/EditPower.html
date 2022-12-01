@@ -55,12 +55,12 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
   <div class="col-7 text-center m-3">
     <form action="/super-powers/editPower" method="POST">
       <div class="form-group row">
-        <label for="powers" class="col-3 col-form-label">
+        <label for="powerDescription" class="col-3 col-form-label">
           Superpower Description</label>
           <div class="col-9">
-            <input type="text" name="name" id="powers" class="form-control"
-                   th:value="${power.powerId}"
-                   th:text="${power.powerDescription}"/>
+            <input hidden name="powerId" th:value="${power.powerId}">
+            <input type="text" name="powerDescription" id="powerDescription" class="form-control"
+                   th:value="${power.powerDescription}"/>
 
 <!--            <div th:if="${#fields.hasErrors('power.powerDescription')}">-->
 <!--              <p th:each="error : ${#fields.errors('power.powerDescription')}" class="alert alert-danger"-->

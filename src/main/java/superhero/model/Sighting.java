@@ -110,4 +110,16 @@ public class Sighting {
         }
               return true;
     }
+
+    @Override
+    public String toString() {
+        return "Sighting{" +
+                "sightingId=" + sightingId +
+                ", sightingDate=" + sightingDate +
+                ", sightingLocation=" + sightingLocation +
+                ", sightingLocations=" + sightingLocations +
+                ", supers=" + supers +
+                ", sightingSuper=" + sightingSuper +
+                '}';
+    }
 }

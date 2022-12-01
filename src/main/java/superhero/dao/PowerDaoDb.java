@@ -72,15 +72,14 @@ public class PowerDaoDb implements PowerDao {
     }
 
 
-        public static final class PowerMapper implements RowMapper<Power> {
-            @Override
-            public Power mapRow (ResultSet rs, int index) throws SQLException {
-                Power power = new Power();
-                power.setPowerId(rs.getInt("powerId"));
-                power.setPowerDescription(rs.getString("powerDescription"));
+    public static final class PowerMapper implements RowMapper<Power> {
+        @Override
+        public Power mapRow (ResultSet rs, int index) throws SQLException {
+            Power power = new Power();
+            power.setPowerId(rs.getInt("powerId"));
+            power.setPowerDescription(rs.getString("powerDescription"));
 
-                return power;
-            }
+            return power;
         }
     }
-
+}

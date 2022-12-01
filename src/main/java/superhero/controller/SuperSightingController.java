@@ -88,10 +88,13 @@ public class SuperSightingController {
 //        return "NOT IMPLEMENTED: Get specific super sighting";
 //    }
 //
+
     @GetMapping("editSighting")
     public String updateSuperSighting(Integer sightingId, Model model) {
+
         Sighting sighting = sightingDao.getSightingById(sightingId);
         List<Super> superheroes = superDao.getAllSupers();
+        System.out.println(sighting.toString());
         List<Location> locations = locationDao.getAllLocations();
         model.addAttribute("sighting", sighting);
         model.addAttribute("superheroes", superheroes);
@@ -100,12 +103,16 @@ public class SuperSightingController {
         return "editSighting";
     }
 
+
     @PostMapping("editSighting")
     public String performEditSighting(@Valid Sighting sighting, BindingResult result,
                                       HttpServletRequest request, Model model) {
         String superId = request.getParameter("superId");
         String locationId = request.getParameter("locationId");
         String date = request.getParameter("date");
+
+        System.out.println(sighting.toString());
+
 
         if (superId == null) {
             FieldError error = new FieldError("sighting", "super", "Must include a super");
@@ -122,14 +129,21 @@ public class SuperSightingController {
             result.addError(error);
         }
 
+
+
+
         sighting.setSightingSuper(superDao.getSuperById(Integer.parseInt(superId)));
         sighting.setSightingLocation(locationDao.getLocationById(Integer.parseInt(locationId)));
         sighting.setSightingDate(LocalDate.parse(date));
 
+        sightingDao.updateSighting(sighting);
+
         if (result.hasErrors()) {
             model.addAttribute("sighting", sighting);
-            return "editSighting";
+
+            return "redirect:/super-sightings/editSighting?sightingId=" + sighting.getSightingId();
         }
+        sightingDao.updateSighting(sighting);
 
         return "redirect:/super-sightings";
 
