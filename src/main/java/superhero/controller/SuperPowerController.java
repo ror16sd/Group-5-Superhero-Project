@@ -72,16 +72,15 @@ public class SuperPowerController {
     @GetMapping("editPower")
     public String editPower(Integer powerId, Model model) {
         Power power = powerDao.getPowerById(powerId);
-//        power.setPowerId(powerId);
         model.addAttribute("power", power);
         return "EditPower";
     }
 
     @PostMapping("editPower")
     public String performEditPower(@Valid Power power, BindingResult result, Model model) {
-//        if(result.hasErrors()) {
-//            return "EditPower";
-//        }
+        if(result.hasErrors()) {
+            return "EditPower";
+        }
 
         powerDao.updatePower(power);
         return "redirect:/super-powers";

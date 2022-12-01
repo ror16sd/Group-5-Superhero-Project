@@ -62,10 +62,10 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
             <input type="text" name="powerDescription" id="powerDescription" class="form-control"
                    th:value="${power.powerDescription}"/>
 
-<!--            <div th:if="${#fields.hasErrors('power.powerDescription')}">-->
-<!--              <p th:each="error : ${#fields.errors('power.powerDescription')}" class="alert alert-danger"-->
-<!--                 th:text="${error}"> Name errors</p>-->
-<!--            </div>-->
+            <div th:if="${#fields.hasErrors('power.powerDescription')}">
+              <p th:each="error : ${#fields.errors('power.powerDescription')}" class="alert alert-danger"
+                 th:text="${error}"> Name errors</p>
+            </div>
           </div>
 
 
