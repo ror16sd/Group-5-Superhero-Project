@@ -52,27 +52,24 @@ public class PowerDaoDb implements PowerDao {
 
     @Override
     public void updatePower(Power power) {
-        final String UPDATE_POWER = "UPDATE Power set name = ?"
+        final String UPDATE_POWER = "UPDATE power SET powerDescription = ? "
                 + "WHERE powerId = ?";
         jdbc.update(UPDATE_POWER, power.getPowerDescription(), power.getPowerId());
     }
 
     @Override
     public void deletePowerById(int powerId) {
-//        final String DELETE_HERO_POWER = "DELETE FROM superPerson WHERE powerId = ?";
-//        jdbc.update(DELETE_HERO_POWER, powerId);
+        final String DELETE_HERO_POWER = "DELETE FROM superPerson WHERE powerId = ?";
+        jdbc.update(DELETE_HERO_POWER, powerId);
 
-//        final String DELETE_SUPERPOWER = "DELETE FROM power WHERE powerId = ?";
-//        jdbc.update(DELETE_SUPERPOWER, powerId);
+        final String DELETE_SUPERPOWER = "DELETE FROM power WHERE powerId = ?";
+        jdbc.update(DELETE_SUPERPOWER, powerId);
     }
 
     @Override
     public List<Power> getPowerForSuper(Super superHero) {
         return null;
     }
-
-//<<<<<<< Updated upstream
-
 
 
         public static final class PowerMapper implements RowMapper<Power> {
