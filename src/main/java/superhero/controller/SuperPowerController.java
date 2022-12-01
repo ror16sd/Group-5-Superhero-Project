@@ -5,28 +5,23 @@
 package superhero.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
 import jdk.jfr.Frequency;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import superhero.dao.PowerDao;
 import superhero.dao.SuperDao;
-import superhero.model.Location;
 import superhero.model.Power;
-import superhero.model.Sighting;
-import superhero.model.Super;
 
-import javax.validation.Valid;
 import java.net.BindException;
 import java.util.List;
 
 /**
  *
- // * @author ciruf
+// * @author ciruf
  */
 @Controller
 @RequestMapping("/super-powers")
@@ -35,10 +30,10 @@ public class SuperPowerController {
     @Autowired
     public PowerDao powerDao;
 
-    @Autowired
-    SuperDao superDao;
+//    @Autowired
+//    SuperDao superDao;
 
-    @GetMapping
+    @GetMapping("powers")
     public String getSuperPowers(Model model) {
 
         List<Power> powers = powerDao.getAllPowers();
@@ -46,72 +41,53 @@ public class SuperPowerController {
         return "SuperPower";
     }
 
-    // Get power by ID
-    // Need to check this again, null error, powerId return null value
-    @GetMapping("/{id}")
-    public String getSuperPower(Model model, Integer powerId) {
-        Power power = powerDao.getPowerById(powerId);
-
-        model.addAttribute("power", power);
-
-        return "redirect:/super-powers";
-    }
-
-
     @PostMapping
-    public String createSuperPower(HttpServletRequest request) {
-        String powerDescription = request.getParameter("powerDescription");
-        Power power = new Power();
-        power.setPowerDescription(powerDescription);
-        powerDao.addPower(power);
-        return "redirect:/super-powers";
-    }
-
-
-    @GetMapping("editPower")
-    public String editPower(Integer powerId, Model model) {
-        Power power = powerDao.getPowerById(powerId);
-        model.addAttribute("power", power);
-        return "EditPower";
-    }
-
-    @PostMapping("editPower")
-    public String performEditPower(@Valid Power power, BindingResult result, Model model) {
-        if(result.hasErrors()) {
-            return "EditPower";
-        }
-
-        powerDao.updatePower(power);
-        return "redirect:/super-powers" + power.getPowerId();
+    public String createSuperPower(Power power, HttpServletRequest request) {
+//        powerDao.addPower(power);
+        return "redirect:/SuperPower";
 
     }
 
-//    public String editPower(Integer powerId, Model model) {
-//
-//        Power power = powerDao.getPowerById(powerId);
-//        List<Super> superheroes = superDao.getAllSupers();
-//        model.addAttribute("superheroes", superheroes);
+    @GetMapping("/{id}")
+    public String getSuperPower(@PathVariable int id) {
+//        Power power = powerDao.getPowerById(id);
+        return "SuperPower";
+    }
+
+
+    @GetMapping("edit")
+    public String editPower(Integer id, Model model) {
+//        Power power = powerDao.getPowerById(id);
 //        model.addAttribute("power", power);
-//
-//
-//        return "EditPower";
-//
-//    }
-//
-//    @PostMapping("editPower")
-//    public String performEditPower(@Valid Power power, BindingResult result){
-//        if(result.hasErrors()) {
-//            return "EditPower";
-//        }
+        return "editPower";
+    }
+
+
+
+//    @PutMapping("/{id}")
+//    public String updateSuperPower(@PathVariable int id, @RequestBody Power power) {
+//        Power updatePower = powerDao.getPowerById(id);
+//        updatePower.setPowerId(power.getPowerId());
+//        updatePower.setPowerDescription(power.getPowerDescription());
 //        powerDao.updatePower(power);
-//        return "redirect:/super-powers";
-//
+//        return "editPower";
 //    }
+//
+    @PostMapping("edit")
+    public String performEditPower(@Valid Power power, BindingResult result){
+        if(result.hasErrors()) {
+            return "editPower";
+        }
+//        powerDao.updatePower(power);
+        return "redirect:/SuperPower";
+
+    }
+
 
     @GetMapping("deletePower")
-    public String deleteSuperPower(Integer powerId) {
-        powerDao.deletePowerById(powerId);
-        return "redirect:/super-powers";
+    public String deleteSuperPower(@PathVariable int powerId) {
+//        powerDao.deletePowerById(powerId);
+        return "redirect:/SuperPower";
 
     }
 

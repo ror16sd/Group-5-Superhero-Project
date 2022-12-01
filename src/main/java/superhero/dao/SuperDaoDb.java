@@ -93,7 +93,7 @@ public class SuperDaoDb implements SuperDao
         final String DELETE_SUPER_ORG = "DELETE FROM super_organization WHERE superId = ?";
         jdbc.update(DELETE_SUPER_ORG, superId);
 
-        final String DELETE_SUPER = "DELETE FROM super WHERE superId = ?";
+        final String DELETE_SUPER = "DELETE FROM superPerson WHERE superId = ?";
         jdbc.update(DELETE_SUPER, superId);
     }
 

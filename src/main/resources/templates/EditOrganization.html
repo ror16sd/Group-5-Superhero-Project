@@ -50,20 +50,21 @@ xmlns="http://www.w3.org/1999/xhtml">
         </div>
     <div class="row m-4 border border-dark">
         <div class="col-3 text-center m-3">
-            <span class="h3">Add Organization</span>
+            <span class="h3">Edit Organization</span>
         </div>
         <div class="col-7 text-center m-3">
-            <form action="/super-organizations" method="POST">
+            <form action="/super-organizations/edit" method="POST">
                 <div class="col-12 m-1 text-center" 
                     th:if="${!errors.isEmpty()}">
                         <p class="alert alert-danger" th:each="error : ${errors}" 
                       th:text="${error.message}">Error message</p>
                 </div>
                 <div class="form-group row">
+                    <input hidden type="text" id="organizationId" name="organizationId" th:value="${organization.organizationId}">
                     <label for="organizationName" class="col-3 col-form-label">
                         Organization</label>
                     <div class="col-9">
-                        <input type="text" name="organizationName" 
+                        <input th:value="${organization.organizationName}"type="text" name="organizationName" 
                                id="organizationName" class="form-control"/>
                     </div>
                 </div>
@@ -71,7 +72,7 @@ xmlns="http://www.w3.org/1999/xhtml">
                     <label for="organizationDescription" class="col-3 col-form-label">
                         Description</label>
                     <div class="col-9">
-                        <input type="text" name="organizationDescription" 
+                        <input th:value="${organization.organizationDescription}"type="text" name="organizationDescription" 
                                id="organizationDescription" class="form-control"/>
                     </div>
                 </div>
@@ -82,6 +83,7 @@ xmlns="http://www.w3.org/1999/xhtml">
 
                             <select id="location" name="locationId" class="form-control" >
                                 <option th:each="location : ${locations}" 
+                                        th:selected="${location.locationId == organization.location.locationId}"
                                         th:value="${location.locationId}" 
                                         th:text="${location.locationName}">
                                     Location Name</option>
@@ -95,51 +97,18 @@ xmlns="http://www.w3.org/1999/xhtml">
                         <select multiple id="superMemberIds" name="superMemberIds" 
                                 class="form-control" >
                             <option th:each="super : ${superPeople}" 
+                                    th:selected="*{superMemberIds.contains(super.superId)}"
                                     th:value="${super.superId}" 
                                     th:text="${super.superName}">
                                 Names of Supers</option>
                         </select>
                     </div>
                 </div>
-                <button type="submit" class="btn btn-primary">Add Organization</button>
+                <button type="submit" class="btn btn-primary">Edit Organization</button>
             </form>
         </div>
     </div>
-    <div class="row m-4 border border-dark">
-        <div class="col text-center m-3">
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Organization</th>
-                        <th>Location</th>
-                        <th>Description</th>
-<!--                        <th>Total Members</th>-->
-                        <th>Details</th>
-                        <th>Edit</th>
-                        <th>Delete</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr th:each="organization : ${organizations}">
-                        <td th:text="${organization.organizationId}">Organization ID</td>
-                        <td th:text="${organization.organizationName}">Organization Name</td>
-                        <td th:text="${organization.location.locationName}">Location Name</td>
-                        <td th:text="${organization.organizationDescription}">Organization Description</td>
-<!--                        <td th:text="${#lists.size(organization.superMembers)}">Total Members</td>-->
-                        <td><a href="#" th:href="@{/super-organizations/details(id=${organization.organizationId})}">Details</a></td>
-                        <td><a href="#" th:href="@{/super-organizations/edit(id=${organization.organizationId})}">Edit</a></td>
-                        <td><a href="#" th:href="@{/super-organizations/delete(id=${organization.organizationId})}">Delete</a></td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-</div> 
-
-     
-
-
+        
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>

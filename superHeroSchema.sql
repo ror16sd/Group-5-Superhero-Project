@@ -41,9 +41,9 @@ superId int not null,
 organizationId int not null,
 primary key (superId, organizationId),
  foreign key (superId) 
-	references superPerson(superId),
+   references superPerson(superId),
  foreign key (organizationId) 
-	references superOrganization(organizationId));
+   references superOrganization(organizationId));
 
 Create Table sightingLocation(
 sightingId int not null primary key auto_increment,

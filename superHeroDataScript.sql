@@ -18,7 +18,6 @@ Insert into superperson(superName, powerId, superDescription, isSuper)
 VALUES
 ('Superman', 1, 'Americas Hero', 1), 
 ('The Joker', 4, 'Pure psychopath', 0);
-('The Wholesome Six', 3, "Angels", 1);
 
 Insert into superOrganization(organizationName, organizationDescription, locationId)
 VALUES
@@ -28,9 +27,7 @@ VALUES
 
 Insert into sightingLocation(date, locationId, superId)
 VALUES
-('2022-11-11 13:23:44', 1, 1);
-('2022-10-29 18:00:35', 2, 5);
-
+('2022-11-11', 1, 1);
 
 Insert into super_Organization(superId, organizationId)
 VALUES

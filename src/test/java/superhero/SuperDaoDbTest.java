@@ -8,6 +8,8 @@ import superhero.model.*;
 
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 @SpringBootTest
 class SuperDaoDbTest {
 
@@ -63,26 +65,98 @@ class SuperDaoDbTest {
     }
 
     @Test
-    void getSuperById() {
+    void testGetSuperByIdAndAdd() {
+        Power power = new Power();
+        power.setPowerDescription("Test Power");
+        power = powerDao.addPower(power);
+
+        Super superPerson = new Super();
+        superPerson.setSuperName("Test Name");
+        superPerson.setSuperDescription("Test Description");
+        superPerson.setIsSuper(true);
+        superPerson.setPower(power);
+        superPerson = superDao.addSuper(superPerson);
+
+        Super retrievedSuper = superDao.getSuperById(superPerson.getSuperId());
+        assertEquals(superPerson,retrievedSuper);
     }
 
     @Test
     void getAllSupers() {
-    }
+        Power power = new Power();
+        power.setPowerDescription("Test Power");
+        power = powerDao.addPower(power);
 
-    @Test
-    void addSuper() {
+        Super superPerson = new Super();
+        superPerson.setSuperName("Test Name");
+        superPerson.setSuperDescription("Test Description");
+        superPerson.setIsSuper(true);
+        superPerson.setPower(power);
+        superPerson = superDao.addSuper(superPerson);
+
+        Power power1 = new Power();
+        power1.setPowerDescription("Test Power1");
+        power1 = powerDao.addPower(power1);
+
+        Super superPerson1 = new Super();
+        superPerson1.setSuperName("Test Name1");
+        superPerson1.setSuperDescription("Test Description1");
+        superPerson1.setIsSuper(true);
+        superPerson1.setPower(power1);
+        superPerson1 = superDao.addSuper(superPerson1);
+
+        List<Super> supers = superDao.getAllSupers();
+        assertEquals(2,supers.size());
+        assertTrue(supers.contains(superPerson));
+        assertTrue(supers.contains(superPerson1));
     }
 
     @Test
     void updateSuper() {
+        Power power = new Power();
+        power.setPowerDescription("Test Power");
+        power = powerDao.addPower(power);
+
+        Super superPerson = new Super();
+        superPerson.setSuperName("Test Name");
+        superPerson.setSuperDescription("Test Description");
+        superPerson.setIsSuper(true);
+        superPerson.setPower(power);
+        superPerson = superDao.addSuper(superPerson);
+
+        Super retrievedSuper = superDao.getSuperById(superPerson.getSuperId());
+        assertEquals(superPerson,retrievedSuper);
+
+        superPerson.setSuperName("New Test Name");
+        superDao.updateSuper(superPerson);
+
+        assertNotEquals(superPerson,retrievedSuper);
+
+        retrievedSuper = superDao.getSuperById(superPerson.getSuperId());
+
+        assertEquals(superPerson,retrievedSuper);
     }
 
     @Test
     void deleteSuperById() {
+        Power power = new Power();
+        power.setPowerDescription("Test Power");
+        power = powerDao.addPower(power);
+
+        Super superPerson = new Super();
+        superPerson.setSuperName("Test Name");
+        superPerson.setSuperDescription("Test Description");
+        superPerson.setIsSuper(true);
+        superPerson.setPower(power);
+        superPerson = superDao.addSuper(superPerson);
+
+        Super retrievedSuper = superDao.getSuperById(superPerson.getSuperId());
+        assertEquals(superPerson,retrievedSuper);
+
+        superDao.deleteSuperById(superPerson.getSuperId());
+
+        retrievedSuper = superDao.getSuperById(superPerson.getSuperId());
+        assertNull(retrievedSuper);
     }
 
-    @Test
-    void getPowersForSuper() {
-    }
 }
