@@ -28,16 +28,23 @@ public class SuperOrganizationDaoDb implements SuperOrganizationDao {
     @Override
     public SuperOrganization getSuperOrganizationById(int superOrgId) {
         try {
-            final String GET_SUPERORGANIZATION_BY_ID = "Select * superOrganization WHERE id = ?";
+            final String GET_SUPERORGANIZATION_BY_ID = "Select * superOrganization WHERE organizationId = ?";
             SuperOrganization superOrganization = jdbcTemplate.queryForObject(GET_SUPERORGANIZATION_BY_ID, new SuperOrganizationMapper(), superOrgId);
             superOrganization.setSupers(getSuperForSuperOrganization(superOrgId));
-            superOrganization.setLocation(superOrganization.getLocation());
+            superOrganization.setLocation(getLocationForSuperOrg(superOrgId));
             return superOrganization;
         } catch (DataAccessException ex) {
             return null;
         }
     }
 
+
+    private Location getLocationForSuperOrg(int superOrgId) {
+        final String SELECT_LOCATION_FOR_SIGHTING_BY_ID = "SELECT l.* FROM location l " +
+                "JOIN superOrganization s ON s.locationId = l.locationId WHERE s.organizationId = ?";
+        return jdbcTemplate.queryForObject(SELECT_LOCATION_FOR_SIGHTING_BY_ID, new LocationDaoDb.LocationMapper(), superOrgId);
+
+    }
     @Override
     public List<SuperOrganization> getOrganizationsForSuper(Super superPerson) {
         final String SELECT_SUPERS_FOR_ORGANIZATION = "SELECT o.* FROM superOrganization o JOIN "
@@ -50,11 +57,11 @@ public class SuperOrganizationDaoDb implements SuperOrganizationDao {
     }
     @Override
     public List<SuperOrganization> getOrganizationsForLocation(Location location) {
-       final String SELECT_LOCATION_FOR_ORGANIZATION ="SELECT * FROM superOrganization WHERE locationId =?";
-       List<SuperOrganization> superOrganizations = jdbcTemplate.query(SELECT_LOCATION_FOR_ORGANIZATION,
-               new SuperOrganizationMapper(), location.getLocationId());
-       associateOrganizationAndSuper(superOrganizations);
-       return superOrganizations;
+        final String SELECT_LOCATION_FOR_ORGANIZATION ="SELECT * FROM superOrganization WHERE locationId =?";
+        List<SuperOrganization> superOrganizations = jdbcTemplate.query(SELECT_LOCATION_FOR_ORGANIZATION,
+                new SuperOrganizationMapper(), location.getLocationId());
+        associateOrganizationAndSuper(superOrganizations);
+        return superOrganizations;
     }
 
     @Override
@@ -108,7 +115,7 @@ public class SuperOrganizationDaoDb implements SuperOrganizationDao {
     public void updateSuperOrganization(SuperOrganization superOrganization) {
         final String UPDATE_SUPERORGANIZATION =
                 "UPDATE superOrganization SET organizationName = ?, organizationDescription = ?, locationId = ?" +
-                "WHERE organizationId = ?";
+                        "WHERE organizationId = ?";
         jdbcTemplate.update(UPDATE_SUPERORGANIZATION,
                 superOrganization.getOrganizationName(),
                 superOrganization.getOrganizationDescription(),

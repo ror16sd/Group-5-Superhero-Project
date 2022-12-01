@@ -16,7 +16,7 @@ public class Sighting {
 
     private int sightingId;
 
-    private LocalDate date;
+    private LocalDate sightingDate;
 
     private Location sightingLocation;
 
@@ -51,11 +51,11 @@ public class Sighting {
     }
 
     public LocalDate getSightingDate() {
-        return date;
+        return sightingDate;
     }
 
     public void setSightingDate(LocalDate sightingDate) {
-        this.date = sightingDate;
+        this.sightingDate = sightingDate;
     }
 
     public Location getSightingLocation() {
@@ -78,7 +78,7 @@ public class Sighting {
     public int hashCode() {
         int hash = 3;
         hash = 61 * hash + this.sightingId;
-        hash = 61 * hash + Objects.hashCode(this.date);
+        hash = 61 * hash + Objects.hashCode(this.sightingDate);
         hash = 61 * hash + Objects.hashCode(this.sightingLocation);
         hash = 61 * hash + Objects.hashCode(this.sightingSuper);
         return hash;
@@ -99,7 +99,7 @@ public class Sighting {
         if (this.sightingId != other.sightingId) {
             return false;
         }
-        if (!Objects.equals(this.date, other.date)) {
+        if (!Objects.equals(this.sightingDate, other.sightingDate)) {
             return false;
         }
         if (!Objects.equals(this.sightingLocation, other.sightingLocation)) {
@@ -109,5 +109,17 @@ public class Sighting {
             return false;
         }
               return true;
+    }
+
+    @Override
+    public String toString() {
+        return "Sighting{" +
+                "sightingId=" + sightingId +
+                ", sightingDate=" + sightingDate +
+                ", sightingLocation=" + sightingLocation +
+                ", sightingLocations=" + sightingLocations +
+                ", supers=" + supers +
+                ", sightingSuper=" + sightingSuper +
+                '}';
     }
 }
