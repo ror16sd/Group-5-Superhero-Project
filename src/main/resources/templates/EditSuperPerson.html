@@ -87,7 +87,7 @@ xmlns="http://www.w3.org/1999/xhtml">
                                     <option th:each="power : ${powers}" 
                                             th:value="${power.powerId}" 
                                             th:text="${power.powerDescription}"
-                                            th:selected="${power.powerId == superPerson.power.powerId}">
+                                            th:selected="${power?.powerId == superPerson.power?.powerId}">
                                         Power Description</option>
                                 </select>
                             </div>
