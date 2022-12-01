@@ -131,7 +131,7 @@ public class SuperSightingController {
             return "editSighting";
         }
 
-        return "redirect:/Sighting";
+        return "redirect:/super-sightings";
 
     }
     
