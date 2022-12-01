@@ -1,11 +1,17 @@
 package superhero.model;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+
 import java.util.Objects;
 
 public class Power {
 
     private int powerId;
 
+    // add validation to powerDescription variable
+    @NotBlank(message = "Description must not be blank")
+    @Size(max = 30, message = "Description must be fewer than 30 characters")
     private String powerDescription;
 
     public int getPowerId() {
