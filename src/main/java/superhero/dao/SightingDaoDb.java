@@ -22,7 +22,7 @@ public class SightingDaoDb implements SightingDao {
 
     @Autowired
     JdbcTemplate jdbcTemplate;
-    
+
     @Autowired
     SuperDao superDao;
 
@@ -49,15 +49,15 @@ public class SightingDaoDb implements SightingDao {
         return superDao.getSuperById(idOfSuper);
 
     }
-    
+
 //    private List<Sighting> setSuperForSightings(List<Sighting> sightingsList) {
 //        for (Sighting sighting: sightingsList) {
 //            sighting.setSightingSuper(getSuperForSighting(sighting.getSightingId()));
 //        }
-//        
+//
 //        return sightingsList;
 //    }
-    
+
     //Changed to int sightingId instead of int locationId which was
     //causing the error with this method
     private Location getLocationForSighting(int sightingId) {
@@ -66,7 +66,7 @@ public class SightingDaoDb implements SightingDao {
         return jdbcTemplate.queryForObject(SELECT_LOCATION_FOR_SIGHTING_BY_ID, new LocationDaoDb.LocationMapper(), sightingId);
 
     }
-    
+
     private List<Sighting> setLocationForSightings(List<Sighting> sightingsList) {
         for (Sighting sighting: sightingsList) {
             sighting.setSightingLocation(getLocationForSighting(sighting.getSightingId()));
@@ -88,7 +88,7 @@ public class SightingDaoDb implements SightingDao {
     @Transactional
     public Sighting addSighting(Sighting sighting) {
         //TODO: should the model be changed?
-        //date needed to be sightingDate since this is how it appears in the 
+        //date needed to be date since this is how it appears in the
         //database
         final String INSERT_SIGHTING = "INSERT INTO sightinglocation (date , locationId, superId) "
                 + "VALUES(?,?,?)";
@@ -132,7 +132,7 @@ public class SightingDaoDb implements SightingDao {
         associateLocationsForSighting(sightings);
         return sightings;
     }
-    
+
     void associateLocationsForSighting(List<Sighting> sightings) {
         for (Sighting sighting : sightings) {
             sighting.setSightingLocation(getLocationForSighting(sighting.getSightingId()));
@@ -145,11 +145,10 @@ public class SightingDaoDb implements SightingDao {
         public Sighting mapRow(ResultSet rs, int index) throws SQLException {
             Sighting sighting = new Sighting();
             sighting.setSightingId(rs.getInt("sightingId"));
-            //changed date to sightingDate since this is how date column
+            //changed date to date since this is how date column
             //appears in the database
             sighting.setSightingDate(rs.getDate("date").toLocalDate());
             return sighting;
         }
     }
 }
-
