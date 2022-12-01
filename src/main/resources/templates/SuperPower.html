@@ -42,40 +42,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
         </li>  &nbsp; &nbsp;
     </ul>
 </nav>
-<!--<div class="container">-->
-<!--    <div class="row m-4">-->
-<!--        <div class="col text-center border border-dark">-->
-<!--            <h1>What is Their SuperPower?</h1>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--    <div class="row m-4 border border-dark">-->
-<!--        <div class="col-3 text-center m-3">-->
-<!--            <span class="h3">Add SuperPower</span>-->
-<!--        </div>-->
-<!--        <div class="col-7 text-center m-3">-->
-<!--            <form action="super-powers" method="POST">-->
-<!--                <div class="form-group row">-->
-<!--                    <label for="superPower" class="col-3 col-form-label">-->
-<!--                        Power</label>-->
-<!--                    <div class="col-9">-->
-<!--                        <input type="text" name="powerName"-->
-<!--                               id="superPower" class="form-control"/>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--                <div class="form-group row">-->
-<!--                    <label for="lastName" class="col-3 col-form-label">-->
-<!--                        Name</label>-->
-<!--                    <div class="col-9">-->
-<!--                        <input type="text" name="powerDescription"-->
-<!--                               id="lastName" class="form-control"/>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--                <button type="submit" class="btn btn-primary">Add Power</button>-->
-<!--            </form>-->
-<!--        </div>-->
-<!--    </div>-->
-
-<!--- Thu's code --->
+<div class="container">
 
 <div class="row m-4 border border-dark">
     <div class="col-3 text-center m-3">
@@ -83,40 +50,46 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
     </div>
     <div class="col-7 text-center m-3">
         <form action="/super-powers" method="POST">
-            <div class="form-group row">
-                <label for="superPower" class="col-3 col-form-label">
-                    Super Power ID</label>
-                <div class="col-9">
-                    <select id="superPower" name="powerId"
-                            class="form-control" >
-                        <option th:each="power : ${powers}"
-                                th:text="${power.powerId}">
+<!--            <div class="form-group row">-->
+<!--                <label for="superPower" class="col-3 col-form-label">-->
+<!--                    Super Power ID</label>-->
+<!--                <div class="col-9">-->
+<!--                    <select id="superPower" name="powerId"-->
+<!--                            class="form-control" >-->
+<!--                        <option th:each="power : ${powers}"-->
+<!--                                th:text="${power.powerId}">-->
 
 
-                            Super Power ID</option>
-                    </select>
-                </div>
-            </div>
+<!--                            Super Power ID</option>-->
+<!--                    </select>-->
+<!--                </div>-->
+<!--            </div>-->
             <div class="form-group row">
-                <label for="powerName" class="col-3 col-form-label">
-                    Super Power Name</label>
+                <label for="spName" class="col-3 col-form-label">
+                    Superpower Name</label>
                 <div class="col-9">
-                    <select id="powerName" name="powerDescription"
-                            class="form-control" >
-                        <option th:each="power : ${powers}"
-                                th:text="${power.powerDescription}"
-                        >
-                            Super Power Name</option>
-                    </select>
+                    <input type="text" name="powerDescription"
+                           id="spName" class="form-control"/>
                 </div>
             </div>
+<!--            <div class="form-group row">-->
+<!--                <label for="powerName" class="col-3 col-form-label">-->
+<!--                    Super Power Name</label>-->
+<!--                <div class="col-9">-->
+<!--                    <select id="powerName" name="powerDescription"-->
+<!--                            class="form-control" >-->
+<!--                        <option th:each="power : ${powers}"-->
+<!--                                th:text="${power.powerDescription}"-->
+<!--                        >-->
+<!--                            Super Power Name</option>-->
+<!--                    </select>-->
+<!--                </div>-->
+<!--            </div>-->
 
             <button type="submit" class="btn btn-primary">Add Super Power</button>
         </form>
     </div>
 </div>
-
-
 
 
     <div class="row m-4 border border-dark">
@@ -153,14 +126,4 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
 </body>
 
 </html>
-<!--
-Drop down menu
-<label for="cars">Choose a car:</label>
 
-<select multiple name="power" id="powerId">
-  <option th:each="power: ${powers}"
-            th:value="${power.powerId}"
-            th:text="${power.powerDescription}">Power</option>
-
-</select>
--->

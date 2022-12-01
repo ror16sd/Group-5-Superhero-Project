@@ -50,26 +50,31 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
 
 <div class="row m-4 border border-dark">
     <div class="col-3 text-center m-3">
-        <span class="h3">Add Sighting</span>
+        <span class="h3">Edit Sighting</span>
     </div>
     <div class="col-7 text-center m-3">
         <form action="/super-sightings/editSighting" method="POST">
             <div class="form-group row">
-                <label for="superheroes" class="col-3 col-form-label">
-                    Superhero Name</label>
-                <div class="col-9">
-                    <select id="superheroes" name="superId"
-                            class="form-control" >
-                        <option th:each="super : ${superheroes}"
-                                th:value="${super.superId}"
-                                th:text="${super.superName}">
-<!--                                th:selected="${sighting.sightingSuper.superId == super.superId}"-->
-
-
-                            Superhero Name</option>
-                    </select>
-                </div>
+                    <label for="supName" class="col-3 col-form-label">
+                        Superhero Name</label>
+                    <div class="col-9">
+                        <input type="text" name="superName"
+                               id="supName" class="form-control"/>
+                    </div>
             </div>
+
+
+                <!--                <div class="col-9">-->
+<!--                    <select id="superheroes" name="superId"-->
+<!--                            class="form-control" >-->
+<!--                        <option th:each="super : ${superheroes}"-->
+<!--                                th:value="${super.superId}"-->
+<!--                                th:text="${super.superName}">-->
+
+
+<!--                            Superhero Name</option>-->
+<!--                    </select>-->
+<!--                </div>-->
             <div class="form-group row">
                 <label for="location" class="col-3 col-form-label">
                     Location ID</label>

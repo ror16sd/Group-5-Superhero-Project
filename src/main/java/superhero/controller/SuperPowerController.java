@@ -15,7 +15,10 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import superhero.dao.PowerDao;
 import superhero.dao.SuperDao;
+import superhero.model.Location;
 import superhero.model.Power;
+import superhero.model.Sighting;
+import superhero.model.Super;
 
 import javax.validation.Valid;
 import java.net.BindException;
@@ -32,8 +35,8 @@ public class SuperPowerController {
     @Autowired
     public PowerDao powerDao;
 
-//    @Autowired
-//    SuperDao superDao;
+    @Autowired
+    SuperDao superDao;
 
     @GetMapping
     public String getSuperPowers(Model model) {
@@ -65,32 +68,34 @@ public class SuperPowerController {
     }
 
 
-    @GetMapping("edit")
-    public String editPower(Integer id, Model model) {
-        Power power = powerDao.getPowerById(id);
+    @GetMapping("editPower")
+    public String editPower(Integer powerId, Model model) {
+
+        Power power = powerDao.getPowerById(powerId);
+        List<Super> superheroes = superDao.getAllSupers();
+        model.addAttribute("superheroes", superheroes);
         model.addAttribute("power", power);
-        return "editPower";
+
+
+        return "editSighting";
+
     }
 
-
-    @PostMapping("edit")
+    @PostMapping("editPower")
     public String performEditPower(@Valid Power power, BindingResult result){
         if(result.hasErrors()) {
             return "editPower";
         }
-//        powerDao.updatePower(power);
+        powerDao.updatePower(power);
         return "redirect:/SuperPower";
 
     }
 
 
     @GetMapping("deletePower")
-    public String deleteSuperPower(HttpServletRequest request) {
-        int powerId = Integer.parseInt(request.getParameter("powerId"));
+    public String deleteSuperPower(Integer powerId) {
         powerDao.deletePowerById(powerId);
         return "redirect:/super-powers";
-
-
 
     }
 
