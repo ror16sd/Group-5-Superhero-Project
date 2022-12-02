@@ -94,11 +94,12 @@ public class SuperSightingController {
 
         Sighting sighting = sightingDao.getSightingById(sightingId);
         List<Super> superheroes = superDao.getAllSupers();
-        System.out.println(sighting.toString());
         List<Location> locations = locationDao.getAllLocations();
+        final String sightingDate = sighting.getSightingDate().toString();
         model.addAttribute("sighting", sighting);
         model.addAttribute("superheroes", superheroes);
         model.addAttribute("locations", locations);
+        model.addAttribute("sightingDate", sightingDate);
 
         return "editSighting";
     }

@@ -163,7 +163,7 @@ xmlns="http://www.w3.org/1999/xhtml">
                         <td th:text="${location.locationCity}">Location City</td>
                         <td th:text="${location.locationZip}">Location Zip</td>
                         <td th:text="${location.locationLat != null} ? ${location.locationLat} : 'Latitude Unknown'">Location Lat</td>
-                        <td th:text="${location.locationLong == null} ? ${location.locationLong} : 'Longitude Unknown'">Location Long</td>
+                        <td th:text="${location.locationLong != null} ? ${location.locationLong} : 'Longitude Unknown'">Location Long</td>
                         <td><a href="#" th:href="@{/locations/edit(id=${location.locationId})}">Edit</a></td>
                         <td><a href="#" th:href="@{/locations/delete(id=${location.locationId})}">Delete</a></td>
                     </tr>

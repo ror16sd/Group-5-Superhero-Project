@@ -88,10 +88,10 @@ public class SuperOrganizationDaoDb implements SuperOrganizationDao {
 
 
     @Override
-    public List<Super> getSupersForOrganization(int superId) {
+    public List<Super> getSupersForOrganization(int orgId) {
         final String SELECT_SUPERS_FOR_ORGANIZATION = "SELECT so.superId FROM superPerson s " +
-                "JOIN super_organization so ON so.superId = s.superId WHERE so.superId = ?";
-        List<Integer> superIds = jdbcTemplate.queryForList(SELECT_SUPERS_FOR_ORGANIZATION, Integer.class, superId);
+                "JOIN super_organization so ON so.superId = s.superId WHERE so.organizationId = ?";
+        List<Integer> superIds = jdbcTemplate.queryForList(SELECT_SUPERS_FOR_ORGANIZATION, Integer.class, orgId);
         List<Super> supers = new ArrayList<>();
         for(Integer superId1 : superIds) {
             supers.add(superDaoDb.getSuperById(superId1));

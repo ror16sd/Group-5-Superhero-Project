@@ -69,7 +69,7 @@ footer {
     background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTp468qJazCGff8T8naKCAU7c5Y_bTbJVmjPGbDaHia06HOVTSo37UbC6zwObi1z1scJJg&usqp=CAU');
 }
 
-#organization, organizationEdit, #organizationDetails {
+#organization, #organizationEdit, #organizationDetails {
     background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQv7FY4IiNL7DEFStMrXFWCrtPOBCgVMPk5EJldS1zSJPsDbDY0s8Ft5RHCwi_rjRjT-MQ&usqp=CAU');
 }
 
