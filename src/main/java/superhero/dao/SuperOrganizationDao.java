@@ -18,8 +18,11 @@ public interface SuperOrganizationDao {
 
     void deleteSuperOrganizationById(int superOrganizationId);
 
-    List<SuperOrganization> getOrganizationsForSuper(Super superPerson);
+    List<Super> getSupersForOrganization(int superId);
 
-    List<SuperOrganization> getOrganizationsForLocation(Location location);
+    public List<SuperOrganization> getOrganizationsForSupers(Super supers);
+
+    public List<SuperOrganization> getOrganizationsForLocation(Location location);
+
 
 }

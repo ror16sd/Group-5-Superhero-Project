@@ -41,6 +41,11 @@ class SightingDaoDbTest {
 
     @BeforeEach
     void setUp() {
+
+        List<SuperOrganization> organizations = superOrganizationDao.getAllSuperOrganizations();
+        for(SuperOrganization organization : organizations){
+            superOrganizationDao.deleteSuperOrganizationById(organization.getOrganizationId());
+        }
         List<Location> locations = locationDao.getAllLocations();
         for(Location location : locations){
             locationDao.deleteLocationById(location.getLocationId());
@@ -56,10 +61,6 @@ class SightingDaoDbTest {
         List<Super> supers = superDao.getAllSupers();
         for(Super super1 : supers){
             superDao.deleteSuperById(super1.getSuperId());
-        }
-        List<SuperOrganization> organizations = superOrganizationDao.getAllSuperOrganizations();
-        for(SuperOrganization organization : organizations){
-            superOrganizationDao.deleteSuperOrganizationById(organization.getOrganizationId());
         }
     }
 

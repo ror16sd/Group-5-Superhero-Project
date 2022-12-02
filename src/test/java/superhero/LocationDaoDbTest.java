@@ -37,25 +37,25 @@ class LocationDaoDbTest {
 
     @BeforeEach
     void setUp() {
+        List<SuperOrganization> organizations = superOrganizationDao.getAllSuperOrganizations();
+        for (SuperOrganization organization : organizations) {
+            superOrganizationDao.deleteSuperOrganizationById(organization.getOrganizationId());
+        }
         List<Location> locations = locationDao.getAllLocations();
-        for(Location location : locations){
+        for (Location location : locations) {
             locationDao.deleteLocationById(location.getLocationId());
         }
         List<Power> powers = powerDao.getAllPowers();
-        for (Power power : powers){
+        for (Power power : powers) {
             powerDao.deletePowerById(power.getPowerId());
         }
         List<Sighting> sightings = sightingDao.getAllSightings();
-        for(Sighting sighting : sightings){
+        for (Sighting sighting : sightings) {
             sightingDao.deleteSightingById(sighting.getSightingId());
         }
         List<Super> supers = superDao.getAllSupers();
-        for(Super super1 : supers){
+        for (Super super1 : supers) {
             superDao.deleteSuperById(super1.getSuperId());
-        }
-        List<SuperOrganization> organizations = superOrganizationDao.getAllSuperOrganizations();
-        for(SuperOrganization organization : organizations){
-            superOrganizationDao.deleteSuperOrganizationById(organization.getOrganizationId());
         }
     }
 
@@ -65,19 +65,19 @@ class LocationDaoDbTest {
 
     @Test
     void TestGetLocationByIdAndAdd() {
-       Location location = new Location();
-       location.setLocationName("Disney World");
-       location.setLocationDescription("The Happiest Place on Earth");
-       location.setLocationAddress("1375 E Buena Vista Dr");
-       location.setLocationCity("Orlando");
-       location.setLocationState("Florida");
-       location.setLocationZip(32830);
-       location.setLocationLat(28.37779);
-       location.setLocationLong(-81.57065);
+        Location location = new Location();
+        location.setLocationName("Disney World");
+        location.setLocationDescription("The Happiest Place on Earth");
+        location.setLocationAddress("1375 E Buena Vista Dr");
+        location.setLocationCity("Orlando");
+        location.setLocationState("Florida");
+        location.setLocationZip(32830);
+        location.setLocationLat(28.37779);
+        location.setLocationLong(-81.57065);
 
-       location = locationDao.addLocation(location);
-       Location retrievedLocation = locationDao.getLocationById(location.getLocationId());
-       assertEquals(location,retrievedLocation);
+        location = locationDao.addLocation(location);
+        Location retrievedLocation = locationDao.getLocationById(location.getLocationId());
+        assertEquals(location,retrievedLocation);
 
     }
 
