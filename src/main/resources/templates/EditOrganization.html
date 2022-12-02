@@ -32,6 +32,9 @@ xmlns="http://www.w3.org/1999/xhtml">
                 <a href="../super-organizations" class="navbar__links">Organization</a>
             </li>
             <li class="nav-item px-2">
+                <a href="../locations" class="navbar__links">Locations</a>
+            </li>
+            <li class="nav-item px-2">
                 <a href="../super-sightings" class="navbar__links">Sighting</a>
             </li>
             <li class="nav-item px-2">
@@ -80,7 +83,7 @@ xmlns="http://www.w3.org/1999/xhtml">
 
                             <select id="location" name="locationId" class="form-control" >
                                 <option th:each="location : ${locations}" 
-                                        th:selected="${location.locationId == organization.location.locationId}"
+                                        th:selected="${location.locationId == organization.location?.locationId}"
                                         th:value="${location.locationId}" 
                                         th:text="${location.locationName}">
                                     Location Name</option>
@@ -94,7 +97,7 @@ xmlns="http://www.w3.org/1999/xhtml">
                         <select multiple id="superMemberIds" name="superMemberIds" 
                                 class="form-control" >
                             <option th:each="super : ${superPeople}" 
-                                    th:selected="*{superMemberIds.contains(super.superId)}"
+                                    th:selected="*{superMemberIds?.contains(super.superId)}"
                                     th:value="${super.superId}" 
                                     th:text="${super.superName}">
                                 Names of Supers</option>

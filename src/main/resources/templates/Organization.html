@@ -32,6 +32,9 @@ xmlns="http://www.w3.org/1999/xhtml">
                 <a href="../super-organizations" class="navbar__links">Organization</a>
             </li>
             <li class="nav-item px-2">
+                <a href="../locations" class="navbar__links">Locations</a>
+            </li>
+            <li class="nav-item px-2">
                 <a href="../super-sightings" class="navbar__links">Sighting</a>
             </li>
             <li class="nav-item px-2">
@@ -121,7 +124,7 @@ xmlns="http://www.w3.org/1999/xhtml">
                     <tr th:each="organization : ${organizations}">
                         <td th:text="${organization.organizationId}">Organization ID</td>
                         <td th:text="${organization.organizationName}">Organization Name</td>
-                        <td th:text="${organization.location.locationName}">Location Name</td>
+                        <td th:text="${organization.location != null} ? ${organization.location.locationName} : 'Location Unknown'">Location Name</td>
                         <td th:text="${organization.organizationDescription}">Organization Description</td>
 <!--                        <td th:text="${#lists.size(organization.superMembers)}">Total Members</td>-->
                         <td><a href="#" th:href="@{/super-organizations/details(id=${organization.organizationId})}">Details</a></td>

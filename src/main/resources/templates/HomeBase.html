@@ -21,27 +21,27 @@ xmlns="http://www.w3.org/1999/xhtml">
     <nav class="navbar navbar-expand-lg navbar-dark bg-secondary">
         <a class="navbar-brand" href="">SuperSightings</a>
         <ul class="navbar-nav ms-auto">
-            <li class="nav-item">
-                <a href="SuperHeroHome.html" class="navbar__links">Home</a>
-            </li> &nbsp; &nbsp;
-            <li class="nav-item">
-                <a href="Who.html" class="navbar__links">Who</a>
-            </li>  &nbsp; &nbsp;
-            <li class="nav-item">
-                <a href="SuperPower.html" class="navbar__links">SuperPower</a>
-            </li>  &nbsp; &nbsp;
-            <li class="nav-item">
-                <a href="Organization.html" class="navbar__links">Organization</a>
-            </li>  &nbsp; &nbsp;
-            <li class="nav-item">
-                <a href="HomeBase.html" class="navbar__links">HomeBase</a>
-            </li>  &nbsp; &nbsp;
-            <li class="nav-item">
-                <a href="Sighting.html" class="navbar__links">Sighting</a>
-            </li>  &nbsp; &nbsp;
-            <li class="nav-item">
-                <a href="Gallery.html" class="navbar__links">Gallery</a>
-            </li>  &nbsp; &nbsp;
+            <li class="nav-item px-2">
+                <a href="../" class="navbar__links">Home</a>
+            </li>
+            <li class="nav-item px-2">
+                <a href="../super-people" class="navbar__links">Who</a>
+            </li>
+            <li class="nav-item px-2">
+                <a href="../super-powers" class="navbar__links">SuperPower</a>
+            </li>
+            <li class="nav-item px-2">
+                <a href="../super-organizations" class="navbar__links">Organization</a>
+            </li>
+            <li class="nav-item px-2">
+                <a href="../locations" class="navbar__links">Locations</a>
+            </li>
+            <li class="nav-item px-2">
+                <a href="../super-sightings" class="navbar__links">Sighting</a>
+            </li>
+            <li class="nav-item px-2">
+                <a href="../gallery" class="navbar__links">Gallery</a>
+            </li>
         </ul>
     </nav>
     <div class="container">
@@ -55,8 +55,13 @@ xmlns="http://www.w3.org/1999/xhtml">
             <span class="h3">Add Organization Location</span>
         </div>
         <div class="col-7 text-center m-3">
-            <form action="addLocation" method="POST">
+            <form action="/locations" method="POST">
                 <div class="form-group row">
+                    <div class="col-12 m-1 text-center" 
+                    th:if="${!errors.isEmpty()}">
+                        <p class="alert alert-danger" th:each="error : ${errors}" 
+                      th:text="${error.message}">Error message</p>
+                    </div>
                     <label for="locationName" class="col-3 col-form-label">
                         Location Name</label>
                     <div class="col-9">
@@ -65,59 +70,64 @@ xmlns="http://www.w3.org/1999/xhtml">
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label for="description" class="col-3 col-form-label">
+                    <label for="locationDescription" class="col-3 col-form-label">
                         Description</label>
                     <div class="col-9">
-                        <input type="text" name="description" 
-                               id="description" class="form-control"/>
+                        <input type="text" name="locationDescription" 
+                               id="locationDescription" class="form-control"/>
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label for="streetAdd" class="col-3 col-form-label">
+                    <label for="locationAddress" class="col-3 col-form-label">
                         Street Address</label>
                     <div class="col-9">
-                        <input type="text" name="streetAdd" 
-                               id="streetAdd" class="form-control"/>
+                        <input type="text" name="locationAddress" 
+                               id="locationAddress" class="form-control"/>
                     </div>
                 </div>
                 <div class="form-group row">
                     <label for="state" class="col-3 col-form-label">
                         State</label>
                     <div class="col-9">
-                        <input type="text" name="state" 
-                        id="state" class="form-control"/>
+                        <input type="text" name="locationState" 
+                        id="locationState" class="form-control"/>
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label for="city" class="col-3 col-form-label">
+                    <label for="locationCity" class="col-3 col-form-label">
                         City</label>
                     <div class="col-9">
-                        <input type="text" name="city" 
-                               id="city" class="form-control"/>
+                        <input type="text" name="locationCity" 
+                               id="locationCity" class="form-control"/>
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label for="zipCode" class="col-3 col-form-label">
+                    <label for="locationZip" class="col-3 col-form-label">
                         Zip Code</label>
                     <div class="col-9">
-                        <input type="text" name="zipCode" 
-                        id="zipCode" class="form-control"/>
+                        <input type="number" name="locationZip" 
+                        id="locationZip" class="form-control" min="00001" max="99999"
+                        th:value="${0}"/>
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label for="latitude" class="col-3 col-form-label">
+                    <label for="locationLat" class="col-3 col-form-label">
                         Latitude</label>
                     <div class="col-9">
-                        <input type="text" name="latitude" 
-                               id="latitude" class="form-control"/>
+                        <input type="number" step="any"name="locationLat" 
+                               id="locationLat" class="form-control"
+                               min="000000000000" max="999999999999"
+                               th:value="${0}"/>
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label for="longitude" class="col-3 col-form-label">
+                    <label for="locationLong" class="col-3 col-form-label">
                         Longitude</label>
                     <div class="col-9">
-                        <input type="text" name="longitude" 
-                               id="longitude" class="form-control"/>
+                        <input type="number" step="any"name="locationLong" 
+                               id="locationLong" class="form-control"
+                               min="000000000000" max="999999999999"
+                               th:value="${0}"/>
                     </div>
                 </div>
                 <button type="submit" class="btn btn-primary">Add Organization Location</button>
@@ -152,8 +162,8 @@ xmlns="http://www.w3.org/1999/xhtml">
                         <td th:text="${location.locationState}">Location State</td>
                         <td th:text="${location.locationCity}">Location City</td>
                         <td th:text="${location.locationZip}">Location Zip</td>
-                        <td th:text="${location.locationLong}">Location Long</td>
-                        <td th:text="${location.locationLat}">Location Lat</td>
+                        <td th:text="${location.locationLat != null} ? ${location.locationLat} : 'Latitude Unknown'">Location Lat</td>
+                        <td th:text="${location.locationLong == null} ? ${location.locationLong} : 'Longitude Unknown'">Location Long</td>
                         <td><a href="#" th:href="@{/locations/edit(id=${location.locationId})}">Edit</a></td>
                         <td><a href="#" th:href="@{/locations/delete(id=${location.locationId})}">Delete</a></td>
                     </tr>
