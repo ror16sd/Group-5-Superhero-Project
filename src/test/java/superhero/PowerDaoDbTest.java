@@ -37,19 +37,19 @@ class PowerDaoDbTest {
 
     @BeforeEach
     public void setUp() {
-        List<Super> SuperPerson = superDao.getAllSupers();
-        for (Super Super : SuperPerson) {
-            superDao.deleteSuperById(Super.getSuperId());
-        }
 
+        List<SuperOrganization> superOrganization = superOrganizationDao.getAllSuperOrganizations();
+        for (SuperOrganization SuperOrganization : superOrganization) {
+            superOrganizationDao.deleteSuperOrganizationById(SuperOrganization.getOrganizationId());
+        }
         List<Location> locations = locationDao.getAllLocations();
         for (Location location : locations) {
             locationDao.deleteLocationById(location.getLocationId());
         }
 
-        List<SuperOrganization> superOrganization = superOrganizationDao.getAllSuperOrganizations();
-        for (SuperOrganization SuperOrganization : superOrganization) {
-            superOrganizationDao.deleteSuperOrganizationById(SuperOrganization.getOrganizationId());
+        List<Super> SuperPerson = superDao.getAllSupers();
+        for (Super Super : SuperPerson) {
+            superDao.deleteSuperById(Super.getSuperId());
         }
 
         List<Sighting> sightings = sightingDao.getAllSightings();

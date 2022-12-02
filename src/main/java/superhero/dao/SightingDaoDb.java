@@ -13,8 +13,6 @@ import superhero.model.Super;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
-import java.time.LocalDate;
 import java.util.List;
 
 @Repository
@@ -38,7 +36,8 @@ public class SightingDaoDb implements SightingDao {
             return null;
         }
     }
-    
+
+    @Override
     public List<Sighting> getTop10Sightings() {
         try {
             final String SELECT_TOP_10_SIGHTINGS = "SELECT * FROM sightinglocation ORDER BY DATE DESC LIMIT 10;";
