@@ -51,4 +51,30 @@ public class LocationController {
       
       return "redirect:/locations";
     }
+    
+    @GetMapping("/edit")
+    public String getEditLocationPage(int id, Model model) {
+        final Location location = locationDao.getLocationById(id);
+        model.addAttribute("location", location);
+        model.addAttribute("errors", violations);
+        return "EditLocation";
+    }
+    
+    @PostMapping("/edit")
+    public String editLocation(Location location) {
+      Validator validate = Validation.buildDefaultValidatorFactory().getValidator();
+      violations = validate.validate(location);  
+      
+      if (!violations.isEmpty()) {
+          return "redirect:/locations/edit?id=" + location.getLocationId();    
+       }
+      locationDao.updateLocation(location);
+      return "redirect:/locations";
+    }
+    
+    @GetMapping("/delete")
+    public String deleteLocation(int id) {
+        locationDao.deleteLocationById(id);
+        return "redirect:/locations";
+    }
 }
