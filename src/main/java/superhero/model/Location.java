@@ -1,7 +1,12 @@
 package superhero.model;
 
+import jakarta.validation.constraints.DecimalMax;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.Digits;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.Pattern;
 import java.util.Objects;
 
 public class Location {
@@ -22,18 +27,23 @@ public class Location {
 
     @NotBlank(message = "State must not be blank")
     @Size(max = 20, message = "State must be fewer than 20 characters")
+    @Pattern(regexp="(A[KLRZ]|C[AOT]|D[CE]|FL|GA"
+            + "|HI|I[ADLN]|K[SY]|LA|M[ADEINOST]|N[CDEH"
+            + "JMVY]|O[HKR]|PA|RI|S[CD]|T[NX]|UT|V[AT]|W[AIV"
+            + "Y])", message = "Must input a valid state abbreviation")
     private String locationState;
 
     @NotBlank(message = "City must not be blank")
     @Size(max = 30, message = "City name must be fewer than 30 characters")
     private String locationCity;
 
-    @NotBlank(message = "Zipcode must not be blank")
-    @Size(max = 10, message = "Zipcode must be fewer than 10 characters")
+    @Digits(integer = 5, fraction = 0, message = "Zip code must be 5 digits")
     private int locationZip;
-
+    @Digits(integer = 12, fraction = 8, message = "Long can only be represented in 12 digits maximum, "
+            + "8 of those being decimal points")
     private double locationLong;
-
+    @Digits(integer = 12, fraction = 8, message = "Lat can only be represented in 12 digits maximum, "
+            + "8 of those being decimal points")
     private double locationLat;
 
     public int getLocationId() {

@@ -58,18 +58,18 @@ footer {
     color: white;
     }
 
-    #who {
+    #who, #whoEdit {
         background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTpP7J0GcJdElbMtyRvgzTtF5nCCq-ytPbRGiJYQ42U1f82cp3XrXpmwkXu4HwbAwG0DKg&usqp=CAU');
     }
 #supPower{
         background-image: url('https://images.newscientist.com/wp-content/uploads/2020/05/22112120/sagdig_opo0431b_web.jpg?crop=16:9,smart&width=1200&height=675&upscale=true'); 
     }
 
-#orgLocation {
+#orgLocation, #orgLocationEdit {
     background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTp468qJazCGff8T8naKCAU7c5Y_bTbJVmjPGbDaHia06HOVTSo37UbC6zwObi1z1scJJg&usqp=CAU');
 }
 
-#organization {
+#organization, organizationEdit, #organizationDetails {
     background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQv7FY4IiNL7DEFStMrXFWCrtPOBCgVMPk5EJldS1zSJPsDbDY0s8Ft5RHCwi_rjRjT-MQ&usqp=CAU');
 }
 

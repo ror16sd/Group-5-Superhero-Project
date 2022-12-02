@@ -97,12 +97,12 @@ public class SuperOrganizationController {
     }
     
     @GetMapping("/details")
-    public String getSuperOrganization(Integer id, Model model) {
+    public String getSuperOrganizationDetails(Integer id, Model model) {
         if (organizations.size() < 1) {
             loadTestOrganizationList();
         }
 //        TO BE IMPLEMENTED AFTER ORG DAO IS IMPLEMENTED
-//        final SuperOrganization organization = organizationDao.getSuperOrganizationById(1);
+//        final SuperOrganization organization = organizationDao.getSuperOrganizationById(id);
         final SuperOrganization organization = getTestOrganization(id);
         model.addAttribute("organization", organization);
         return "OrganizationDetails";
@@ -113,8 +113,13 @@ public class SuperOrganizationController {
         if (organizations.size() < 1) {
             loadTestOrganizationList();
         }
+//        TO BE IMPLEMENTED AFTER ORG DAO IS IMPLEMENTED
+//        final SuperOrganization organization = organizationDao.getSuperOrganizationById(id);
         final SuperOrganization organization = getTestOrganization(id);
-        final List<Integer> superMemberIds = returnSuperMemberIdList(organization);
+        List<Integer> superMemberIds = null;
+        if (organization.getSuperMembers() != null) {
+            superMemberIds = returnSuperMemberIdList(organization);
+        }
         List<Location> locations = locationDao.getAllLocations();
         List<Super> superPeople = superDao.getAllSupers();
         model.addAttribute("locations", locations);
@@ -150,11 +155,11 @@ public class SuperOrganizationController {
         Validator validate = Validation.buildDefaultValidatorFactory().getValidator();
         violations = validate.validate(organization);
        
-        if (!violations.isEmpty()) {
- //        TO BE IMPLEMENTED AFTER ORG DAO IS IMPLEMENTED
- //           organizationDao.updateSuperOrganization(organization);
+        if (!violations.isEmpty()) {  
            return "redirect:/super-organizations/edit?id=" + organization.getOrganizationId();
         }
+//        TO BE IMPLEMENTED AFTER ORG DAO IS IMPLEMENTED
+ //           organizationDao.updateSuperOrganization(organization);
         organizations.put(organization.getOrganizationId(), organization);
         return "redirect:/super-organizations";
     }
@@ -186,10 +191,8 @@ public class SuperOrganizationController {
         testOrg2.setOrganizationDescription("This also a org for testing");
         final Location testLocation = locationDao.getLocationById(1);
         testOrg1.setLocation(testLocation);
-        testOrg2.setLocation(testLocation);
         final List<Super> supers = superDao.getAllSupers();
         testOrg1.setSupers(supers);
-        testOrg2.setSupers(supers);
         organizations.put(1, testOrg1);
         organizations.put(2, testOrg2);
     }
